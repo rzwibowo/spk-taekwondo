@@ -47,7 +47,7 @@
     <nav class="sidebar-nav">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" href="<?php base_url() ?>mahasiswa">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php base_url() ?>mahasiswa">
             <i class="nav-icon icon-graduation"></i> Mahasiswa
           </a>
         </li>

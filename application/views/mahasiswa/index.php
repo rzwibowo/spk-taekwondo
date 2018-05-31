@@ -1,4 +1,5 @@
 <div class="row">
+	<!-- BEGIN form input -->
 	<div class="col-md-6">
 	  <div class="card">
 	    <div class="card-header">
@@ -22,7 +23,7 @@
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="thn_angkatan">Tahun Angkatan</label>
 	          <div class="col-md-5">
-	            <input type="number" id="thn_angkatan" name="thn_angkatan" class="form-control" placeholder="Masukkan Tahun Angkatan">
+	            <input type="number" id="thn_angkatan" name="thn_angkatan" class="form-control">
 	          </div>
 	        </div>
 	        <div class="form-group row">
@@ -47,7 +48,7 @@
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="tgl_lahir">Tanggal Lahir</label>
 	          <div class="col-md-5">
-	            <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control" placeholder="Masukkan Tanggal Lahir">
+	            <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control">
 	          </div>
 	        </div>
 	        <div class="form-group row">
@@ -75,7 +76,7 @@
 	          		<div class="input-group-prepend">
 		          		<span class="input-group-text">Rp</span>
 	          		</div>
-		            <input type="number" id="pgh_orangtua" name="pgh_orangtua" class="form-control" placeholder="Masukkan Penghasilan Orang Tua">
+		            <input type="number" id="pgh_orangtua" name="pgh_orangtua" class="form-control">
 	          	</div>
 	          </div>
 	        </div>
@@ -88,17 +89,218 @@
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 	          <div class="col-md-3">
-	            <input type="number" id="jml_tanggungan" name="jml_tanggungan" class="form-control" placeholder="Masukkan Jumlah Tanggungan">
+	            <input type="number" id="jml_tanggungan" name="jml_tanggungan" class="form-control">
 	          </div>
 	        </div>
 	      </form>
 	    </div>
 	    <div class="card-footer">
 	      <button type="submit" class="btn btn-sm btn-primary">
-	        <i class="fa fa-dot-circle-o"></i> Submit</button>
+	        <i class="fa fa-dot-circle-o"></i> Simpan</button>
 	      <button type="reset" class="btn btn-sm btn-danger">
 	        <i class="fa fa-ban"></i> Reset</button>
 	    </div>
 	  </div>
 	</div>
+	<!-- END form input -->
+
+	<!-- START list -->
+	<div class="col-md-6">
+		<div class="card">
+		  <div class="card-header">
+		    Daftar <strong>Mahasiswa</strong>
+		  </div>
+		  <div class="card-body">
+		    <table class="table table-responsive-sm table-striped">
+		      <thead>
+		        <tr>
+		          <th>NIM</th>
+		          <th>Nama</th>
+		          <th>Tahun Angkatan</th>
+		          <th></th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		          <td>1754110123</td>
+		          <td>Sarjono</td>
+		          <td>2017</td>
+		          <td>
+		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
+		            |
+		            <a href="#">Edit</a>
+		            |
+		            <a href="#" class="text-danger">Hapus</a>
+		          </td>
+		        </tr>
+		        <tr>
+		          <td>1633110123</td>
+		          <td>Diplomo</td>
+		          <td>2016</td>
+		          <td>
+		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
+		            |
+		            <a href="#">Edit</a>
+		            |
+		            <a href="#" class="text-danger">Hapus</a>
+		          </td>
+		        </tr>
+		        <tr>
+		          <td>1556110123</td>
+		          <td>Prasojo</td>
+		          <td>2016</td>
+		          <td>
+		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
+		            |
+		            <a href="#">Edit</a>
+		            |
+		            <a href="#" class="text-danger">Hapus</a>
+		          </td>
+		        </tr>
+		        <tr>
+		          <td>1454110123</td>
+		          <td>Minulyo</td>
+		          <td>2014</td>
+		          <td>
+		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
+		            |
+		            <a href="#">Edit</a>
+		            |
+		            <a href="#" class="text-danger">Hapus</a>
+		          </td>
+		        </tr>
+		        <tr>
+		          <td>1331110123</td>
+		          <td>Wisrono</td>
+		          <td>2013</td>
+		          <td>
+		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
+		            |
+		            <a href="#">Edit</a>
+		            |
+		            <a href="#" class="text-danger">Hapus</a>
+		          </td>
+		        </tr>
+		      </tbody>
+		    </table>
+		    <ul class="pagination">
+		      <li class="page-item">
+		        <a class="page-link" href="#">Prev</a>
+		      </li>
+		      <li class="page-item active">
+		        <a class="page-link" href="#">1</a>
+		      </li>
+		      <li class="page-item">
+		        <a class="page-link" href="#">2</a>
+		      </li>
+		      <li class="page-item">
+		        <a class="page-link" href="#">3</a>
+		      </li>
+		      <li class="page-item">
+		        <a class="page-link" href="#">4</a>
+		      </li>
+		      <li class="page-item">
+		        <a class="page-link" href="#">Next</a>
+		      </li>
+		    </ul>
+		  </div>
+		</div>
+	</div>
+	<!-- END list -->
+
+	<!-- BEGIN modal detail -->
+	<div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detail Mahasiswa</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">NIM</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>1456110123</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Nama</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Informatiko</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Tahun Angkatan</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>2014</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Jenis Kelamin</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Laki-laki</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Tempat Lahir</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Alas Pari</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Tanggal Lahir</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>11 November 1991</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Alamat</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Jalan Lurus No. 11</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">IPK</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>3.88</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Kendaraan</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Traktor</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Penghasilan Orang Tua</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Rp 1.234.000,00</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Pekerjaan Orang Tua</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>Anggota DPR</b></p>
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Jumlah Tanggungan</label>
+	      	    <div class="col-md-9">
+	      	      <p class="form-control-static"><b>11</b></p>
+	      	    </div>
+	      	  </div>
+	      	</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	    <!-- /.modal-content -->
+	  </div>
+	  <!-- /.modal-dialog -->
+	</div>
+	<!-- END modal detail -->
 </div>
