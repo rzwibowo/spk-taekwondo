@@ -18,7 +18,7 @@
   <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="<?php echo site_url() ?>">
     <img class="navbar-brand-full" src="<?php echo base_url() ?>assets/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
     <img class="navbar-brand-minimized" src="<?php echo base_url() ?>assets/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
   </a>
@@ -47,7 +47,7 @@
     <nav class="sidebar-nav">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php base_url() ?>mahasiswa">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
             <i class="nav-icon icon-graduation"></i> Mahasiswa
           </a>
         </li>
@@ -62,7 +62,14 @@
   <main class="main">
     <!-- Breadcrumb-->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active"><?php echo isset($title) ? $title : "" ?></li>
+      <?php
+        if (isset($title)) {
+          echo "<li class='breadcrumb-item'>Home</li>";
+          echo "<li class='breadcrumb-item active'>".$title."</li>";
+        } else { 
+          echo "<li class='breadcrumb-item active'>Home</li>";
+        }
+      ?>
     </ol>
     <div class="container-fluid">
       <div class="animated fadeIn">
