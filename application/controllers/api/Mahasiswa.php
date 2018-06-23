@@ -30,21 +30,45 @@ class Mahasiswa extends REST_Controller {
 
     }
 
-    public function mahasiswas_get()
+    public function mahasiswas_post()
     {
-        $data=$this->ModelMahasiswa->GetMahasiswa()->result();
+        $Filter = $this->post('body');
+        $data=$this->ModelMahasiswa->GetMahasiswaWithFilter($Filter)->result();
         $this->set_response($data, REST_Controller::HTTP_CREATED);
     }
     public function mahasiswa_post()
     {
         $MHS= (object) $this->post('body');
-        if($this->ModelMahasiswa->InsertMahasiswa($MHS)){
+        if(isset($MHS->id_mahasiswa)){
+            if($this->ModelMahasiswa->UpdateMahasiswa($MHS)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
                 $this->set_response(array('error' => 'Error saat simpan data'), 404);
             }
+        }else{
+            if($this->ModelMahasiswa->InsertMahasiswa($MHS)){
+                $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+            }else{
+                $this->set_response(array('error' => 'Error saat simpan data'), 404);
+            }
+        }
 
       //  $this->set_response($message, REST_Controller::HTTP_CREATED);
+    }
+    function GetDataMahasiswaById_get($Id)
+    {
+        # code...
+        $where=array('id_mahasiswa'=>$Id);
+        $MHS=$this->ModelMahasiswa->GatById($where)->result();
+        $this->set_response($MHS[0], REST_Controller::HTTP_CREATED);
+    }
+    function mahasiswadelete_get($Id)
+    {
+        if($this->ModelMahasiswa->Detete($Id)){
+
+        }else{
+
+        }
     }
 
 }

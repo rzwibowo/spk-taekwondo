@@ -120,6 +120,13 @@
 		          <th>Tahun Angkatan</th>
 		          <th></th>
 		        </tr>
+		        <tr>
+		          <th></th>
+		          <th><input type="text" name="nim" class="form-control" v-model="FilterModel.nim" v-on:keyup="ChangeFilter(FilterModel.nim)"></th>
+		          <th><input type="text" name="nama" class="form-control" v-model="FilterModel.nama" v-on:keyup="ChangeFilter(FilterModel.nama)"></th>
+		          <th><input type="text" name="thn_angkatan" class="form-control" v-model="FilterModel.thn_angkatan" v-on:keyup="ChangeFilter(FilterModel.thn_angkatan)"></th>
+		          <th></th>
+		        </tr>
 		      </thead>
 		      <tbody>
 		       <tr v-for="(mahasiswa,index) in mahasiswas">
@@ -127,10 +134,12 @@
 		       	<td>{{mahasiswa.nim}}</td>
 		       	<td>{{mahasiswa.nama}}</td>
 		       	<td>{{mahasiswa.thn_angkatan}}</td>
-		       	<td> <button type="button" class="btn btn-sm btn-primary">
+		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.id_mahasiswa)">
 	                 <i class="fa fa-ban"></i> Edit</button>
-	                <button type="button" class="btn btn-sm btn-success">
+	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.id_mahasiswa)">
 	                <i class="fa fa-dot-circle-o"></i> View</button>
+	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.id_mahasiswa)">
+	                <i class="fa fa-minus-circle"></i> Delete</button>
 	            </td>
 		       </tr>
 		      </tbody>
@@ -175,46 +184,46 @@
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">NIM</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>1456110123</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.nim}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Nama</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Informatiko</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.nama}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tahun Angkatan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>2014</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.thn_angkatan}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Jenis Kelamin</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Laki-laki</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.jenis_kelamin}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tempat Lahir</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Alas Pari</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.tempat_lahir}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tanggal Lahir</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>11 November 1991</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.tgl_lahir}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Alamat</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Jalan Lurus No. 11</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.alamat}}</b></p>
 	      	    </div>
 	      	  </div>
-	      	  <div class="form-group row">
+	      	<!--   <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">IPK</label>
 	      	    <div class="col-md-9">
 	      	      <p class="form-control-static"><b>3.88</b></p>
@@ -243,7 +252,7 @@
 	      	    <div class="col-md-9">
 	      	      <p class="form-control-static"><b>11</b></p>
 	      	    </div>
-	      	  </div>
+	      	  </div> -->
 	      	</form>
 	      </div>
 	      <div class="modal-footer">
@@ -265,7 +274,9 @@ var app = new Vue({
   },
   data: {
   	mahasiswa:{},
-  	mahasiswas:[]
+  	mahasiswas:[],
+  	FilterModel:[],
+  	mahasiswaView:{}
   },
   methods: {
     Save() 
@@ -287,7 +298,9 @@ var app = new Vue({
    GetData()
    {
       axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas')
+    	.post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas',{
+    		body: this.Filter()
+    	})
         .then(response => {
         	this.mahasiswas =  response.data;
        })
@@ -301,6 +314,72 @@ var app = new Vue({
    reset()
    {
    	this.mahasiswa = {};
+   },
+   Filter()
+   {
+      var FilterParam = {};
+      if(this.FilterModel.nim !== "" && this.FilterModel.nim !== null ){
+        FilterParam.nim =this.FilterModel.nim;
+      }
+      if(this.FilterModel.nama !== null && this.FilterModel.nama !== "" ){
+        FilterParam.nama =this.FilterModel.nama;
+      }
+      if(this.FilterModel.thn_angkatan !== null && this.FilterModel.thn_angkatan !== "" ){
+        FilterParam.thn_angkatan =this.FilterModel.thn_angkatan;
+      }
+      return FilterParam;
+   },
+   ChangeFilter(Param)
+   {
+   	if(Param.length > 2){
+        this.GetData();
+    }else if(Param.length == 0){
+          this.GetData();
+    }
+
+   },
+   Edit(Id)
+   {
+     axios
+    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+        .then(response => {
+        	this.mahasiswa =  response.data;
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false )
+   },
+   Delete(Id)
+   {
+   	var x = confirm("Are you sure you want to delete?");
+    if (x){
+       axios
+   	   .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswadelete/'+Id)
+        .then(response => {
+        this.GetData();
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+       })
+       .finally(() => this.loading = false )
+    }
+   },
+   View(Id)
+   {
+   	axios
+    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+        .then(response => {
+        	this.mahasiswaView =  response.data;
+         	$("#detail-modal").modal('show');
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false )
    }
  }
 })
