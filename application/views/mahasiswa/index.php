@@ -1,6 +1,6 @@
 <div class="row" id="app">
 	<!-- BEGIN form input -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 	  <div class="card">
 	    <div class="card-header">
 	      Input Data 
@@ -57,7 +57,7 @@
 	            <textarea id="alamat" name="alamat" rows="3" v-model="mahasiswa.alamat" class="form-control" placeholder="Masukkan Alamat"></textarea>
 	          </div>
 	        </div>
-	        <!-- <div class="form-group row">
+	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="nama">IPK</label>
 	          <div class="col-md-4">
 	            <input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK">
@@ -68,8 +68,8 @@
 	          <div class="col-md-9">
 	            <input type="text" id="kendaraan" name="kendaraan" v-model="mahasiswa.kendaraan" class="form-control" placeholder="Masukkan Kendaraan">
 	          </div>
-	        </div> -->
-	        <!-- <div class="form-group row">
+	        </div>
+	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="pgh_orangtua">Penghasilan Orang Tua</label>
 	          <div class="col-md-7">
 	          	<div class="input-group">
@@ -79,22 +79,22 @@
 		            <input type="number" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control">
 	          	</div>
 	          </div>
-	        </div> -->
-	        <!-- <div class="form-group row">
+	        </div>
+	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="pkj_orangtua">Pekerjaan Orang Tua</label>
 	          <div class="col-md-9">
 	            <input type="text" id="pkj_orangtua" name="pkj_orangtua" v-model="mahasiswa.pkj_orangtua" class="form-control" placeholder="Masukkan Pekerjaan Orang Tua">
 	          </div>
-	        </div> -->
-	       <!--  <div class="form-group row">
+	        </div>
+	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 	          <div class="col-md-3">
 	            <input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control">
 	          </div>
-	        </div> -->
+	        </div>
 	      </form>
 	    </div>
-	    <div class="card-footer">
+	    <div class="card-footer" style="text-align: center;">
 	      <button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 	        <i class="fa fa-dot-circle-o"></i> Simpan</button>
 	      <button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
@@ -105,7 +105,7 @@
 	<!-- END form input -->
 
 	<!-- START list -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="card">
 		  <div class="card-header">
 		    Daftar <strong>Mahasiswa</strong>
@@ -117,7 +117,15 @@
 		          <th>#</th>
 		          <th>NIM</th>
 		          <th>Nama</th>
-		          <th>Tahun Angkatan</th>
+		          <th>Tahun</th>
+		          <th>JK</th>
+		          <!-- <th>Tempat</th> -->
+		          <!-- <th>Alam</th> -->
+		          <th>IPK</th>
+		          <th>Kendaraan</th>
+		          <!-- <th>Penghasilan Orang Tua</th> -->
+		          <!-- <th>Pekerjaan Orang Tua</th> -->
+		          <!-- <th>Tanggungan Orang Tua</th> -->
 		          <th></th>
 		        </tr>
 		        <tr>
@@ -125,6 +133,14 @@
 		          <th><input type="text" name="nim" class="form-control" v-model="FilterModel.nim" v-on:keyup="ChangeFilter(FilterModel.nim)"></th>
 		          <th><input type="text" name="nama" class="form-control" v-model="FilterModel.nama" v-on:keyup="ChangeFilter(FilterModel.nama)"></th>
 		          <th><input type="text" name="thn_angkatan" class="form-control" v-model="FilterModel.thn_angkatan" v-on:keyup="ChangeFilter(FilterModel.thn_angkatan)"></th>
+		          <th><input type="text" name="jenis_kelamin" class="form-control" v-model="FilterModel.jenis_kelamin" v-on:keyup="ChangeFilter(FilterModel.jenis_kelamin)"></th>
+		          <!-- <th><input type="text" name="tempat_lahir" class="form-control" v-model="FilterModel.tempat_lahir" v-on:keyup="ChangeFilter(FilterModel.tempat_lahir)"></th> -->
+		          <!-- <th><input type="text" name="alamat" class="form-control" v-model="FilterModel.alamat" v-on:keyup="ChangeFilter(FilterModel.alamat)"></th> -->
+		          <th><input type="text" name="ipk" class="form-control" v-model="FilterModel.ipk" v-on:keyup="ChangeFilter(FilterModel.ipk)"></th>
+		          <th><input type="text" name="kendaraan" class="form-control" v-model="FilterModel.kendaraan" v-on:keyup="ChangeFilter(FilterModel.kendaraan)"></th>
+		          <!-- <th><input type="text" name="pgh_orangtua" class="form-control" v-model="FilterModel.pgh_orangtua" v-on:keyup="ChangeFilter(FilterModel.pgh_orangtua)"></th> -->
+		          <!-- <th><input type="text" name="pkj_orangtua" class="form-control" v-model="FilterModel.pkj_orangtua" v-on:keyup="ChangeFilter(FilterModel.pkj_orangtua)"></th> -->
+		          <!-- <th><input type="text" name="jml_tanggungan" class="form-control" v-model="FilterModel.jml_tanggungan" v-on:keyup="ChangeFilter(FilterModel.jml_tanggungan)"></th> -->
 		          <th></th>
 		        </tr>
 		      </thead>
@@ -134,8 +150,16 @@
 		       	<td>{{mahasiswa.nim}}</td>
 		       	<td>{{mahasiswa.nama}}</td>
 		       	<td>{{mahasiswa.thn_angkatan}}</td>
+		       	<td>{{mahasiswa.jenis_kelamin}}</td>
+		       	<!-- <td>{{mahasiswa.tempat_lahir}}</td> -->
+		       	<!-- <td>{{mahasiswa.alamat}}</td> -->
+		       	<td>{{mahasiswa.ipk}}</td>
+		       	<td>{{mahasiswa.kendaraan}}</td>
+		       	<!-- <td>{{mahasiswa.pgh_orangtua}}</td> -->
+		       	<!-- <td>{{mahasiswa.pkj_orangtua}}</td> -->
+		       	<!-- <td>{{mahasiswa.jml_tanggungan}}</td> -->
 		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.id_mahasiswa)">
-	                 <i class="fa fa-ban"></i> Edit</button>
+	                 <i class="fa fa-pencil"></i> Edit</button>
 	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.id_mahasiswa)">
 	                <i class="fa fa-dot-circle-o"></i> View</button>
 	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.id_mahasiswa)">
@@ -223,36 +247,36 @@
 	      	      <p class="form-control-static"><b>{{mahasiswaView.alamat}}</b></p>
 	      	    </div>
 	      	  </div>
-	      	<!--   <div class="form-group row">
+	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">IPK</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>3.88</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.ipk}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Kendaraan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Traktor</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.kendaraan}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Penghasilan Orang Tua</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Rp 1.234.000,00</b></p>
+	      	      <p class="form-control-static"><b>Rp.{{mahasiswaView.pgh_orangtua}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Pekerjaan Orang Tua</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Anggota DPR</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.pkj_orangtua}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Jumlah Tanggungan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>11</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.jml_tanggungan}}</b></p>
 	      	    </div>
-	      	  </div> -->
+	      	  </div>
 	      	</form>
 	      </div>
 	      <div class="modal-footer">
@@ -326,6 +350,15 @@ var app = new Vue({
       }
       if(this.FilterModel.thn_angkatan !== null && this.FilterModel.thn_angkatan !== "" ){
         FilterParam.thn_angkatan =this.FilterModel.thn_angkatan;
+      }
+      if(this.FilterModel.jenis_kelamin !== null && this.FilterModel.jenis_kelamin !== "" ){
+        FilterParam.jenis_kelamin =this.FilterModel.jenis_kelamin;
+      }
+      if(this.FilterModel.ipk !== null && this.FilterModel.ipk !== "" ){
+        FilterParam.ipk =this.FilterModel.ipk;
+      }
+      if(this.FilterModel.kendaraan !== null && this.FilterModel.kendaraan !== "" ){
+        FilterParam.kendaraan =this.FilterModel.kendaraan;
       }
       return FilterParam;
    },

@@ -54,7 +54,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">
+           <a class="nav-link<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
             <i class="nav-icon icon-equalizer"></i> Kriteria
           </a>
         </li>
