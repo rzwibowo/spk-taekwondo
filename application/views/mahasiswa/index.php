@@ -127,6 +127,11 @@
 		       	<td>{{mahasiswa.nim}}</td>
 		       	<td>{{mahasiswa.nama}}</td>
 		       	<td>{{mahasiswa.thn_angkatan}}</td>
+		       	<td> <button type="button" class="btn btn-sm btn-primary">
+	                 <i class="fa fa-ban"></i> Edit</button>
+	                <button type="button" class="btn btn-sm btn-success">
+	                <i class="fa fa-dot-circle-o"></i> View</button>
+	            </td>
 		       </tr>
 		      </tbody>
 		    </table>
