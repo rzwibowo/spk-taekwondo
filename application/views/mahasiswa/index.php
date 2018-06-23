@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row" id="app">
 	<!-- BEGIN form input -->
 	<div class="col-md-6">
 	  <div class="card">
 	    <div class="card-header">
-	      Input Data
+	      Input Data 
 	      <strong>Mahasiswa</strong>
 	    </div>
 	    <div class="card-body">
@@ -11,93 +11,93 @@
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="nim">NIM</label>
 	          <div class="col-md-9">
-	            <input type="text" id="nim" name="nim" class="form-control" placeholder="Masukkan NIM">
+	            <input type="text" id="nim" name="nim" v-model="mahasiswa.nim" class="form-control" placeholder="Masukkan NIM">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="nama">Nama</label>
 	          <div class="col-md-9">
-	            <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukkan Nama">
+	            <input type="text" id="nama" name="nama" v-model="mahasiswa.nama" class="form-control" placeholder="Masukkan Nama">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="thn_angkatan">Tahun Angkatan</label>
 	          <div class="col-md-5">
-	            <input type="number" id="thn_angkatan" name="thn_angkatan" class="form-control">
+	            <input type="number" id="thn_angkatan" v-model="mahasiswa.thn_angkatan" name="thn_angkatan" class="form-control">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label">Jenis Kelamin</label>
 	          <div class="col-md-9 col-form-label">
 	            <div class="form-check form-check-inline mr-1">
-	              <input class="form-check-input" type="radio" id="laki-laki" value="laki-laki" name="jns_kelamin">
+	              <input class="form-check-input" type="radio" id="laki-laki" v-model="mahasiswa.jenis_kelamin" value="laki-laki" name="jenis_kelamin">
 	              <label class="form-check-label" for="laki-laki">Laki-laki</label>
 	            </div>
 	            <div class="form-check form-check-inline mr-1">
-	              <input class="form-check-input" type="radio" id="perempuan" value="perempuan" name="jns_kelamin">
+	              <input class="form-check-input" type="radio" id="perempuan" v-model="mahasiswa.jenis_kelamin" value="perempuan" name="jenis_kelamin">
 	              <label class="form-check-label" for="perempuan">Perempuan</label>
 	            </div>
 	          </div>
 	        </div>
 	        <div class="form-group row">
-	          <label class="col-md-3 col-form-label" for="tmp_lahir">Tempat Lahir</label>
+	          <label class="col-md-3 col-form-label" for="tempat_lahir">Tempat Lahir</label>
 	          <div class="col-md-9">
-	            <input type="text" id="tmp_lahir" name="tmp_lahir" class="form-control" placeholder="Masukkan Tempat Lahir">
+	            <input type="text" id="tempat_lahir" name="tempat_lahir"  v-model="mahasiswa.tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="tgl_lahir">Tanggal Lahir</label>
 	          <div class="col-md-5">
-	            <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control">
+	            <input type="date" id="tgl_lahir" name="tgl_lahir" v-model="mahasiswa.tgl_lahir" class="form-control">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="alamat">Alamat</label>
 	          <div class="col-md-9">
-	            <textarea id="alamat" name="alamat" rows="3" class="form-control" placeholder="Masukkan Alamat"></textarea>
+	            <textarea id="alamat" name="alamat" rows="3" v-model="mahasiswa.alamat" class="form-control" placeholder="Masukkan Alamat"></textarea>
 	          </div>
 	        </div>
-	        <div class="form-group row">
+	        <!-- <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="nama">IPK</label>
 	          <div class="col-md-4">
-	            <input type="number" id="nama" name="nama" class="form-control" placeholder="Masukkan IPK">
+	            <input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK">
 	          </div>
 	        </div>
 	        <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="kendaraan">Kendaraan</label>
 	          <div class="col-md-9">
-	            <input type="text" id="kendaraan" name="kendaraan" class="form-control" placeholder="Masukkan Kendaraan">
+	            <input type="text" id="kendaraan" name="kendaraan" v-model="mahasiswa.kendaraan" class="form-control" placeholder="Masukkan Kendaraan">
 	          </div>
-	        </div>
-	        <div class="form-group row">
+	        </div> -->
+	        <!-- <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="pgh_orangtua">Penghasilan Orang Tua</label>
 	          <div class="col-md-7">
 	          	<div class="input-group">
 	          		<div class="input-group-prepend">
 		          		<span class="input-group-text">Rp</span>
 	          		</div>
-		            <input type="number" id="pgh_orangtua" name="pgh_orangtua" class="form-control">
+		            <input type="number" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control">
 	          	</div>
 	          </div>
-	        </div>
-	        <div class="form-group row">
+	        </div> -->
+	        <!-- <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="pkj_orangtua">Pekerjaan Orang Tua</label>
 	          <div class="col-md-9">
-	            <input type="text" id="pkj_orangtua" name="pkj_orangtua" class="form-control" placeholder="Masukkan Pekerjaan Orang Tua">
+	            <input type="text" id="pkj_orangtua" name="pkj_orangtua" v-model="mahasiswa.pkj_orangtua" class="form-control" placeholder="Masukkan Pekerjaan Orang Tua">
 	          </div>
-	        </div>
-	        <div class="form-group row">
+	        </div> -->
+	       <!--  <div class="form-group row">
 	          <label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 	          <div class="col-md-3">
-	            <input type="number" id="jml_tanggungan" name="jml_tanggungan" class="form-control">
+	            <input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control">
 	          </div>
-	        </div>
+	        </div> -->
 	      </form>
 	    </div>
 	    <div class="card-footer">
-	      <button type="submit" class="btn btn-sm btn-primary">
+	      <button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 	        <i class="fa fa-dot-circle-o"></i> Simpan</button>
-	      <button type="reset" class="btn btn-sm btn-danger">
+	      <button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
 	        <i class="fa fa-ban"></i> Reset</button>
 	    </div>
 	  </div>
@@ -114,6 +114,7 @@
 		    <table class="table table-responsive-sm table-striped">
 		      <thead>
 		        <tr>
+		          <th>#</th>
 		          <th>NIM</th>
 		          <th>Nama</th>
 		          <th>Tahun Angkatan</th>
@@ -121,66 +122,12 @@
 		        </tr>
 		      </thead>
 		      <tbody>
-		        <tr>
-		          <td>1754110123</td>
-		          <td>Sarjono</td>
-		          <td>2017</td>
-		          <td>
-		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
-		            |
-		            <a href="#">Edit</a>
-		            |
-		            <a href="#" class="text-danger">Hapus</a>
-		          </td>
-		        </tr>
-		        <tr>
-		          <td>1633110123</td>
-		          <td>Diplomo</td>
-		          <td>2016</td>
-		          <td>
-		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
-		            |
-		            <a href="#">Edit</a>
-		            |
-		            <a href="#" class="text-danger">Hapus</a>
-		          </td>
-		        </tr>
-		        <tr>
-		          <td>1556110123</td>
-		          <td>Prasojo</td>
-		          <td>2016</td>
-		          <td>
-		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
-		            |
-		            <a href="#">Edit</a>
-		            |
-		            <a href="#" class="text-danger">Hapus</a>
-		          </td>
-		        </tr>
-		        <tr>
-		          <td>1454110123</td>
-		          <td>Minulyo</td>
-		          <td>2014</td>
-		          <td>
-		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
-		            |
-		            <a href="#">Edit</a>
-		            |
-		            <a href="#" class="text-danger">Hapus</a>
-		          </td>
-		        </tr>
-		        <tr>
-		          <td>1331110123</td>
-		          <td>Wisrono</td>
-		          <td>2013</td>
-		          <td>
-		            <a href="#" data-toggle="modal" data-target="#detail-modal">Detail</a>
-		            |
-		            <a href="#">Edit</a>
-		            |
-		            <a href="#" class="text-danger">Hapus</a>
-		          </td>
-		        </tr>
+		       <tr v-for="(mahasiswa,index) in mahasiswas">
+		       	<td>{{index + 1}}</td>
+		       	<td>{{mahasiswa.nim}}</td>
+		       	<td>{{mahasiswa.nama}}</td>
+		       	<td>{{mahasiswa.thn_angkatan}}</td>
+		       </tr>
 		      </tbody>
 		    </table>
 		    <ul class="pagination">
@@ -304,3 +251,53 @@
 	</div>
 	<!-- END modal detail -->
 </div>
+<script type="text/javascript">
+
+var app = new Vue({
+  el: '#app',
+  created(){
+    this.GetData();
+  },
+  data: {
+  	mahasiswa:{},
+  	mahasiswas:[]
+  },
+  methods: {
+    Save() 
+    {
+    	axios
+    	.post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswa',{
+          body: this.mahasiswa
+    	})
+        .then(response => {
+        	this.GetData();
+        	this.reset();
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.GetData())
+   },
+   GetData()
+   {
+      axios
+    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas')
+        .then(response => {
+        	this.mahasiswas =  response.data;
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false )
+
+   },
+   reset()
+   {
+   	this.mahasiswa = {};
+   }
+ }
+})
+        
+</script>
