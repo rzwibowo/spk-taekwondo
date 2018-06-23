@@ -86,12 +86,12 @@
   },
   methods: {
     GetCokies () {
-     return this.$cookies.get("tokenUserApp");
+      this.$cookies.get("tokenUserApp")
     },
    Initialization()
    {
-   if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
-   window.location.replace("http://localhost/spk-beasiswa/index.php/login"); 
+  if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
+    window.location.replace("http://localhost/spk-beasiswa/index.php/login"); 
   }
    },
   }

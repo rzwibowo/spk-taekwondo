@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23 Jun 2018 pada 15.13
+-- Generation Time: 23 Jun 2018 pada 15.52
 -- Versi Server: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -97,6 +97,13 @@ CREATE TABLE `pengelola` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data untuk tabel `pengelola`
+--
+
+INSERT INTO `pengelola` (`nip`, `username`, `password`) VALUES
+(1, 'sahrun', '21232f297a57a5a743894a0e4a801fc3');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -138,6 +145,11 @@ ALTER TABLE `kriteria`
 --
 ALTER TABLE `mahasiswa`
   MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `pengelola`
+--
+ALTER TABLE `pengelola`
+  MODIFY `nip` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
