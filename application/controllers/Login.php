@@ -8,5 +8,7 @@ class Login extends CI_Controller {
 
 		$this->load->view('_layout/v_headLogin', $pageprop);
 		$this->load->view('login/index');
+		$this->load->view('_layout/v_footLogin');
+
 	}
 }

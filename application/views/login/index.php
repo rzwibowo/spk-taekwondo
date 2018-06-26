@@ -1,29 +1,30 @@
-		<div class="row" id="app" style="text-align: center;">
+		<div class="row" id="app">
 			<!-- BEGIN form input -->
 			<div class="col-lg-12">
-			  <div class="card">
-			    <div class="card-header">
+			  <div class="card" style="width: 25rem">
+			    <div class="card-header text-center">
 			     <h3>Login</h3>
 			    </div>
 			    <div class="card-body">
 			      <form action="" method="post" class="form-horizontal">
 			        <div class="form-group row">
-			          <label class="col-md-3 col-form-label" for="nim">User Name</label>
-			          <div class="col-md-9">
+			          <label class="col-md-4 col-form-label" for="nim">User Name</label>
+			          <div class="col-md-8">
 			            <input type="text" id="username" name="username" v-model="User.username" class="form-control" placeholder="User Name">
 			          </div>
 			        </div>
 			        <div class="form-group row">
-			          <label class="col-md-3 col-form-label" for="nim">Password</label>
-			          <div class="col-md-9">
+			          <label class="col-md-4 col-form-label" for="nim">Password</label>
+			          <div class="col-md-8">
 			            <input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="Password">
 			          </div>
 			        </div>
 			       </form>
 			    </div>
 			    <div class="card-footer">
-			      <button type="submit" class="btn btn-sm btn-primary"  v-on:click="Login">
-			        <i class="fa fa-dot-circle-o"></i> Login</button>
+			      <button type="submit" class="btn btn-sm btn-primary pull-right" v-on:click="Login">
+			        <span class="ladda-label"><i class="fa fa-dot-circle-o"></i> Login</span>
+						</button>
 			    </div>
 			  </div>
 			</div>
@@ -34,7 +35,6 @@
  </main>
 </body>
 <script type="text/javascript">
-
 var app = new Vue({
   el: '#app',
   data: {
@@ -44,43 +44,41 @@ var app = new Vue({
     this.Initialization()
   },
   methods: {
-    Login() 
-    {
+    Login() {
     	axios
-    	.post('http://localhost/spk-beasiswa/index.php/api/login/UserAutorization',{
+    	.post('<?php echo site_url() ?>/api/login/UserAutorization',{
     		body: this.User
     	})
-        .then(response => {
+			.then(response => {
 
-        	console.log(response.data);
-          if(response.data.length > 0){
-          
-          this.$cookies.set("tokenUserApp",response.data[0].nip,"60MIN");
-          window.location.replace("http://localhost/spk-beasiswa/index.php"); 
-         }
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => console.log())
-   },
+				console.log(response.data);
+				if(response.data.length > 0){
+				
+					this.$cookies.set("tokenUserApp",response.data[0].nip,"60MIN");
+					window.location.replace("<?php echo site_url() ?>"); 
+				}
+			})
+			.catch(error => {
+				console.log(error)
+				this.errored = true
+			})
+			.finally(() => console.log())
+		},
     GetCokies () {
       return this.$cookies.get("tokenUserApp");
     },
-   Initialization()
-   {
-   	console.log(this.GetCokies());
-	if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
-          window.location.replace("http://localhost/spk-beasiswa/index.php"); 
-	      }else{
-	        this.User = {
-	            IdUser:0,
-	            Username:"",
-	            Password:"",
-	      }
-	    }
-   },
+		Initialization() {
+			console.log(this.GetCokies());
+			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
+				window.location.replace("<?php echo site_url() ?>"); 
+			} else {
+				this.User = {
+						IdUser:0,
+						Username:"",
+						Password:"",
+				}
+			}
+		},
   }
 })
         

@@ -11,11 +11,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="<?php echo base_url() ?>assets/css/style.css" rel="stylesheet">
-       <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-       <script src="https://unpkg.com/vue-cookies@1.5.5/vue-cookies.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-cookies@1.5.5/vue-cookies.js"></script>
   </head>
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed">
   <main class="row" id="main" style="margin: auto;">
     <!-- Breadcrumb-->
     <div class="container-fluid">

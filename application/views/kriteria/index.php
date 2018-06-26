@@ -262,5 +262,6 @@ var app = new Vue({
    }
   }
 })
-        
+
+loaderStop()      
 </script>
