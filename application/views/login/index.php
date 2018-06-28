@@ -23,7 +23,7 @@
 			    </div>
 			    <div class="card-footer">
 			      <button type="submit" class="btn btn-sm btn-primary pull-right" v-on:click="Login">
-			        <span class="ladda-label"><i class="fa fa-dot-circle-o"></i> Login</span>
+							<i class="fa fa-dot-circle-o"></i> Login
 						</button>
 			    </div>
 			  </div>

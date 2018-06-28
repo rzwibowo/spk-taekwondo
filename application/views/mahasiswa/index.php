@@ -1,7 +1,7 @@
 <div class="row" id="app">
 	<!-- BEGIN form input -->
-	<div class="col-md-12">
-	  <div class="card">
+	<div class="col-md-6">
+	  <div class="card" id="input">
 	    <div class="card-header">
 	      Input Data 
 	      <strong>Mahasiswa</strong>
@@ -106,7 +106,7 @@
 
 	<!-- START list -->
 	<div class="col-md-12">
-		<div class="card">
+		<div class="card" id="list">
 		  <div class="card-header">
 		    Daftar <strong>Mahasiswa</strong>
 		  </div>
@@ -306,41 +306,46 @@ var app = new Vue({
     Save() 
     {
     	axios
-    	.post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswa',{
+    	  .post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswa',{
           body: this.mahasiswa
-    	})
+    	  })
         .then(response => {
-        	this.GetData();
-        	this.reset();
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.GetData())
-   },
-   GetData()
-   {
+       	  this.GetData();
+       	  this.reset();
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+				.finally(() => this.GetData())
+			document.getElementById('list').scrollIntoView({
+				behavior: 'smooth'
+			})
+    },
+    GetData()
+    {
       axios
-    	.post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas',{
-    		body: this.Filter()
-    	})
+    	  .post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas',{
+    		  body: this.Filter()
+    	  })
         .then(response => {
         	this.mahasiswas =  response.data;
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false )
-
-   },
-   reset()
-   {
-   	this.mahasiswa = {};
-   },
-   Filter()
-   {
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+				.finally(() => this.loading = false )
+				document.getElementById('list').scrollIntoView({
+					behavior: 'smooth'
+				})
+    },
+    reset()
+    {
+   	  this.mahasiswa = {};
+    },
+    Filter()
+    {
       var FilterParam = {};
       if(this.FilterModel.nim !== "" && this.FilterModel.nim !== null ){
         FilterParam.nim =this.FilterModel.nim;
@@ -361,60 +366,64 @@ var app = new Vue({
         FilterParam.kendaraan =this.FilterModel.kendaraan;
       }
       return FilterParam;
-   },
-   ChangeFilter(Param)
-   {
-   	if(Param.length > 2){
+    },
+    ChangeFilter(Param)
+    {
+   	  if(Param.length > 2){
         this.GetData();
-    }else if(Param.length == 0){
-          this.GetData();
-    }
+      } else if(Param.length == 0){
+        this.GetData();
+      }
 
-   },
-   Edit(Id)
-   {
-     axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+    },
+    Edit(Id)
+    {
+      axios
+    	  .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
         	this.mahasiswa =  response.data;
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false )
-   },
-   Delete(Id)
-   {
-   	var x = confirm("Are you sure you want to delete?");
-    if (x){
-       axios
-   	   .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswadelete/'+Id)
-        .then(response => {
-        this.GetData();
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-       })
-       .finally(() => this.loading = false )
-    }
-   },
-   View(Id)
-   {
-   	axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+				.finally(() => this.loading = false 
+			)
+			document.getElementById('input').scrollIntoView({
+				behavior: 'smooth'
+			})
+		},
+    Delete(Id)
+    {
+			var x = confirm("Are you sure you want to delete?");
+			if (x){
+        axios
+   	      .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswadelete/'+Id)
+          .then(response => {
+            this.GetData();
+          })
+          .catch(error => {
+            console.log(error)
+            this.errored = true
+          })
+          .finally(() => this.loading = false )
+       }
+    },
+    View(Id)
+    {
+   	  axios
+    	  .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
         	this.mahasiswaView =  response.data;
          	$("#detail-modal").modal('show');
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false )
-   }
- }
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false )
+    }
+  }
 })
 
 loaderStop()
