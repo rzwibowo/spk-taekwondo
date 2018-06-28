@@ -317,10 +317,12 @@ var app = new Vue({
           console.log(error)
           this.errored = true
         })
-				.finally(() => this.GetData())
-			document.getElementById('list').scrollIntoView({
-				behavior: 'smooth'
-			})
+				.finally(
+					// () => this.GetData()
+					document.getElementById('list').scrollIntoView({
+						behavior: 'smooth'
+					})
+				)
     },
     GetData()
     {
@@ -335,10 +337,12 @@ var app = new Vue({
           console.log(error)
           this.errored = true
         })
-				.finally(() => this.loading = false )
-				document.getElementById('list').scrollIntoView({
-					behavior: 'smooth'
-				})
+				// .finally(() => this.loading = false )
+				.finally(
+					document.getElementById('list').scrollIntoView({
+						behavior: 'smooth'
+					})
+				)
     },
     reset()
     {
