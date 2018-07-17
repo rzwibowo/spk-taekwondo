@@ -1,32 +1,32 @@
 		<div class="row" id="app">
 			<!-- BEGIN form input -->
 			<div class="col-lg-12">
-			  <div class="card" style="width: 25rem">
-			    <div class="card-header text-center">
-			     <h3>Login</h3>
-			    </div>
-			    <div class="card-body">
-			      <form action="" method="post" class="form-horizontal">
-			        <div class="form-group row">
-			          <label class="col-md-4 col-form-label" for="nim">User Name</label>
-			          <div class="col-md-8">
-			            <input type="text" id="username" name="username" v-model="User.username" class="form-control" placeholder="User Name">
-			          </div>
-			        </div>
-			        <div class="form-group row">
-			          <label class="col-md-4 col-form-label" for="nim">Password</label>
-			          <div class="col-md-8">
-			            <input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="Password">
-			          </div>
-			        </div>
-			       </form>
-			    </div>
-			    <div class="card-footer">
-			      <button type="submit" class="btn btn-sm btn-primary pull-right" v-on:click="Login">
-							<i class="fa fa-dot-circle-o"></i> Login
-						</button>
-			    </div>
-			  </div>
+		      <form action="" method="post" class="form-horizontal" @submit.prevent="Login">
+				  <div class="card" style="width: 25rem">
+				    <div class="card-header text-center">
+				     <h3>Login</h3>
+				    </div>
+				    <div class="card-body">
+				        <div class="form-group row">
+				          <label class="col-md-4 col-form-label" for="nim">User Name</label>
+				          <div class="col-md-8">
+				            <input type="text" id="username" name="username" v-model="User.username" class="form-control" placeholder="User Name">
+				          </div>
+				        </div>
+				        <div class="form-group row">
+				          <label class="col-md-4 col-form-label" for="nim">Password</label>
+				          <div class="col-md-8">
+				            <input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="Password">
+				          </div>
+				        </div>
+				    </div>
+				    <div class="card-footer">
+				      <button type="submit" class="btn btn-sm btn-primary pull-right" v-on:click="Login">
+								<i class="fa fa-dot-circle-o"></i> Login
+							</button>
+				    </div>
+				  </div>
+		       </form>
 			</div>
 			<!-- END form input -->
 		</div>
