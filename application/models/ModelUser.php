@@ -22,6 +22,13 @@ class ModelUser extends CI_Model
          return $this->db->get();
    }
 
+   function getUserName($Where){
+        $this->db->select('username');
+        $this->db->from('pengelola');
+        $this->db->where('nip', $Where);
+		return $this->db->get();
+   }
+
 }
 
 ?>

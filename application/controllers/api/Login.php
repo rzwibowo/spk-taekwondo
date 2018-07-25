@@ -37,4 +37,9 @@ class Login extends REST_Controller {
          $this->set_response($User, REST_Controller::HTTP_CREATED);
     }
 
+    function GetUserName_get($nip){
+        $user=$this->ModelUser->GetUserName($nip)->result();
+        $this->set_response($user[0], REST_Controller::HTTP_CREATED);
+    }
+
 }

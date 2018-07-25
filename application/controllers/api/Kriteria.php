@@ -64,7 +64,7 @@ class Kriteria extends REST_Controller {
     }
     function kriteriadelete_get($Id)
     {
-        if($this->ModelKriteria->Detete($Id)){
+        if($this->ModelKriteria->Delete($Id)){
 
         }else{
 
