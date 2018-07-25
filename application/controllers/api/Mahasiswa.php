@@ -39,7 +39,7 @@ class Mahasiswa extends REST_Controller {
     public function mahasiswa_post()
     {
         $MHS= (object) $this->post('body');
-        if(isset($MHS->id_mahasiswa)){
+        if(isset($MHS->nim)){
             if($this->ModelMahasiswa->UpdateMahasiswa($MHS)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
@@ -58,13 +58,13 @@ class Mahasiswa extends REST_Controller {
     function GetDataMahasiswaById_get($Id)
     {
         # code...
-        $where=array('id_mahasiswa'=>$Id);
-        $MHS=$this->ModelMahasiswa->GatById($where)->result();
+        $where=array('nim'=>$Id);
+        $MHS=$this->ModelMahasiswa->GetById($where)->result();
         $this->set_response($MHS[0], REST_Controller::HTTP_CREATED);
     }
     function mahasiswadelete_get($Id)
     {
-        if($this->ModelMahasiswa->Detete($Id)){
+        if($this->ModelMahasiswa->Delete($Id)){
 
         }else{
 

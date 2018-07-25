@@ -42,8 +42,8 @@
             <div class="dropdown-header text-center">
               <strong>Account</strong>
             </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-user"></i> Profile</a>
+            <a class="dropdown-item disabled" href="#">
+              <i class="fa fa-user"></i> {{username}}</a>
             <a class="dropdown-item" href="#">
               <i class="fa fa-lock"></i> Logout</a>
           </div>
@@ -85,6 +85,7 @@
 <script type="text/javascript">
   var app = new Vue({
   data: {
+    username: ''
   },
   created() {
     this.Initialization()

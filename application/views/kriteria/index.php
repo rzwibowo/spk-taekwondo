@@ -67,11 +67,11 @@
 		       	<td>{{index + 1}}</td>
 		       	<td>{{kriteria.kode_kriteria}}</td>
 		       	<td>{{kriteria.nama_kriteria}}</td>
-		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.id_kriteria)">
+		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
 	                 <i class="fa fa-pencil"></i> Edit</button>
-	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.id_kriteria)">
+	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
 	                <i class="fa fa-dot-circle-o"></i> View</button>
-	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.id_kriteria)">
+	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
 	                <i class="fa fa-minus-circle"></i> Delete</button>
 	            </td>
 		       </tr>

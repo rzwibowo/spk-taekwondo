@@ -72,11 +72,7 @@ var app = new Vue({
 			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
 				window.location.replace("<?php echo site_url() ?>"); 
 			} else {
-				this.User = {
-						IdUser:0,
-						Username:"",
-						Password:"",
-				}
+				this.User = {}
 			}
 		},
   }
