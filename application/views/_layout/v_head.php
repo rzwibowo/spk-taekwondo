@@ -33,7 +33,7 @@
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <ul class="nav navbar-nav ml-auto">
+      <ul class="nav navbar-nav ml-auto" id="identity">
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <img class="img-avatar" src="<?php echo base_url() ?>assets/img/avatars/6.jpg" alt="admin@bootstrapmaster.com">
@@ -42,8 +42,8 @@
             <div class="dropdown-header text-center">
               <strong>Account</strong>
             </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-user"></i> Profile</a>
+            <a class="dropdown-item disabled" href="#">
+              <i class="fa fa-user"></i> {{username}}</a>
             <a class="dropdown-item" href="#">
               <i class="fa fa-lock"></i> Logout</a>
           </div>
@@ -83,9 +83,29 @@
           <div class="animated fadeIn">
 
 <script type="text/javascript">
+  var idt = new Vue({
+    el: '#identity',
+    data: {
+      username: ''
+    },
+    created() {
+      this.GetUserName()
+    },
+    methods: {
+      GetUserName () {
+        axios.get('<?php echo site_url() ?>/api/login/GetUserName/'+this.$cookies.get("tokenUserApp"))
+        .then(response => {
+            this.username = response.data.username;
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+      },
+    }
+  })
+
   var app = new Vue({
-  data: {
-  },
   created() {
     this.Initialization()
   },
@@ -95,8 +115,9 @@
     },
    Initialization()
    {
-   if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
-   window.location.replace("http://localhost/spk-beasiswa/index.php/login"); 
+     if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
+       window.location.replace("http://localhost/spk-beasiswa/index.php/login"); 
+      GetUserName()
   }
    },
   }

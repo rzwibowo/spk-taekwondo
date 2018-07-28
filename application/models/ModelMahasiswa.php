@@ -35,14 +35,14 @@ class ModelMahasiswa extends CI_Model
 		}
 	  return $this->db->get();
 	}
-	function GatById($Where)
+	function GetById($Where)
 	{
 		# code...
 		return $this->db->get_where('mahasiswa',$Where);
 	}
 	function UpdateMahasiswa($Data){
 	    $Where=array(
-				'id_mahasiswa'=>$Data->id_mahasiswa
+				'nim'=>$Data->nim
 		);
 
         $this->db->where($Where);
@@ -52,10 +52,10 @@ class ModelMahasiswa extends CI_Model
 			return false;
 		}
 	}
-	function Detete($Id)
+	function Delete($Id)
 	{
 		$Where=array(
-				'id_mahasiswa'=>$Id
+				'nim'=>$Id
 		);
 		$this->db->where($Where);
 		if($this->db->delete('mahasiswa')){

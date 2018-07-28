@@ -158,11 +158,11 @@
 		       	<!-- <td>{{mahasiswa.pgh_orangtua}}</td> -->
 		       	<!-- <td>{{mahasiswa.pkj_orangtua}}</td> -->
 		       	<!-- <td>{{mahasiswa.jml_tanggungan}}</td> -->
-		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.id_mahasiswa)">
+		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.nim)">
 	                 <i class="fa fa-pencil"></i> Edit</button>
-	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.id_mahasiswa)">
+	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.nim)">
 	                <i class="fa fa-dot-circle-o"></i> View</button>
-	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.id_mahasiswa)">
+	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.nim)">
 	                <i class="fa fa-minus-circle"></i> Delete</button>
 	            </td>
 		       </tr>
