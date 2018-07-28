@@ -44,7 +44,96 @@
 										<span style="color: red" v-show="Submit && !kriteria.nama_kriteria">Field harus diisi</span>
 									</div>
 								</div>
+							    <div class="form-group row">
+										<label class="col-md-3 col-form-label">Type</label>
+										<div class="col-md-9 col-form-label">
+											<div class="form-check form-check-inline mr-1">
+												<input class="form-check-input" type="radio" id="istext" v-model="kriteria.istext" value="1" name="istext" v-on:click="SubmitKriteria = []">
+												<label class="form-check-label" for="true">Text</label>
+											</div>
+											<div class="form-check form-check-inline mr-1">
+												<input class="form-check-input" type="radio" id="istext" v-model="kriteria.istext" value="0" name="istext" v-on:click="SubmitKriteria = []">
+												<label class="form-check-label" for="false">Non Text</label>
+											</div>
+										</div>
+								</div>
 							</form>
+						<div class="card" v-show="kriteria.istext == 1">
+						<div class="card-header">
+							<div class="row">
+							 <div class="text-left col-md-10">
+							   <strong>Detail Kriteria</strong>
+							 </div>
+							 <div class="text-right  col-md-2">
+							    <button type="submit" class="btn btn-sm btn-primary"  v-on:click="AddKriteria(true)"> + </button>
+						     </div>
+						     </div>
+							</div>
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Kriteria</th>
+										<th>Bobot</th>
+										<th>Keterangan</th>
+										<th></th>
+									</tr>
+									
+								</thead>
+								<tbody>
+									<tr v-for="(sub,index) in SubKriterias">
+										<td>{{index + 1}}</td>
+										<td>{{sub.kriteria}}</td>
+										<td>{{sub.bobot}}</td>
+										<td>{{sub.keterangan}}</td>
+										<td><button  v-on:click="SubKriterias.splice(index,1)" class="btn btn-sm btn-danger">
+											<i class="fa fa-close"></i>
+										    </button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="card" v-show="kriteria.istext == 0">
+						<div class="card-header">
+							<div class="row">
+							 <div class="text-left col-md-10">
+							   <strong>Detail Kriteria</strong>
+							 </div>
+							 <div class="text-right  col-md-2">
+							    <button type="submit" class="btn btn-sm btn-primary"  v-on:click="AddKriteria(false)"> + </button>
+						     </div>
+						     </div>
+						 </div>
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Kriteria</th>
+										<th>Max</th>
+										<th>Oprator Max</th>
+										<th>Min</th>
+										<th>Operator Nim</th>
+										<th></th>
+									</tr>
+									<tr  v-for="(sub,index) in SubKriterias">
+										<td>{{index+1}}</td>
+										<td>{{sub.kriteria}}</td>
+										<td>{{sub.max}}</td>
+										<td>{{sub.operator_max}}</td>
+										<td>{{sub.min}}</td>
+										<td>{{sub.operator_min}}</td>
+										<td><button  v-on:click="SubKriterias.splice(index,1)" class="btn btn-sm btn-danger">
+											<i class="fa fa-close"></i>
+										    </button>
+										</td>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
 						</div>
 						<div class="card-footer text-right">
 							<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
@@ -141,11 +230,143 @@
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
-	    <!-- /.modal-content -->
 	  </div>
-	  <!-- /.modal-dialog -->
 	</div>
-	<!-- END modal detail -->
+
+	<div class="modal fade" id="modalDetailkriteriaText" tabindex="-1" role="dialog" aria-labelledby="modalDetailkriteriaText" aria-hidden="true">
+	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detail kriteria</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Kriteria</label>
+	      	    <div class="col-md-9">
+	      	      <input type="text" name="kriteria" v-model="SubKriteria.kriteria" class="form-control">
+	      	      <input type="hidden" name="id_kriteria" v-model="SubKriteria.id_kriteria">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Bobot</label>
+	      	    <div class="col-md-9">
+	      	    	<input type="number" name="bobot" v-model="SubKriteria.bobot" class="form-control">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Keterangan</label>
+	      	    <div class="col-md-9">
+	      	    	<textarea name="keterangan" v-model="SubKriteria.keterangan" class="form-control">
+	      	    		
+	      	    	</textarea>
+	      	    </div>
+	      	  </div>
+	      	</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" v-on:click="AddKriteriatext">Add</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="modal fade" id="modalDetailkriterianonText" tabindex="-1" role="dialog" aria-labelledby="modalDetailkriteriaText" aria-hidden="true">
+	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Detail kriteria</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Kriteria</label>
+	      	    <div class="col-md-9">
+	      	      <input type="text" name="kriteria" v-model="SubKriteria.kriteria" class="form-control">
+	      	      <input type="hidden" name="id_kriteria" v-model="SubKriteria.id_kriteria">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Max</label>
+	      	    <div class="col-md-9">
+	      	    	<input type="number" name="max" v-model="SubKriteria.max" class="form-control">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row" v-show="SubKriteria.max">
+	      	    <label class="col-md-3 col-form-label">Operator Max</label>
+	      	   <div class="col-md-9 col-form-label">
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value=">" name="oprator_max">
+							<label class="form-check-label" for="oprator_max">></label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<" name="oprator_max">
+							<label class="form-check-label" for="oprator_max"><</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value=">=" name="oprator_max">
+							<label class="form-check-label" for="oprator_max">>=</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<=" name="oprator_max">
+							<label class="form-check-label" for="oprator_max"><=</label>
+					</div>
+				</div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Min</label>
+	      	    <div class="col-md-9">
+	      	    	<input type="number" name="min" v-model="SubKriteria.min" class="form-control">
+	      	    </div>
+	      	  </div>
+	      	   <div class="form-group row" v-show="SubKriteria.min">
+	      	    <label class="col-md-3 col-form-label">Operator Min</label>
+	      	   <div class="col-md-9 col-form-label">
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">" name="operator_nim" :disabled="SubKriteria.operator_max == '>' || SubKriteria.operator_max == '>='">
+							<label class="form-check-label" for="operator_nim">></label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<" name="operator_nim" :disabled="SubKriteria.operator_max == '<'">
+							<label class="form-check-label" for="operator_nim"><</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">=" name="operator_nim" :disabled="SubKriteria.operator_max == '>=' || SubKriteria.operator_max == '>'">
+							<label class="form-check-label" for="operator_nim">>=</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<=" name="operator_nim" :disabled="SubKriteria.operator_max == '<='">
+							<label class="form-check-label" for="operator_nim"><=</label>
+					</div>
+				</div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Bobot</label>
+	      	    <div class="col-md-9">
+	      	    	<input type="number" name="bobot" v-model="SubKriteria.bobot" class="form-control">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Keterangan</label>
+	      	    <div class="col-md-9">
+	      	    	<textarea name="keterangan" v-model="SubKriteria.keterangan" class="form-control">
+	      	    		
+	      	    	</textarea>
+	      	    </div>
+	      	  </div>
+	      	</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" v-on:click="AddKriterianontext">Add</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
 <script type="text/javascript">
 
@@ -153,20 +374,25 @@ var app = new Vue({
   el: '#app',
   created(){
     this.GetData();
+    this.kriteria.SubKriteria = [];
   },
   data: {
   	kriteria:{},
   	kriterias:[],
   	FilterModel:[],
   	kriteriaView:{},
+  	SubKriterias :[],
+  	SubKriteria:{},
   	Form:{},
-  	Submit:{}
+  	Submit:{},
+  	SubmitKriteria:{},
   },
   methods: {
     Save() 
     {
     	this.Submit = true;
     	if(this.kriteria.kode_kriteria && this.kriteria.nama_kriteria){
+    	this.kriteria.SubKriteria = this.SubKriterias;
     	axios
     	.post(locationServer+'/api/kriteria/kriteria',{
           body: this.kriteria
@@ -271,6 +497,28 @@ var app = new Vue({
         this.errored = true
       })
       .finally(() => this.loading = false )
+   },
+   AddKriteria(text){
+   	this.SubKriteria = {};
+   	this.SubmitKriteria = false;
+   if(text){
+	$("#modalDetailkriteriaText").modal('show');
+   }else{
+   	$("#modalDetailkriterianonText").modal('show');
+   }
+    
+   },
+   AddKriteriatext(){
+   	this.SubmitKriteria = true;
+   	var sub = this.SubKriteria;
+   	this.SubKriterias.push(sub);
+    $("#modalDetailkriteriaText").modal('hide');
+   },
+    AddKriterianontext(){
+   	this.SubmitKriteria = true;
+   	var sub = this.SubKriteria;
+   	this.SubKriterias.push(sub);
+    $("#modalDetailkriterianonText").modal('hide');
    }
   }
 })

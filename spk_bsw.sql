@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Jul 2018 pada 13.56
+-- Generation Time: 28 Jul 2018 pada 14.25
 -- Versi Server: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -34,6 +34,13 @@ CREATE TABLE `beasiswa` (
   `id_beasiswa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `beasiswa`
+--
+
+INSERT INTO `beasiswa` (`id_mahasiswa`, `jumlah_beasiswa`, `id_beasiswa`) VALUES
+(4, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -43,20 +50,20 @@ CREATE TABLE `beasiswa` (
 CREATE TABLE `kriteria` (
   `id_kriteria` int(11) NOT NULL,
   `kode_kriteria` varchar(255) NOT NULL,
-  `nama_kriteria` varchar(20) NOT NULL
+  `nama_kriteria` varchar(20) NOT NULL,
+  `istext` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `kriteria`
 --
 
-INSERT INTO `kriteria` (`id_kriteria`, `kode_kriteria`, `nama_kriteria`) VALUES
-(2, 'B003', 'IPK'),
-(3, '002', 'Kendaraan'),
-(4, '003', 'Pekerjaan'),
-(5, '004', 'Penghasilan'),
-(6, '005', 'Tanggungan'),
-(7, 'wwe', 'weew');
+INSERT INTO `kriteria` (`id_kriteria`, `kode_kriteria`, `nama_kriteria`, `istext`) VALUES
+(2, 'B003', 'IPK', 0),
+(3, '002', 'Kendaraan', 0),
+(4, '003', 'Pekerjaan', 0),
+(5, '004', 'Penghasilan', 0),
+(6, '005', 'Tanggungan', 0);
 
 -- --------------------------------------------------------
 
@@ -119,10 +126,13 @@ INSERT INTO `pengelola` (`username`, `password`, `nip`, `id_pengelola`) VALUES
 CREATE TABLE `sub_criteria_nontext` (
   `id_sub_criteria` int(11) NOT NULL,
   `max` int(11) NOT NULL,
-  `oprator_max` varchar(10) NOT NULL,
+  `operator_max` varchar(10) NOT NULL,
   `min` int(11) NOT NULL,
-  `operator_nim` varchar(10) NOT NULL,
-  `id_kriteria` int(11) NOT NULL
+  `operator_min` varchar(10) NOT NULL,
+  `id_kriteria` int(11) NOT NULL,
+  `kriteria` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `bobot` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -217,22 +227,22 @@ ALTER TABLE `tahun_angkatan`
 -- AUTO_INCREMENT for table `beasiswa`
 --
 ALTER TABLE `beasiswa`
-  MODIFY `id_beasiswa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_beasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pengelola`
 --
 ALTER TABLE `pengelola`
-  MODIFY `id_pengelola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pengelola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sub_criteria_nontext`
 --

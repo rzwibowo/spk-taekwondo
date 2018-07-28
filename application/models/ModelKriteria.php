@@ -19,8 +19,24 @@ class ModelKriteria extends CI_Model
 	function InsertKriteria($Data)
 	{
 		# code...
+		$SubKriteria = $Data->SubKriteria;
+		unset($Data->SubKriteria);
 		if($this->db->insert('kriteria',$Data)){
-			return true;
+		  $idKriteria = $this->db->insert_id();
+          //var_dump($SubKriteria);
+          if($Data->istext == '1'){
+            foreach ($SubKriteria as $key => $value) {
+            	$value['id_kriteria'] = $idKriteria;
+          		$this->db->insert('sub_criteria_text',$value);
+            }
+          }else{
+          	foreach ($SubKriteria as $key => $value) {
+          		$value['id_kriteria'] = $idKriteria;
+          	    $this->db->insert('sub_criteria_nontext',$value);
+            }	
+          }
+          
+		  return true;
 		}else{
 			return false;
 		}
