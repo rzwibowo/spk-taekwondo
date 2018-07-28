@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<h3>Data<?php echo $title ?></h3>
+				<h3>Data <?php echo $title ?></h3>
 			</div>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 		<div class="tab-content">
 			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 				<!-- BEGIN form input -->
-				<div class="col-md-8 offset-3">
+				<div class="col-md-6 offset-md-3">
 					<div class="card">
 						<div class="card-header">
 							Input Data 
@@ -39,12 +39,12 @@
 								<div class="form-group row">
 									<label class="col-md-3 col-form-label" for="nim">Password</label>
 									<div class="col-md-9">
-										<input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="password">
+										<input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="Password">
 									</div>
 								</div>
 							</form>
 						</div>
-						<div class="card-footer">
+						<div class="card-footer text-right">
 							<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 								<i class="fa fa-dot-circle-o"></i> Simpan</button>
 							<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
@@ -56,43 +56,41 @@
 			</div>
 			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 				<!-- START list -->
-				<div class="col-md-12">
+				<div class="col-md-8 offset-md-2">
 					<div class="card">
 						<div class="card-header">
 							Daftar <strong><?php echo $title ?></strong>
 						</div>
-						<div class="card-body">
-							<table class="table table-responsive-sm table-striped">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>NIP</th>
-										<th>User Name</th>
-										<th></th>
-									</tr>
-									<tr>
-										<th></th>
-										<th><input type="text" name="nip" class="form-control" v-model="FilterModel.nip" v-on:keyup="ChangeFilter(FilterModel.nip)"></th>
-										<th><input type="text" name="username" class="form-control" v-model="FilterModel.username" v-on:keyup="ChangeFilter(FilterModel.username)"></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(user,index) in Users">
-										<td>{{index + 1}}</td>
-										<td>{{user.nip}}</td>
-									    <td>{{user.username}}</td>
-										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(user.nip)">
-													<i class="fa fa-pencil"></i> Edit</button>
-													<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.nip)">
-													<i class="fa fa-dot-circle-o"></i> View</button>
-													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.nip)">
-													<i class="fa fa-minus-circle"></i> Delete</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<table class="table table-responsive-sm table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>NIP</th>
+									<th>User Name</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th></th>
+									<th><input type="text" name="nip" class="form-control" v-model="FilterModel.nip" v-on:keyup="ChangeFilter(FilterModel.nip)" placeholder="Cari NIP pengguna ..."></th>
+									<th><input type="text" name="username" class="form-control" v-model="FilterModel.username" v-on:keyup="ChangeFilter(FilterModel.username)" placeholder="Cari username ..."></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(user,index) in Users">
+									<td>{{index + 1}}</td>
+									<td>{{user.nip}}</td>
+									<td>{{user.username}}</td>
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(user.nip)">
+												<i class="fa fa-pencil"></i> Edit</button>
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.nip)">
+												<i class="fa fa-dot-circle-o"></i> View</button>
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.nip)">
+												<i class="fa fa-minus-circle"></i> Delete</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<!-- END list -->					
