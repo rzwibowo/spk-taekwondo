@@ -30,6 +30,7 @@ class ModelMahasiswa extends CI_Model
 		# code...
 		$this->db->select('*');
 		$this->db->from('mahasiswa');
+        $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
 		if(count($Filter) > 0){
 			$this->db->like($Filter);
 		}
@@ -38,11 +39,21 @@ class ModelMahasiswa extends CI_Model
 	function GetById($Where)
 	{
 		# code...
+		$this->db->select('*');
+		$this->db->from('mahasiswa');
+        $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
+		$this->db->where($Where);
+
+	  return $this->db->get();
+	}
+	function GetEdit($Where)
+	{
+		# code...
 		return $this->db->get_where('mahasiswa',$Where);
 	}
 	function UpdateMahasiswa($Data){
 	    $Where=array(
-				'nim'=>$Data->nim
+				'id_mahasiswa'=>$Data->id_mahasiswa
 		);
 
         $this->db->where($Where);
@@ -55,7 +66,7 @@ class ModelMahasiswa extends CI_Model
 	function Delete($Id)
 	{
 		$Where=array(
-				'nim'=>$Id
+				'id_mahasiswa'=>$Id
 		);
 		$this->db->where($Where);
 		if($this->db->delete('mahasiswa')){

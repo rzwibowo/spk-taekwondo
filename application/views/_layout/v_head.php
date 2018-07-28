@@ -58,6 +58,11 @@
           </a>
         </li>
         <li class="nav-item px-3">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "user") { echo " active"; } ?>" href="<?php echo site_url() ?>/user">
+            <i class="nav-icon icon-calendar"></i> User
+          </a>
+        </li>
+        <li class="nav-item px-3">
           <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
             <i class="nav-icon icon-calendar"></i> Tahun Angkatan
           </a>

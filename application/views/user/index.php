@@ -31,6 +31,12 @@
 						<div class="card-body">
 							<form action="" method="post" class="form-horizontal">
 								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="username">NIP</label>
+									<div class="col-md-9">
+										<input type="text" id="nip" name="nip" v-model="User.nip" class="form-control" placeholder="nip">
+									</div>
+								</div>
+								<div class="form-group row">
 									<label class="col-md-3 col-form-label" for="username">User Name</label>
 									<div class="col-md-9">
 										<input type="text" id="username" name="username" v-model="User.username" class="form-control" placeholder="User Name">
@@ -81,11 +87,11 @@
 									<td>{{index + 1}}</td>
 									<td>{{user.nip}}</td>
 									<td>{{user.username}}</td>
-									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(user.nip)">
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(user.id_pengelola)">
 												<i class="fa fa-pencil"></i> Edit</button>
-												<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.nip)">
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.id_pengelola)">
 												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.nip)">
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.id_pengelola)">
 												<i class="fa fa-minus-circle"></i> Delete</button>
 									</td>
 								</tr>

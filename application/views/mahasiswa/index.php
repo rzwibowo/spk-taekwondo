@@ -9,18 +9,18 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
+				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form =true;Submit = false;InitializeFrom();reset()">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
+				<a class="nav-link" v-bind:class="Form == false?'active':''" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list" v-on:click="Form =false;Submit = false">
 					<i class="icon-list"></i> List
 				</a>
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane" id="tab_input" role="tabpanel">
+			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 					<!-- BEGIN form input -->
 					<div class="col-md-8 offset-md-2">
 						<div class="card" id="input">
@@ -34,18 +34,29 @@
 										<label class="col-md-3 col-form-label" for="nim">NIM</label>
 										<div class="col-md-9">
 											<input type="text" id="nim" name="nim" v-model="mahasiswa.nim" class="form-control" placeholder="Masukkan NIM">
+											<span v-show="Submit && !mahasiswa.nim" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="nama">Nama</label>
 										<div class="col-md-9">
 											<input type="text" id="nama" name="nama" v-model="mahasiswa.nama" class="form-control" placeholder="Masukkan Nama">
+											<span v-show="Submit && !mahasiswa.nama" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="thn_angkatan">Tahun Angkatan</label>
 										<div class="col-md-5">
-											<input type="number" id="thn_angkatan" v-model="mahasiswa.thn_angkatan" name="thn_angkatan" class="form-control">
+											<select class="form-control" 
+								          	name="thn_angkatan" 
+								          	id="thn_angkatan" 
+								          	v-model="mahasiswa.id_tahun_angkatan" >
+								          		<option value="">-Pilih-</option>
+								          		<option v-for="(value, key) in tahunangkatan" :value="value.id_tahun_angkatan">
+								          			 {{value.tahun_angkatan}}
+								          		</option>
+							          		</select>
+											<span v-show="Submit && !mahasiswa.thn_angkatan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -59,36 +70,48 @@
 												<input class="form-check-input" type="radio" id="perempuan" v-model="mahasiswa.jenis_kelamin" value="perempuan" name="jenis_kelamin">
 												<label class="form-check-label" for="perempuan">Perempuan</label>
 											</div>
+											<span v-show="Submit && !mahasiswa.jenis_kelamin" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="tempat_lahir">Tempat Lahir</label>
 										<div class="col-md-9">
-											<input type="text" id="tempat_lahir" name="tempat_lahir"  v-model="mahasiswa.tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir">
+											<input type="text" id="tempat_lahir" name="tempat_lahir"  v-model="mahasiswa.tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir"/>
+											<span v-show="Submit && !mahasiswa.tempat_lahir" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="tgl_lahir">Tanggal Lahir</label>
 										<div class="col-md-5">
 											<input type="date" id="tgl_lahir" name="tgl_lahir" v-model="mahasiswa.tgl_lahir" class="form-control">
+											<span v-show="Submit && !mahasiswa.tgl_lahir" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="alamat">Alamat</label>
 										<div class="col-md-9">
 											<textarea id="alamat" name="alamat" rows="3" v-model="mahasiswa.alamat" class="form-control" placeholder="Masukkan Alamat"></textarea>
+											<span v-show="Submit && !mahasiswa.alamat" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="nama">IPK</label>
 										<div class="col-md-4">
 											<input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK">
+											<span v-show="Submit && !mahasiswa.ipk" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="kendaraan">Kendaraan</label>
 										<div class="col-md-9">
-											<input type="text" id="kendaraan" name="kendaraan" v-model="mahasiswa.kendaraan" class="form-control" placeholder="Masukkan Kendaraan">
+											<select name="kendaraan" class="form-control" id="kendaraan" v-model="mahasiswa.kendaraan">
+												<option value="">-Pilih-</option>
+												<option value="tidak memiliki kendaraan">tidak memiliki kendaraan</option>
+												<option value="sepeda">sepeda</option>
+												<option value="motor">motor</option>
+												<option value="mobil">mobil</option>
+											</select>
+											<span v-show="Submit && !mahasiswa.kendaraan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -100,18 +123,28 @@
 												</div>
 												<input type="number" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control">
 											</div>
+											<span v-show="Submit && !mahasiswa.pgh_orangtua" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="pkj_orangtua">Pekerjaan Orang Tua</label>
 										<div class="col-md-9">
-											<input type="text" id="pkj_orangtua" name="pkj_orangtua" v-model="mahasiswa.pkj_orangtua" class="form-control" placeholder="Masukkan Pekerjaan Orang Tua">
+											<select class="form-control" 
+								          	name="pkj_orangtua" 
+								          	id="pkj_orangtua" 
+								          	v-model="mahasiswa.pkj_orangtua" >
+								          		<option value="">-Pilih-</option>
+								          		<option value="Pekerjaan tetap">Pekerjaan tetap</option>
+								          		<option value="Pekerjaan tidak tetap">Pekerjaan tidak tetap</option>
+							          		</select>
+											<span v-show="Submit && !mahasiswa.pkj_orangtua" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 										<div class="col-md-3">
 											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control">
+											<span v-show="Submit && !mahasiswa.jml_tanggungan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 								</form>
@@ -126,7 +159,7 @@
 					</div>
 					<!-- END form input -->		
 			</div>
-			<div class="tab-pane active" id="tab_list" role="tabpanel">
+			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 					<!-- START list -->
 					<div class="col-md-12">
 						<div class="card" id="list">
@@ -141,28 +174,18 @@
 										<th>Nama</th>
 										<th class="text-center">Tahun</th>
 										<th>JK</th>
-										<!-- <th>Tempat</th> -->
-										<!-- <th>Alam</th> -->
 										<th class="text-center">IPK</th>
 										<th>Kendaraan</th>
-										<!-- <th>Penghasilan Orang Tua</th> -->
-										<!-- <th>Pekerjaan Orang Tua</th> -->
-										<!-- <th>Tanggungan Orang Tua</th> -->
 										<th></th>
 									</tr>
 									<tr>
 										<th></th>
 										<th><input type="text" name="nim" class="form-control" v-model="FilterModel.nim" v-on:keyup="ChangeFilter(FilterModel.nim)" placeholder="Cari NIM mahasiswa ..."></th>
 										<th><input type="text" name="nama" class="form-control" v-model="FilterModel.nama" v-on:keyup="ChangeFilter(FilterModel.nama)" placeholder="Cari nama mahasiswa ..."></th>
-										<th><input type="number" name="thn_angkatan" class="form-control text-center" v-model="FilterModel.thn_angkatan" v-on:keyup="ChangeFilter(FilterModel.thn_angkatan)" placeholder="Cari tahun angkatan ..."></th>
+										<th><input type="number" name="tahun_angkatan" class="form-control text-center" v-model="FilterModel.tahun_angkatan" v-on:keyup="ChangeFilter(FilterModel.tahun_angkatan)" placeholder="Cari tahun angkatan ..."></th>
 										<th><input type="text" name="jenis_kelamin" class="form-control" v-model="FilterModel.jenis_kelamin" v-on:keyup="ChangeFilter(FilterModel.jenis_kelamin)" placeholder="Cari jenis kelamin mahasiswa ..."></th>
-										<!-- <th><input type="text" name="tempat_lahir" class="form-control" v-model="FilterModel.tempat_lahir" v-on:keyup="ChangeFilter(FilterModel.tempat_lahir)"></th> -->
-										<!-- <th><input type="text" name="alamat" class="form-control" v-model="FilterModel.alamat" v-on:keyup="ChangeFilter(FilterModel.alamat)"></th> -->
 										<th><input type="number" name="ipk" class="form-control text-center" v-model="FilterModel.ipk" v-on:keyup="ChangeFilter(FilterModel.ipk)" placeholder="Cari IPK mahasiswa ..."></th>
 										<th><input type="text" name="kendaraan" class="form-control" v-model="FilterModel.kendaraan" v-on:keyup="ChangeFilter(FilterModel.kendaraan)" placeholder="Cari kendaraan mahasiswa ..."></th>
-										<!-- <th><input type="text" name="pgh_orangtua" class="form-control" v-model="FilterModel.pgh_orangtua" v-on:keyup="ChangeFilter(FilterModel.pgh_orangtua)"></th> -->
-										<!-- <th><input type="text" name="pkj_orangtua" class="form-control" v-model="FilterModel.pkj_orangtua" v-on:keyup="ChangeFilter(FilterModel.pkj_orangtua)"></th> -->
-										<!-- <th><input type="text" name="jml_tanggungan" class="form-control" v-model="FilterModel.jml_tanggungan" v-on:keyup="ChangeFilter(FilterModel.jml_tanggungan)"></th> -->
 										<th></th>
 									</tr>
 								</thead>
@@ -171,20 +194,15 @@
 									<td>{{index + 1}}</td>
 									<td>{{mahasiswa.nim}}</td>
 									<td>{{mahasiswa.nama}}</td>
-									<td class="text-center">{{mahasiswa.thn_angkatan}}</td>
+									<td class="text-center">{{mahasiswa.tahun_angkatan}}</td>
 									<td>{{mahasiswa.jenis_kelamin}}</td>
-									<!-- <td>{{mahasiswa.tempat_lahir}}</td> -->
-									<!-- <td>{{mahasiswa.alamat}}</td> -->
 									<td class="text-center">{{mahasiswa.ipk}}</td>
 									<td>{{mahasiswa.kendaraan}}</td>
-									<!-- <td>{{mahasiswa.pgh_orangtua}}</td> -->
-									<!-- <td>{{mahasiswa.pkj_orangtua}}</td> -->
-									<!-- <td>{{mahasiswa.jml_tanggungan}}</td> -->
-									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.nim)">
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.id_mahasiswa)">
 												<i class="fa fa-pencil"></i> Edit</button>
-												<button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.nim)">
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.id_mahasiswa)">
 												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.nim)">
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.id_mahasiswa)">
 												<i class="fa fa-minus-circle"></i> Delete</button>
 										</td>
 								</tr>
@@ -224,7 +242,7 @@
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tahun Angkatan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.thn_angkatan}}</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.tahun_angkatan}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
@@ -299,16 +317,23 @@ var app = new Vue({
   el: '#app',
   created(){
     this.GetData();
+    this.InitializeFrom();
   },
   data: {
   	mahasiswa:{},
   	mahasiswas:[],
   	FilterModel:[],
-  	mahasiswaView:{}
+  	mahasiswaView:{},
+  	tahunangkatan:[],
+  	Form:{},
+  	Submit:{}
   },
   methods: {
     Save() 
     {
+    	this.Submit = true;
+    	if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan)
+    	{
     	axios
     	  .post(locationServer+'/api/mahasiswa/mahasiswa',{
           body: this.mahasiswa
@@ -316,10 +341,9 @@ var app = new Vue({
         .then(response => {
        	  this.GetData();
        	  this.reset();
-					 $('.nav-tabs a[href="#tab_list"]').tab('show')
         })
         .catch(error => {
-          console.log(error)
+          console.log("Gagal Simpan Data")
           this.errored = true
         })
 				.finally(
@@ -328,6 +352,7 @@ var app = new Vue({
 						behavior: 'smooth'
 					})
 				)
+	 }
     },
     GetData()
     {
@@ -337,6 +362,8 @@ var app = new Vue({
     	  })
         .then(response => {
         	this.mahasiswas =  response.data;
+        	this.Submit = false;
+        	this.Form = false;
         })
         .catch(error => {
           console.log(error)
@@ -352,6 +379,11 @@ var app = new Vue({
     reset()
     {
    	  this.mahasiswa = {};
+   	  this.mahasiswa.pkj_orangtua = "";
+   	  this.mahasiswa.id_tahun_angkatan ="";
+   	  this.mahasiswa.kendaraan = "";
+   	  this.Submit = false;
+   	  this.Form = true;
     },
     Filter()
     {
@@ -362,8 +394,8 @@ var app = new Vue({
       if(this.FilterModel.nama !== null && this.FilterModel.nama !== "" ){
         FilterParam.nama =this.FilterModel.nama;
       }
-      if(this.FilterModel.thn_angkatan !== null && this.FilterModel.thn_angkatan !== "" ){
-        FilterParam.thn_angkatan =this.FilterModel.thn_angkatan;
+      if(this.FilterModel.tahun_angkatan !== null && this.FilterModel.tahun_angkatan !== "" ){
+        FilterParam.tahun_angkatan =this.FilterModel.tahun_angkatan;
       }
       if(this.FilterModel.jenis_kelamin !== null && this.FilterModel.jenis_kelamin !== "" ){
         FilterParam.jenis_kelamin =this.FilterModel.jenis_kelamin;
@@ -375,6 +407,7 @@ var app = new Vue({
         FilterParam.kendaraan =this.FilterModel.kendaraan;
       }
       return FilterParam;
+
     },
     ChangeFilter(Param)
     {
@@ -387,14 +420,15 @@ var app = new Vue({
     },
     Edit(Id)
     {
+    	this.Form = true;
+    	this.Submit = false;
       axios
-    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
+    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaEdit/'+Id)
         .then(response => {
         	this.mahasiswa =  response.data;
-					$('.nav-tabs a[href="#tab_input"]').tab('show')
         })
         .catch(error => {
-          console.log(error)
+          console.log("Gagal Ambil Data");
           this.errored = true
         })
 				.finally(() => this.loading = false 
@@ -413,7 +447,7 @@ var app = new Vue({
             this.GetData();
           })
           .catch(error => {
-            console.log(error)
+            console.log("Gagal Hapus");
             this.errored = true
           })
           .finally(() => this.loading = false )
@@ -428,11 +462,23 @@ var app = new Vue({
          	$("#detail-modal").modal('show');
         })
         .catch(error => {
-          console.log(error)
+          console.log("Gagal Ambil Data");
           this.errored = true
         })
         .finally(() => this.loading = false )
+    },
+    InitializeFrom(){
+    	axios
+    	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
+        .then(response => {
+        	this.tahunangkatan = response.data;
+        })
+        .catch(error => {
+          this.errored = true
+        })
+        .finally(() => console.log())
     }
+
   }
 })
 

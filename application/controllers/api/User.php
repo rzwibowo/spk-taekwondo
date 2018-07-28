@@ -44,7 +44,7 @@ class User extends REST_Controller {
     public function user_post()
     {
         $User= (object) $this->post('body');
-        if(isset($User->nip)){
+        if(isset($User->id_pengelola)){
             if($this->ModelUser->UpdateUser($User)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
@@ -63,7 +63,7 @@ class User extends REST_Controller {
     function getdatauserbyid_get($Id)
     {
         # code...
-        $where=array('nip'=>$Id);
+        $where=array('id_pengelola'=>$Id);
         $User=$this->ModelUser->GatById($where)->result();
         $this->set_response($User[0], REST_Controller::HTTP_CREATED);
     }

@@ -42,7 +42,7 @@ class ModelUser extends CI_Model
     }
     function UpdateUser($Data){
         $Where=array(
-                'nip'=>$Data->nip
+                'id_pengelola'=>$Data->id_pengelola
         );
 
         $this->db->where($Where);
@@ -55,7 +55,7 @@ class ModelUser extends CI_Model
    function Delete($Id)
     {
         $Where=array(
-                'nip'=>$Id
+                'id_pengelola'=>$Id
         );
         $this->db->where($Where);
         if($this->db->delete('pengelola')){
@@ -73,7 +73,7 @@ class ModelUser extends CI_Model
    function getUserName($Where){
         $this->db->select('username');
         $this->db->from('pengelola');
-        $this->db->where('nip', $Where);
+        $this->db->where('id_pengelola', $Where);
 		return $this->db->get();
    }
 
