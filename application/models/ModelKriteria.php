@@ -42,7 +42,7 @@ class ModelKriteria extends CI_Model
 	}
 	function UpdateKriteria($Data){
 	    $Where=array(
-				'kode_kriteria'=>$Data->kode_kriteria
+				'id_kriteria'=>$Data->id_kriteria
 		);
 
         $this->db->where($Where);
@@ -55,7 +55,7 @@ class ModelKriteria extends CI_Model
 	function Delete($Id)
 	{
 		$Where=array(
-				'kode_kriteria'=>$Id
+				'id_kriteria'=>$Id
 		);
 		$this->db->where($Where);
 		if($this->db->delete('kriteria')){

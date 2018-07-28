@@ -44,7 +44,7 @@ class Kriteria extends REST_Controller {
     public function kriteria_post()
     {
         $Kriteria= (object) $this->post('body');
-        if(isset($Kriteria->kode_kriteria)){
+        if(isset($Kriteria->id_kriteria)){
             if($this->ModelKriteria->UpdateKriteria($Kriteria)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
@@ -63,7 +63,7 @@ class Kriteria extends REST_Controller {
     function GetDataKriteriaById_get($Id)
     {
         # code...
-        $where=array('kode_kriteria'=>$Id);
+        $where=array('id_kriteria'=>$Id);
         $MHS=$this->ModelKriteria->GatById($where)->result();
         $this->set_response($MHS[0], REST_Controller::HTTP_CREATED);
     }

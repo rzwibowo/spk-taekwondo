@@ -9,18 +9,18 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
+				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form =true;Submit = false">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
+				<a class="nav-link"  v-bind:class="Form == false?'active':''" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list" v-on:click="Form = false;Submit = false">
 					<i class="icon-list"></i> List
 				</a>
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane" id="tab_input" role="tabpanel">
+			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 				<!-- BEGIN form input -->
 				<div class="col-md-6 offset-md-3">
 					<div class="card">
@@ -34,18 +34,21 @@
 									<label class="col-md-3 col-form-label" for="nim">Kode</label>
 									<div class="col-md-4">
 										<input type="text" id="kode_kriteria" name="kode_kriteria" v-model="kriteria.kode_kriteria" class="form-control" placeholder="Masukkan Kode">
+										<span style="color: red" v-show="Submit && !kriteria.kode_kriteria">Field harus diisi</span>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-md-3 col-form-label" for="nama">Nama</label>
 									<div class="col-md-9">
 										<input type="text" id="nama_kriteria" name="nama_kriteria" v-model="kriteria.nama_kriteria" class="form-control" placeholder="Masukkan Nama Kriteria">
+										<span style="color: red" v-show="Submit && !kriteria.nama_kriteria">Field harus diisi</span>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label class="col-md-3 col-form-label" for="nama">Bobot</label>
 									<div class="col-md-4">
 										<input type="number" id="bobot_kriteria" name="bobot_kriteria" v-model="kriteria.bobot_kriteria" class="form-control" placeholder="Masukkan Bobot">
+										<span style="color: red" v-show="Submit && !kriteria.bobot_kriteria">Field harus diisi</span>
 									</div>
 								</div>
 							</form>
@@ -60,7 +63,7 @@
 				</div>
 				<!-- END form input -->	
 			</div>
-			<div class="tab-pane active" id="tab_list" role="tabpanel">
+			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 				<!-- START list -->
 				<div class="col-md-12">
 					<div class="card">
@@ -106,11 +109,11 @@
 									<td>{{kriteria.kode_kriteria}}</td>
 									<td>{{kriteria.nama_kriteria}}</td>
 									<td class="text-center">{{kriteria.bobot_kriteria}}</td>
-									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.id_kriteria)">
 												<i class="fa fa-pencil"></i> Edit</button>
-												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.id_kriteria)">
 												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.id_kriteria)">
 												<i class="fa fa-minus-circle"></i> Delete</button>
 									</td>
 								</tr>
@@ -176,11 +179,15 @@ var app = new Vue({
   	kriteria:{},
   	kriterias:[],
   	FilterModel:[],
-  	kriteriaView:{}
+  	kriteriaView:{},
+  	Form:{},
+  	Submit:{}
   },
   methods: {
     Save() 
     {
+    	this.Submit = true;
+    	if(this.kriteria.kode_kriteria && this.kriteria.nama_kriteria && this.kriteria.bobot_kriteria){
     	axios
     	.post(locationServer+'/api/kriteria/kriteria',{
           body: this.kriteria
@@ -188,13 +195,15 @@ var app = new Vue({
         .then(response => {
         	this.GetData();
         	this.reset();
-					$('.nav-tabs a[href="#tab_list"]').tab('show')
+  	        this.Submit = false;
        })
        .catch(error => {
-        console.log(error)
+        console.log(error);
+        alert("Gagal Simpan Data");
         this.errored = true
       })
-      .finally(() => this.GetData())
+      .finally(() => console.log())
+      }
    },
    GetData()
    {
@@ -204,6 +213,8 @@ var app = new Vue({
     	})
         .then(response => {
         	this.kriterias =  response.data;
+        	this.Form = false;
+  	        this.Submit = false;
        })
        .catch(error => {
         console.log(error)
@@ -215,6 +226,7 @@ var app = new Vue({
    reset()
    {
    	this.kriteria = {};
+   	this.Submit = false;
    },
    Filter()
    {
@@ -241,11 +253,12 @@ var app = new Vue({
    },
    Edit(Id)
    {
+  	this.Submit = false;
      axios
     	.get(locationServer+'/api/kriteria/GetDataKriteriaById/'+Id)
         .then(response => {
         	this.kriteria =  response.data;
-					$('.nav-tabs a[href="#tab_input"]').tab('show')
+        	this.Form = true;
        })
        .catch(error => {
         console.log(error)
