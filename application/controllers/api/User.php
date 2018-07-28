@@ -51,6 +51,7 @@ class User extends REST_Controller {
                 $this->set_response(array('error' => 'Error saat simpan data'), 404);
             }
         }else{
+            $User->password =  md5($User->password);
             if($this->ModelUser->InsertUser($User)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{

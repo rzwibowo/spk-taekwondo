@@ -41,10 +41,17 @@ class ModelUser extends CI_Model
       return $this->db->get();
     }
     function UpdateUser($Data){
+      $this->db->select('password');
+         $this->db->from('pengelola');
+         $this->db->where('id_pengelola', $Data->id_pengelola);
+      $password =  $this->db->get()->result()[0];
+      if($password->password !== $Data->password){
+        $Data->password = md5($Data->password);
+
+       }
         $Where=array(
                 'id_pengelola'=>$Data->id_pengelola
         );
-
         $this->db->where($Where);
         if($this->db->update('pengelola',$Data)){
             return true;

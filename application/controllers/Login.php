@@ -11,4 +11,12 @@ class Login extends CI_Controller {
 		$this->load->view('_layout/v_footLogin');
 
 	}
+	public function logout()
+	{
+
+		$this->load->view('_layout/v_headLogin');
+		$this->load->view('login/logout');
+		$this->load->view('_layout/v_footLogin');
+
+	}
 }

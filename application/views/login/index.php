@@ -65,7 +65,8 @@ var app = new Vue({
       return this.$cookies.get("tokenUserApp");
     },
 		Initialization() {
-			console.log(this.GetCokies());
+
+     // this.$cookies.remove("tokenUserApp");
 			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
 			 	window.location.replace(locationServer); 
 			} else {
