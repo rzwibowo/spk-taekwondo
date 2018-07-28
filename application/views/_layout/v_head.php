@@ -114,8 +114,8 @@
       },
     Logout()
      {
-      this.$cookies.remove("tokenUserApp");
-      window.location.replace(locationServer+"/login"); 
+     $cookies.remove('tokenUserApp');
+     window.location.replace(locationServer+"/login"); 
      }
     }
   })

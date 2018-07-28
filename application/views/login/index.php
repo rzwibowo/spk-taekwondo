@@ -50,8 +50,6 @@ var app = new Vue({
     		body: this.User
     	})
 			.then(response => {
-
-				console.log(response.data);
 				if(response.data.length > 0){ 
                   this.$cookies.set("tokenUserApp",response.data[0].nip,60 * 60 * 1);
 				  window.location.replace(locationServer); 
