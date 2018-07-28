@@ -44,13 +44,6 @@
 										<span style="color: red" v-show="Submit && !kriteria.nama_kriteria">Field harus diisi</span>
 									</div>
 								</div>
-								<div class="form-group row">
-									<label class="col-md-3 col-form-label" for="nama">Bobot</label>
-									<div class="col-md-4">
-										<input type="number" id="bobot_kriteria" name="bobot_kriteria" v-model="kriteria.bobot_kriteria" class="form-control" placeholder="Masukkan Bobot">
-										<span style="color: red" v-show="Submit && !kriteria.bobot_kriteria">Field harus diisi</span>
-									</div>
-								</div>
 							</form>
 						</div>
 						<div class="card-footer text-right">
@@ -76,7 +69,6 @@
 									<th>#</th>
 									<th>Kode Kriteria</th>
 									<th>Nama Kriteria</th>
-									<th class="text-center">Bobot</th>
 									<th></th>
 								</tr>
 								<tr>
@@ -93,12 +85,6 @@
 										v-model="FilterModel.nama_kriteria" 
 										v-on:keyup="ChangeFilter(FilterModel.nama_kriteria)"
 										placeholder="Cari nama kriteria ..."></th>
-									<th><input type="number" 
-										name="bobot_kriteria" 
-										class="form-control text-center" 
-										v-model="FilterModel.bobot_kriteria" 
-										v-on:keyup="ChangeFilter(FilterModel.bobot_kriteria)"
-										placeholder="Cari bobot kriteria ..."></th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -108,7 +94,6 @@
 									<td>{{index + 1}}</td>
 									<td>{{kriteria.kode_kriteria}}</td>
 									<td>{{kriteria.nama_kriteria}}</td>
-									<td class="text-center">{{kriteria.bobot_kriteria}}</td>
 									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.id_kriteria)">
 												<i class="fa fa-pencil"></i> Edit</button>
 												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.id_kriteria)">
@@ -150,12 +135,6 @@
 	      	      <p class="form-control-static"><b>{{kriteriaView.nama_kriteria}}</b></p>
 	      	    </div>
 	      	  </div>
-	      	  <div class="form-group row">
-	      	    <label class="col-md-3 col-form-label">Bobot Kriteria</label>
-	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{kriteriaView.bobot_kriteria}}</b></p>
-	      	    </div>
-	      	  </div>
 	      	</form>
 	      </div>
 	      <div class="modal-footer">
@@ -187,7 +166,7 @@ var app = new Vue({
     Save() 
     {
     	this.Submit = true;
-    	if(this.kriteria.kode_kriteria && this.kriteria.nama_kriteria && this.kriteria.bobot_kriteria){
+    	if(this.kriteria.kode_kriteria && this.kriteria.nama_kriteria){
     	axios
     	.post(locationServer+'/api/kriteria/kriteria',{
           body: this.kriteria
@@ -236,9 +215,6 @@ var app = new Vue({
       }
       if(this.FilterModel.nama_kriteria !== null && this.FilterModel.nama_kriteria !== "" ){
         FilterParam.nama =this.FilterModel.nama_kriteria;
-      }
-      if(this.FilterModel.bobot_kriteria !== null && this.FilterModel.bobot_kriteria !== "" ){
-        FilterParam.bobot_kriteria =this.FilterModel.bobot_kriteria;
       }
       return FilterParam;
    },
