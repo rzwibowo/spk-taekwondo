@@ -65,6 +65,9 @@ class ModelMahasiswa extends CI_Model
 			return false;
 		}
 	}
+	function GetMahasiswaWithTahunAngkatan($where){
+		return $this->db->get_where('mahasiswa',$where);
+	}
 
 }
 

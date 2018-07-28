@@ -36,6 +36,11 @@ class Kriteria extends REST_Controller {
         $data=$this->ModelKriteria->GetKriteriaWithFilter($Filter)->result();
         $this->set_response($data, REST_Controller::HTTP_CREATED);
     }
+    public function getkriterias_get()
+    {
+        $data=$this->ModelKriteria->Getkriteria()->result();
+        $this->set_response($data, REST_Controller::HTTP_CREATED);
+    }
     public function kriteria_post()
     {
         $Kriteria= (object) $this->post('body');

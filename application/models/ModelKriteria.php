@@ -11,7 +11,7 @@ class ModelKriteria extends CI_Model
 		$this->load->database();
 	}
 	
-    function GetMahasiswa(){
+    function Getkriteria(){
 
     	return $this->db->get('kriteria');
     }

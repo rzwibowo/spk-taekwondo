@@ -52,10 +52,9 @@ var app = new Vue({
 			.then(response => {
 
 				console.log(response.data);
-				if(response.data.length > 0){
-				
-					this.$cookies.set("tokenUserApp",response.data[0].nip,"60MIN");
-					window.location.replace("<?php echo site_url() ?>"); 
+				if(response.data.length > 0){ 
+                  this.$cookies.set("tokenUserApp",response.data[0].nip,60 * 60 * 1);
+				  window.location.replace("<?php echo site_url() ?>"); 
 				}
 			})
 			.catch(error => {
@@ -70,7 +69,7 @@ var app = new Vue({
 		Initialization() {
 			console.log(this.GetCokies());
 			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
-				window.location.replace("<?php echo site_url() ?>"); 
+			 	window.location.replace("<?php echo site_url() ?>"); 
 			} else {
 				this.User = {
 						IdUser:0,
