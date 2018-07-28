@@ -290,7 +290,10 @@ var app = new Vue({
    Calculate(){
    	var valid = true;
    this.MatrixPerbandingan.forEach(function (value, i) {
-   	 if(value.row.filter(x => x.isChange == true && x.value == 0).length) valid =false;
+   	 if(value.row.filter(x => x.isChange == true && x.value == 0).length > 0){
+   	 	valid =false;
+   	   }
+   	   console.log(value.row.filter(x => x.isChange == true && x.value == 0).length);
    	});
    if(!valid){
     alert("Ada data yang tidak falid");
