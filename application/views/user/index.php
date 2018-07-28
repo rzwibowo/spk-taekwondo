@@ -2,50 +2,44 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<h3><?php echo $title ?></h3>
+				<h3>Data<?php echo $title ?></h3>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
+				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form = true">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
+				<a class="nav-link" v-bind:class="Form == false?'active':''" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list" v-on:click="Form = false">
 					<i class="icon-list"></i> List
 				</a>
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active" id="tab_input" role="tabpanel">
+			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 				<!-- BEGIN form input -->
-				<div class="col-md-6 offset-3">
+				<div class="col-md-8 offset-3">
 					<div class="card">
 						<div class="card-header">
 							Input Data 
-							<strong>Kriteria</strong>
+							<strong><?php echo $title ?></strong>
 						</div>
 						<div class="card-body">
 							<form action="" method="post" class="form-horizontal">
 								<div class="form-group row">
-									<label class="col-md-3 col-form-label" for="nim">Kode</label>
+									<label class="col-md-3 col-form-label" for="username">User Name</label>
 									<div class="col-md-9">
-										<input type="text" id="kode_kriteria" name="kode_kriteria" v-model="kriteria.kode_kriteria" class="form-control" placeholder="Masukkan Kode">
+										<input type="text" id="username" name="username" v-model="User.username" class="form-control" placeholder="User Name">
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-md-3 col-form-label" for="nama">Nama</label>
+									<label class="col-md-3 col-form-label" for="nim">Password</label>
 									<div class="col-md-9">
-										<input type="text" id="nama_kriteria" name="nama_kriteria" v-model="kriteria.nama_kriteria" class="form-control" placeholder="Masukkan Nama">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-3 col-form-label" for="nama">Bobot</label>
-									<div class="col-md-9">
-										<input type="text" id="bobot_kriteria" name="bobot_kriteria" v-model="kriteria.bobot_kriteria" class="form-control" placeholder="Masukkan Bobot">
+										<input type="password" id="password" name="password" v-model="User.password" class="form-control" placeholder="password">
 									</div>
 								</div>
 							</form>
@@ -60,41 +54,39 @@
 				</div>
 				<!-- END form input -->	
 			</div>
-			<div class="tab-pane" id="tab_list" role="tabpanel">
+			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 				<!-- START list -->
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							Daftar <strong>kriteria</strong>
+							Daftar <strong><?php echo $title ?></strong>
 						</div>
 						<div class="card-body">
 							<table class="table table-responsive-sm table-striped">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Kode Kriteria</th>
-										<th>Nama Kriteria</th>
-										<th>Bobot</th>
+										<th>NIP</th>
+										<th>User Name</th>
 										<th></th>
 									</tr>
 									<tr>
 										<th></th>
-										<th><input type="text" name="kode_kriteria" class="form-control" v-model="FilterModel.kode_kriteria" v-on:keyup="ChangeFilter(FilterModel.kode_kriteria)"></th>
-										<th><input type="text" name="nama_kriteria" class="form-control" v-model="FilterModel.nama_kriteria" v-on:keyup="ChangeFilter(FilterModel.nama_kriteria)"></th>
-										<th><input type="text" name="bobot_kriteria" class="form-control" v-model="FilterModel.bobot_kriteria" v-on:keyup="ChangeFilter(FilterModel.bobot_kriteria)"></th>
+										<th><input type="text" name="nip" class="form-control" v-model="FilterModel.nip" v-on:keyup="ChangeFilter(FilterModel.nip)"></th>
+										<th><input type="text" name="username" class="form-control" v-model="FilterModel.username" v-on:keyup="ChangeFilter(FilterModel.username)"></th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(kriteria,index) in kriterias">
+									<tr v-for="(user,index) in Users">
 										<td>{{index + 1}}</td>
-										<td>{{kriteria.kode_kriteria}}</td>
-										<td>{{kriteria.nama_kriteria}}</td>
-										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
+										<td>{{user.nip}}</td>
+									    <td>{{user.username}}</td>
+										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(user.nip)">
 													<i class="fa fa-pencil"></i> Edit</button>
-													<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
+													<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.nip)">
 													<i class="fa fa-dot-circle-o"></i> View</button>
-													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
+													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.nip)">
 													<i class="fa fa-minus-circle"></i> Delete</button>
 										</td>
 									</tr>
@@ -107,13 +99,11 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- BEGIN modal detail -->
 	<div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h4 class="modal-title">Detail kriteria</h4>
+	        <h4 class="modal-title">Detail <?php echo $title ?></h4>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -121,21 +111,15 @@
 	      <div class="modal-body">
 	      	<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
 	      	  <div class="form-group row">
-	      	    <label class="col-md-3 col-form-label">Kode Kriteria</label>
-	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{kriteriaView.kode_kriteria}}</b></p>
+	      	    <label class="col-md-6 col-form-label">NIP</label>
+	      	    <div class="col-md-3">
+	      	      <label class=" col-form-label"><b>{{User.nip}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
-	      	    <label class="col-md-3 col-form-label">Nama Kriteria</label>
-	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{kriteriaView.nama_kriteria}}</b></p>
-	      	    </div>
-	      	  </div>
-	      	  <div class="form-group row">
-	      	    <label class="col-md-3 col-form-label">Bobot Kriteria</label>
-	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{kriteriaView.bobot_kriteria}}</b></p>
+	      	    <label class="col-md-6 col-form-label">User Name</label>
+	      	    <div class="col-md-3">
+	      	      <label class=" col-form-label"><b>{{User.username}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	</form>
@@ -148,6 +132,7 @@
 	  </div>
 	  <!-- /.modal-dialog -->
 	</div>
+	</div>
 	<!-- END modal detail -->
 </div>
 <script type="text/javascript">
@@ -156,41 +141,46 @@ var app = new Vue({
   el: '#app',
   created(){
     this.GetData();
+    this.Form = false;
   },
   data: {
-  	kriteria:{},
-  	kriterias:[],
-  	FilterModel:[],
-  	kriteriaView:{}
+  	User:{},
+  	Users:[],
+  	FilterModel:{},
+  	Form:{},
   },
   methods: {
-    Save() 
-    {
-    	axios
-    	.post(locationServer+'/api/kriteria/kriteria',{
-          body: this.kriteria
+   Save() 
+   {
+       axios
+    	.post(locationServer+'/api/user/user',{
+          body: this.User
     	})
         .then(response => {
         	this.GetData();
         	this.reset();
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.GetData())
+        	this.Form = false;
+	       })
+	       .catch(error => {
+	        console.log(error);
+	       	alert("Save Gagal");
+	        this.errored = true
+	      })
+	      .finally(() => this.GetData())
    },
    GetData()
    {
       axios
-    	.post(locationServer+'/api/kriteria/kriterias',{
+    	.post(locationServer+'/api/User/getusers',{
     		body: this.Filter()
     	})
         .then(response => {
-        	this.kriterias =  response.data;
+        	this.Users =  response.data;
+        	this.Form = false;
        })
        .catch(error => {
-        console.log(error)
+        console.log(error);
+       	alert("Get Data Gagal");
         this.errored = true
       })
       .finally(() => this.loading = false )
@@ -198,19 +188,16 @@ var app = new Vue({
    },
    reset()
    {
-   	this.kriteria = {};
+   	this.User = {};
    },
    Filter()
    {
       var FilterParam = {};
-      if(this.FilterModel.kode_kriteria !== "" && this.FilterModel.kode_kriteria !== null ){
-        FilterParam.kode_kriteria =this.FilterModel.kode_kriteria;
+      if(this.FilterModel.nip !== null && this.FilterModel.nip !== "" ){
+        FilterParam.nip =this.FilterModel.nip;
       }
-      if(this.FilterModel.nama_kriteria !== null && this.FilterModel.nama_kriteria !== "" ){
-        FilterParam.nama =this.FilterModel.nama_kriteria;
-      }
-      if(this.FilterModel.bobot_kriteria !== null && this.FilterModel.bobot_kriteria !== "" ){
-        FilterParam.bobot_kriteria =this.FilterModel.bobot_kriteria;
+       if(this.FilterModel.username !== null && this.FilterModel.username !== "" ){
+        FilterParam.username =this.FilterModel.username;
       }
       return FilterParam;
    },
@@ -226,12 +213,14 @@ var app = new Vue({
    Edit(Id)
    {
      axios
-    	.get(locationServer+'/api/kriteria/GetDataKriteriaById/'+Id)
+    	.get(locationServer+'/api/user/getdatauserbyid/'+Id)
         .then(response => {
-        	this.kriteria =  response.data;
+        	this.User =  response.data;
+        	this.Form = true;
        })
        .catch(error => {
-        console.log(error)
+        console.log(error);
+        alert("Get Data Gagal Gagal");
         this.errored = true
       })
       .finally(() => this.loading = false )
@@ -241,12 +230,14 @@ var app = new Vue({
    	var x = confirm("Are you sure you want to delete?");
     if (x){
        axios
-   	   .get(locationServer+'/api/kriteria/kriteriadelete/'+Id)
+   	   .get(locationServer+'/api/user/userdelete/'+Id)
         .then(response => {
         this.GetData();
+        this.Form = false;
        })
        .catch(error => {
-        console.log(error)
+        console.log(error);
+        alert("Delete Gagal");
         this.errored = true
        })
        .finally(() => this.loading = false )
@@ -255,13 +246,15 @@ var app = new Vue({
    View(Id)
    {
    	axios
-    	.get(locationServer+'/api/kriteria/GetDataKriteriaById/'+Id)
+    	.get(locationServer+'/api/user/getdatauserbyid/'+Id)
         .then(response => {
-        	this.kriteriaView =  response.data;
+        	this.User =  response.data;
+        	this.Form = false;
          	$("#detail-modal").modal('show');
        })
        .catch(error => {
-        console.log(error)
+        console.log(error);
+        alert("Get Data Gagal");
         this.errored = true
       })
       .finally(() => this.loading = false )

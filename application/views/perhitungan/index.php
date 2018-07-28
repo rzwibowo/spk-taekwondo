@@ -219,7 +219,7 @@ var app = new Vue({
   	GetTahunAngkatan()
   	{
   	   axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/tahunangkatan/tahunangkatans')
+    	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
         .then(response => {
         	this.TahunAngkatan =  response.data;
        })
@@ -231,7 +231,7 @@ var app = new Vue({
   	},
    GetMahasiswa(idTahun){
    	axios
-       .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
+       .get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
         .then(response => {
         	this.Mahasiswa =  response.data;
 		    this.isCalculate=false;
@@ -244,7 +244,7 @@ var app = new Vue({
    },
    GetKriteria(){
    	axios
-       .get('http://localhost/spk-beasiswa/index.php/api/kriteria/getkriterias')
+       .get(locationServer+'/api/kriteria/getkriterias')
         .then(response => {
         	this.Kriteria =  response.data;
         	this.SetMaxtrixPerbandingan();

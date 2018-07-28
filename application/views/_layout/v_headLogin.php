@@ -15,6 +15,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
     <script src="https://unpkg.com/vue-cookies@1.5.5/vue-cookies.js"></script>
+    <script type="text/javascript">
+        var locationServer ="<?php echo base_url() ?>index.php";
+    </script>
   </head>
   <body class="app header-fixed sidebar-fixed aside-menu-fixed">
   <main class="row" id="main" style="margin: auto;">

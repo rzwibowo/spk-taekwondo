@@ -20,61 +20,60 @@ use Restserver\Libraries\REST_Controller;
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class TahunAngkatan extends REST_Controller {
+class User extends REST_Controller {
 
     function __construct($config = 'rest')
     {
         // Construct the parent class
         parent::__construct($config);
-        $this->load->model('ModelTahunAngkatan');
+        $this->load->model('ModelUser');
 
     }
 
-    public function tahunangkatans_post()
+    public function getusers_post()
     {
         $Filter = $this->post('body');
-        $data=$this->ModelTahunAngkatan->GetTahunAngkatanWithFilter($Filter)->result();
+        $data=$this->ModelUser->GetUserWithFilter($Filter)->result();
         $this->set_response($data, REST_Controller::HTTP_CREATED);
     }
-    public function tahunangkatan_post()
+    public function getkriterias_get()
     {
-        $TahunAngkatan= (object) $this->post('body');
-        if(isset($TahunAngkatan->id_tahun_angkatan)){
-            if($this->ModelTahunAngkatan->UpdateTahunAngkatan($TahunAngkatan)){
+        $data=$this->ModelKriteria->Getkriteria()->result();
+        $this->set_response($data, REST_Controller::HTTP_CREATED);
+    }
+    public function user_post()
+    {
+        $User= (object) $this->post('body');
+        if(isset($User->nip)){
+            if($this->ModelUser->UpdateUser($User)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
                 $this->set_response(array('error' => 'Error saat simpan data'), 404);
             }
         }else{
-            if($this->ModelTahunAngkatan->InsertTahunAngkatan($TahunAngkatan)){
+            if($this->ModelUser->InsertUser($User)){
                 $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
             }else{
                 $this->set_response(array('error' => 'Error saat simpan data'), 404);
             }
         }
+
+      //  $this->set_response($message, REST_Controller::HTTP_CREATED);
     }
-    function gettahunangkatanbyid_get($Id)
+    function getdatauserbyid_get($Id)
     {
         # code...
-        $where=array('id_tahun_angkatan'=>$Id);
-        $tahunAngkatan=$this->ModelTahunAngkatan->GatById($where)->result();
-        $this->set_response($tahunAngkatan[0], REST_Controller::HTTP_CREATED);
+        $where=array('nip'=>$Id);
+        $User=$this->ModelUser->GatById($where)->result();
+        $this->set_response($User[0], REST_Controller::HTTP_CREATED);
     }
-    function tahunangkatandelete_get($Id)
+    function userdelete_get($Id)
     {
-        if($this->ModelTahunAngkatan->Delete($Id)){
+        if($this->ModelUser->Delete($Id)){
 
         }else{
 
         }
     }
-
-    public function tahunangkatans_get()
-    {
-        $tahunangkatan=$this->ModelTahunAngkatan->GetTahunAngkatan()->result();
-        $this->set_response($tahunangkatan, REST_Controller::HTTP_CREATED);
-    }
-   
-    
 
 }
