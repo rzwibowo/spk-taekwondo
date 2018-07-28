@@ -131,7 +131,7 @@
     Logout()
      {
       this.$cookies.remove("tokenUserApp");
-      window.location.replace(locationServer+"/login"); 
+      window.location.replace(locationServer+"/login?logout=true"); 
      }
     }
   })
@@ -146,8 +146,7 @@
    Initialization()
    {
      if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
-      window.location.replace(locationServer+"/login"); 
-      GetUserName()
+      window.location.replace(locationServer+"/login");
      }
    },
   }
