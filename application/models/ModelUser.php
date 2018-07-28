@@ -80,7 +80,7 @@ class ModelUser extends CI_Model
    function getUserName($Where){
         $this->db->select('username');
         $this->db->from('pengelola');
-        $this->db->where('id_pengelola', $Where);
+        $this->db->where('nip', $Where);
 		return $this->db->get();
    }
 
