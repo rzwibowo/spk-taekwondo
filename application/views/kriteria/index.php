@@ -1,106 +1,132 @@
 <div class="row" id="app">
-	<!-- BEGIN form input -->
-	<div class="col-md-6">
-	  <div class="card">
-	    <div class="card-header">
-	      Input Data 
-	      <strong>Kriteria</strong>
-	    </div>
-	    <div class="card-body">
-	      <form action="" method="post" class="form-horizontal">
-	        <div class="form-group row">
-	          <label class="col-md-3 col-form-label" for="nim">Kode</label>
-	          <div class="col-md-9">
-	            <input type="text" id="kode_kriteria" name="kode_kriteria" v-model="kriteria.kode_kriteria" class="form-control" placeholder="Masukkan Kode">
-	          </div>
-	        </div>
-	        <div class="form-group row">
-	          <label class="col-md-3 col-form-label" for="nama">Nama</label>
-	          <div class="col-md-9">
-	            <input type="text" id="nama_kriteria" name="nama_kriteria" v-model="kriteria.nama_kriteria" class="form-control" placeholder="Masukkan Nama">
-	          </div>
-	        </div>
-	        <div class="form-group row">
-	          <label class="col-md-3 col-form-label" for="nama">Bobot</label>
-	          <div class="col-md-9">
-	            <input type="text" id="bobot_kriteria" name="bobot_kriteria" v-model="kriteria.bobot_kriteria" class="form-control" placeholder="Masukkan Bobot">
-	          </div>
-	        </div>
-	       </form>
-	    </div>
-	    <div class="card-footer">
-	      <button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
-	        <i class="fa fa-dot-circle-o"></i> Simpan</button>
-	      <button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
-	        <i class="fa fa-ban"></i> Reset</button>
-	    </div>
-	  </div>
-	</div>
-	<!-- END form input -->
-
-	<!-- START list -->
 	<div class="col-md-12">
 		<div class="card">
-		  <div class="card-header">
-		    Daftar <strong>kriteria</strong>
-		  </div>
-		  <div class="card-body">
-		    <table class="table table-responsive-sm table-striped">
-		      <thead>
-		        <tr>
-		          <th>#</th>
-		          <th>Kode Kriteria</th>
-		          <th>Nama Kriteria</th>
-		          <th>Bobot</th>
-		          <th></th>
-		        </tr>
-		        <tr>
-		          <th></th>
-		          <th><input type="text" name="kode_kriteria" class="form-control" v-model="FilterModel.kode_kriteria" v-on:keyup="ChangeFilter(FilterModel.kode_kriteria)"></th>
-		          <th><input type="text" name="nama_kriteria" class="form-control" v-model="FilterModel.nama_kriteria" v-on:keyup="ChangeFilter(FilterModel.nama_kriteria)"></th>
-		          <th><input type="text" name="bobot_kriteria" class="form-control" v-model="FilterModel.bobot_kriteria" v-on:keyup="ChangeFilter(FilterModel.bobot_kriteria)"></th>
-		          <th></th>
-		        </tr>
-		      </thead>
-		      <tbody>
-		       <tr v-for="(kriteria,index) in kriterias">
-		       	<td>{{index + 1}}</td>
-		       	<td>{{kriteria.kode_kriteria}}</td>
-		       	<td>{{kriteria.nama_kriteria}}</td>
-		       	<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
-	                 <i class="fa fa-pencil"></i> Edit</button>
-	                <button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
-	                <i class="fa fa-dot-circle-o"></i> View</button>
-	                <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
-	                <i class="fa fa-minus-circle"></i> Delete</button>
-	            </td>
-		       </tr>
-		      </tbody>
-		    </table>
-		 <!--    <ul class="pagination">
-		      <li class="page-item">
-		        <a class="page-link" href="#">Prev</a>
-		      </li>
-		      <li class="page-item active">
-		        <a class="page-link" href="#">1</a>
-		      </li>
-		      <li class="page-item">
-		        <a class="page-link" href="#">2</a>
-		      </li>
-		      <li class="page-item">
-		        <a class="page-link" href="#">3</a>
-		      </li>
-		      <li class="page-item">
-		        <a class="page-link" href="#">4</a>
-		      </li>
-		      <li class="page-item">
-		        <a class="page-link" href="#">Next</a>
-		      </li>
-		    </ul> -->
-		  </div>
+			<div class="card-body">
+				<h3><?php echo $title ?></h3>
+			</div>
 		</div>
 	</div>
-	<!-- END list -->
+	<div class="col-md-12">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
+					<i class="icon-pencil"></i> Input
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
+					<i class="icon-list"></i> List
+				</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" :class="isactive" id="tab_input" role="tabpanel">
+				<!-- BEGIN form input -->
+				<div class="col-md-6 offset-3">
+					<div class="card">
+						<div class="card-header">
+							Input Data 
+							<strong>Kriteria</strong>
+						</div>
+						<div class="card-body">
+							<form action="" method="post" class="form-horizontal">
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="nim">Kode</label>
+									<div class="col-md-9">
+										<input type="text" id="kode_kriteria" name="kode_kriteria" v-model="kriteria.kode_kriteria" class="form-control" placeholder="Masukkan Kode">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="nama">Nama</label>
+									<div class="col-md-9">
+										<input type="text" id="nama_kriteria" name="nama_kriteria" v-model="kriteria.nama_kriteria" class="form-control" placeholder="Masukkan Nama">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="nama">Bobot</label>
+									<div class="col-md-9">
+										<input type="text" id="bobot_kriteria" name="bobot_kriteria" v-model="kriteria.bobot_kriteria" class="form-control" placeholder="Masukkan Bobot">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-footer">
+							<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
+								<i class="fa fa-dot-circle-o"></i> Simpan</button>
+							<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
+								<i class="fa fa-ban"></i> Reset</button>
+						</div>
+					</div>
+				</div>
+				<!-- END form input -->	
+			</div>
+			<div class="tab-pane" id="tab_list" role="tabpanel">
+				<!-- START list -->
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							Daftar <strong>kriteria</strong>
+						</div>
+						<div class="card-body">
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Kode Kriteria</th>
+										<th>Nama Kriteria</th>
+										<th>Bobot</th>
+										<th></th>
+									</tr>
+									<tr>
+										<th></th>
+										<th><input type="text" name="kode_kriteria" class="form-control" v-model="FilterModel.kode_kriteria" v-on:keyup="ChangeFilter(FilterModel.kode_kriteria)"></th>
+										<th><input type="text" name="nama_kriteria" class="form-control" v-model="FilterModel.nama_kriteria" v-on:keyup="ChangeFilter(FilterModel.nama_kriteria)"></th>
+										<th><input type="text" name="bobot_kriteria" class="form-control" v-model="FilterModel.bobot_kriteria" v-on:keyup="ChangeFilter(FilterModel.bobot_kriteria)"></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								<tr v-for="(kriteria,index) in kriterias">
+									<td>{{index + 1}}</td>
+									<td>{{kriteria.kode_kriteria}}</td>
+									<td>{{kriteria.nama_kriteria}}</td>
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
+												<i class="fa fa-pencil"></i> Edit</button>
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
+												<i class="fa fa-dot-circle-o"></i> View</button>
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
+												<i class="fa fa-minus-circle"></i> Delete</button>
+										</td>
+								</tr>
+								</tbody>
+							</table>
+					<!--    <ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="#">Prev</a>
+								</li>
+								<li class="page-item active">
+									<a class="page-link" href="#">1</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">2</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">3</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">4</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">Next</a>
+								</li>
+							</ul> -->
+						</div>
+					</div>
+				</div>
+				<!-- END list -->					
+			</div>
+		</div>
+	</div>
 
 	<!-- BEGIN modal detail -->
 	<div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

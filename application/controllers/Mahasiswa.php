@@ -7,7 +7,7 @@ class Mahasiswa extends CI_Controller {
 		$pageprop['title'] = "Data Mahasiswa";
 
 		$this->load->view('_layout/v_head', $pageprop);
-		$this->load->view('mahasiswa/index');
+		$this->load->view('mahasiswa/index', $pageprop);
 		$this->load->view('_layout/v_foot');
 	}
 }

@@ -1,5 +1,12 @@
 
 <div class="row" id="app">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+				<h3><?php echo $title ?></h3>
+			</div>
+		</div>
+	</div>
 	<!-- BEGIN form input -->
 	<div class="col-md-12">
 	  <div class="card" id="input">

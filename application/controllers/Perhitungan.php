@@ -7,7 +7,7 @@ class Perhitungan extends CI_Controller {
 		$pageprop['title'] = "Perhitungan";
 
 		$this->load->view('_layout/v_head', $pageprop);
-		$this->load->view('perhitungan/index');
+		$this->load->view('perhitungan/index', $pageprop);
 		$this->load->view('_layout/v_foot');
 	}
 }

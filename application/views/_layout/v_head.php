@@ -17,8 +17,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
     <script src="https://unpkg.com/vue-cookies@1.5.5/vue-cookies.js"></script>
+
+    <style>
+      #app {
+        margin: 1em auto;
+      }
+    </style>
   </head>
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+  <body class="app header-fixed">
     <div class="loader">
       <img src="<?php echo base_url() ?>assets/img/load.svg" alt="Loading ...">
     </div>
@@ -30,9 +36,28 @@
         <img class="navbar-brand-full" src="<?php echo base_url() ?>assets/img/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
         <img class="navbar-brand-minimized" src="<?php echo base_url() ?>assets/img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
       </a>
-      <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item px-3">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "") { echo " active"; } ?>" href="<?php echo site_url() ?>">
+            <i class="nav-icon icon-home"></i> Home
+          </a>
+        </li>
+        <li class="nav-item px-3">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
+            <i class="nav-icon icon-equalizer"></i> Kriteria
+          </a>
+        </li>
+        <li class="nav-item px-3">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
+            <i class="nav-icon icon-graduation"></i> Mahasiswa
+          </a>
+        </li>
+        <li class="nav-item px-3">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "perhitungan") { echo " active"; } ?>" href="<?php echo site_url() ?>/perhitungan">
+            <i class="nav-icon icon-calculator"></i> Perhitungan
+          </a>
+        </li>
+      </ul>
       <ul class="nav navbar-nav ml-auto" id="identity">
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +65,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
-              <strong>Account</strong>
+              <strong>Pengguna</strong>
             </div>
             <a class="dropdown-item disabled" href="#">
               <i class="fa fa-user"></i> {{username}}</a>
@@ -51,35 +76,8 @@
       </ul>
     </header>
     <div class="app-body">
-      <div class="sidebar">
-        <nav class="sidebar-nav">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
-                <i class="nav-icon icon-graduation"></i> Mahasiswa
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
-                <i class="nav-icon icon-equalizer"></i> Kriteria
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
       <main class="main" id="main">
-        <!-- Breadcrumb-->
-        <ol class="breadcrumb">
-          <?php
-            if (isset($title)) {
-              echo "<li class='breadcrumb-item'>Home</li>";
-              echo "<li class='breadcrumb-item active'>".$title."</li>";
-            } else { 
-              echo "<li class='breadcrumb-item active'>Home</li>";
-            }
-          ?>
-        </ol>
-        <div class="container-fluid">
+        <div class="container">
           <div class="animated fadeIn">
 
 <script type="text/javascript">
