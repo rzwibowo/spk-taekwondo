@@ -318,6 +318,7 @@ var app = new Vue({
         .then(response => {
        	  this.GetData();
        	  this.reset();
+					 $('.nav-tabs a[href="#tab_list"]').tab('show')
         })
         .catch(error => {
           console.log(error)
@@ -392,6 +393,7 @@ var app = new Vue({
     	  .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
         	this.mahasiswa =  response.data;
+					$('.nav-tabs a[href="#tab_input"]').tab('show')
         })
         .catch(error => {
           console.log(error)
