@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<h3>Data<?php echo $title ?></h3>
+				<h3>Data <?php echo $title ?></h3>
 			</div>
 		</div>
 	</div>
