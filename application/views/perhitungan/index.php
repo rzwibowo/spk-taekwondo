@@ -211,21 +211,21 @@
 									</tr>
 									<tr>
 										<td><strong>X</strong></td>
-										<td v-for="(kriteria, idx) in Kriteria" :key="idx"></td>
+										<td v-for="(col, idx) in maxormin" :key="idx">{{ col.maxminvalue }}</td>
 									</tr>
 									<tr>
 										<td><strong>Bobot</strong></td>
 										<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
 									</tr>
-									<!-- <tr>
+									<tr>
 										<td><strong>Sifat</strong></td>
-										<td v-for="(kriteria, idx) in Kriteria" :key="idx">
-											<select class="form-control" v-model="maxormin[idx].states" @change="findMaxOrMin(idx)">
+										<td v-for="(col, idx) in maxormin" :key="idx">
+											<select class="form-control" v-model="col.state" @change="findMaxOrMin(idx)">
 												<option value="max">MAX</option>
-												<option value="max">MIN</option>
+												<option value="min">MIN</option>
 											</select>
 										</td>
-									</tr> -->
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -257,7 +257,7 @@ var app = new Vue({
     IR:{},
     CR:{},
 		MatriksSaw: [],
-		// maxormin: []
+		maxormin: []
   },
   methods: {
   	GetTahunAngkatan()
@@ -430,7 +430,6 @@ var app = new Vue({
 	// BEGIN SAW
 		SetMatriksSawAwal: function(){
 			let MatriksSawAwal = []
-			let maxorminAwal = []
 			for(let index = 0; index < this.Mahasiswa.length; index++){
 				let row = []
 				for(let i_index = 0; i_index < this.Kriteria.length; i_index++){
@@ -439,16 +438,7 @@ var app = new Vue({
 						col_index: i_index,
 						cellvalue: 0
 					}
-
 					row.push(cell)
-
-					// let maxmincell = {
-					// 	col_index: i_index,
-					// 	states: 'max',
-					// 	maxminvalue: 0
-					// }
-
-					// maxormin.push(maxmincell)
 				}
 
 				let matrix = {
@@ -458,23 +448,32 @@ var app = new Vue({
 				MatriksSawAwal.push(matrix)
 			}
 			this.MatriksSaw = MatriksSawAwal
+			this.SetMatriksMaxormin()
+		},
+		SetMatriksMaxormin: function () {
+			let maxorminAwal = []
+			for(let index = 0; index < this.Kriteria.length; index++){
+				let maxmincell = {
+					col_index: index,
+					state: 'max',
+					maxminvalue: 0
+				}
+				maxorminAwal.push(maxmincell)
+			}
+			this.maxormin = maxorminAwal
+		},
+		findMaxOrMin: function(x) {
+			const states = this.maxormin[x].state
+			let col_vals = []
+			this.MatriksSaw.forEach((rows) => {
+				col_vals.push(rows.row[x].cellvalue)
+				// console.log(`kolom ${x} : ${rows.row[x].cellvalue}`)
+			})
+			states === 'max' ? this.maxormin[x].maxminvalue = Math.max(...col_vals) : this.maxormin[x].maxminvalue = Math.min(...col_vals)
+			// console.log(this.maxormin[x].maxminvalue)
 		}
-	}
-	// computed: {
-	// 	findMaxOrMin(x) {
-	// 		const states = this.maxormin[x].states
-	// 		let col_vals = []
-	// 		this.MatriksSaw.forEach((cols) => {
-	// 			for (let i_index = 0; i_index < cols.row.length; i_index++) {
-	// 				let cell = cols.row.filter((y) => {
-	// 					return y.col_index === x
-	// 				})
-	// 				col_vals.push(cell)
-	// 			}
-	// 		})
-	// 	}
-	// }
 	// END SAW
+	}
 })
 loaderStop()
 
