@@ -20,7 +20,7 @@
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active" :class="isactive" id="tab_input" role="tabpanel">
+			<div class="tab-pane active" id="tab_input" role="tabpanel">
 				<!-- BEGIN form input -->
 				<div class="col-md-6 offset-3">
 					<div class="card">
@@ -86,40 +86,20 @@
 									</tr>
 								</thead>
 								<tbody>
-								<tr v-for="(kriteria,index) in kriterias">
-									<td>{{index + 1}}</td>
-									<td>{{kriteria.kode_kriteria}}</td>
-									<td>{{kriteria.nama_kriteria}}</td>
-									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
-												<i class="fa fa-pencil"></i> Edit</button>
-												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
-												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
-												<i class="fa fa-minus-circle"></i> Delete</button>
+									<tr v-for="(kriteria,index) in kriterias">
+										<td>{{index + 1}}</td>
+										<td>{{kriteria.kode_kriteria}}</td>
+										<td>{{kriteria.nama_kriteria}}</td>
+										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.kode_kriteria)">
+													<i class="fa fa-pencil"></i> Edit</button>
+													<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.kode_kriteria)">
+													<i class="fa fa-dot-circle-o"></i> View</button>
+													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.kode_kriteria)">
+													<i class="fa fa-minus-circle"></i> Delete</button>
 										</td>
-								</tr>
+									</tr>
 								</tbody>
 							</table>
-					<!--    <ul class="pagination">
-								<li class="page-item">
-									<a class="page-link" href="#">Prev</a>
-								</li>
-								<li class="page-item active">
-									<a class="page-link" href="#">1</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">2</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">3</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">4</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" href="#">Next</a>
-								</li>
-							</ul> -->
 						</div>
 					</div>
 				</div>
@@ -187,7 +167,7 @@ var app = new Vue({
     Save() 
     {
     	axios
-    	.post('http://localhost/spk-beasiswa/index.php/api/kriteria/kriteria',{
+    	.post(locationServer+'/api/kriteria/kriteria',{
           body: this.kriteria
     	})
         .then(response => {
@@ -204,7 +184,7 @@ var app = new Vue({
    GetData()
    {
       axios
-    	.post('http://localhost/spk-beasiswa/index.php/api/kriteria/kriterias',{
+    	.post(locationServer+'/api/kriteria/kriterias',{
     		body: this.Filter()
     	})
         .then(response => {
@@ -247,7 +227,7 @@ var app = new Vue({
    Edit(Id)
    {
      axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/kriteria/GetDataKriteriaById/'+Id)
+    	.get(locationServer+'/api/kriteria/GetDataKriteriaById/'+Id)
         .then(response => {
         	this.kriteria =  response.data;
 					$('.nav-tabs a[href="#tab_input"]').tab('show')
@@ -263,7 +243,7 @@ var app = new Vue({
    	var x = confirm("Are you sure you want to delete?");
     if (x){
        axios
-   	   .get('http://localhost/spk-beasiswa/index.php/api/kriteria/kriteriadelete/'+Id)
+   	   .get(locationServer+'/api/kriteria/kriteriadelete/'+Id)
         .then(response => {
         this.GetData();
        })
@@ -277,7 +257,7 @@ var app = new Vue({
    View(Id)
    {
    	axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/kriteria/GetDataKriteriaById/'+Id)
+    	.get(locationServer+'/api/kriteria/GetDataKriteriaById/'+Id)
         .then(response => {
         	this.kriteriaView =  response.data;
          	$("#detail-modal").modal('show');

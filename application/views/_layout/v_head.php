@@ -17,7 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
     <script src="https://unpkg.com/vue-cookies@1.5.5/vue-cookies.js"></script>
-
+    <script type="text/javascript">
+      var locationServer ="<?php echo base_url() ?>index.php";
+    </script>
     <style>
       #app {
         margin: 1em auto;
@@ -40,6 +42,11 @@
         <li class="nav-item px-3">
           <a class="nav-link<?php if ($this->uri->segment(1) == "") { echo " active"; } ?>" href="<?php echo site_url() ?>">
             <i class="nav-icon icon-home"></i> Home
+          </a>
+        </li>
+        <li class="nav-item px-3">
+          <a class="nav-link<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
+            <i class="nav-icon icon-calendar"></i> Tahun Angkatan
           </a>
         </li>
         <li class="nav-item px-3">
@@ -69,7 +76,9 @@
             </div>
             <a class="dropdown-item disabled" href="#">
               <i class="fa fa-user"></i> {{username}}</a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="<?php echo site_url() ?>/user">
+              <i class="fa fa-users"></i> Daftar Pengguna</a>
+            <a class="dropdown-item" v-on:click="Logout()">
               <i class="fa fa-lock"></i> Logout</a>
           </div>
         </li>
@@ -87,11 +96,11 @@
       username: ''
     },
     created() {
-      this.GetUserName()
+      this.GetUserName();
     },
     methods: {
       GetUserName () {
-        axios.get('<?php echo site_url() ?>/api/login/GetUserName/'+this.$cookies.get("tokenUserApp"))
+        axios.get(locationServer+'/api/login/GetUserName/'+this.$cookies.get("tokenUserApp"))
         .then(response => {
             this.username = response.data.username;
         })
@@ -100,6 +109,11 @@
           this.errored = true
         })
       },
+    Logout()
+     {
+      this.$cookies.remove("tokenUserApp");
+      window.location.replace(locationServer+"/login"); 
+     }
     }
   })
 
@@ -108,15 +122,15 @@
     this.Initialization()
   },
   methods: {
-    GetCokies () {
-     return this.$cookies.get("tokenUserApp");
-    },
+   GetCokies () {
+    return this.$cookies.get("tokenUserApp");
+   },
    Initialization()
    {
      if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
-       window.location.replace("http://localhost/spk-beasiswa/index.php/login"); 
+      window.location.replace(locationServer+"/login"); 
       GetUserName()
-  }
+     }
    },
   }
 })

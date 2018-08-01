@@ -312,7 +312,7 @@ var app = new Vue({
     Save() 
     {
     	axios
-    	  .post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswa',{
+    	  .post(locationServer+'/api/mahasiswa/mahasiswa',{
           body: this.mahasiswa
     	  })
         .then(response => {
@@ -334,7 +334,7 @@ var app = new Vue({
     GetData()
     {
       axios
-    	  .post('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswas',{
+    	  .post(locationServer+'/api/mahasiswa/mahasiswas',{
     		  body: this.Filter()
     	  })
         .then(response => {
@@ -390,7 +390,7 @@ var app = new Vue({
     Edit(Id)
     {
       axios
-    	  .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
         	this.mahasiswa =  response.data;
 					$('.nav-tabs a[href="#tab_input"]').tab('show')
@@ -410,7 +410,7 @@ var app = new Vue({
 			var x = confirm("Are you sure you want to delete?");
 			if (x){
         axios
-   	      .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/mahasiswadelete/'+Id)
+   	      .get(locationServer+'/api/mahasiswa/mahasiswadelete/'+Id)
           .then(response => {
             this.GetData();
           })
@@ -424,7 +424,7 @@ var app = new Vue({
     View(Id)
     {
    	  axios
-    	  .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/GetDataMahasiswaById/'+Id)
+    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
         	this.mahasiswaView =  response.data;
          	$("#detail-modal").modal('show');

@@ -9,7 +9,7 @@
 	</div>
 	<!-- BEGIN form input -->
 	<div class="col-md-12">
-	  <div class="card" id="input">
+	  <div class="card" >
 	    <div class="card-header">
 	    <div class="col-md-6">
 		     <div class="form-group row">
@@ -67,7 +67,7 @@
 	    </div>
 	</div>
 	<div class="col-md-12" v-show="selected && Mahasiswa.length">
-	  <div class="card" id="input">
+	  <div class="card" >
 	    <div class="card-header">
 	    	<strong>Matriks Perbandingan Berpasangan</strong>
 		  </div>
@@ -105,7 +105,7 @@
 		  </div>
 	     </div>
 		     <div v-show="isCalculate">
-			    <div class="card" id="input">
+			    <div class="card" >
 			    <div class="card-header">
 			    	<strong>Matriks Normalisasi</strong>
 				  </div>
@@ -132,7 +132,7 @@
 				    </table>
 				  </div>
 			     </div>
-			    <div class="card" id="input">
+			    <div class="card" >
 			    <div class="card-header">
 			    	<strong>Menghitung konsistensi</strong>
 				  </div>
@@ -157,9 +157,7 @@
 				    </table>
 				  </div>
 			     </div>
-			    <div class="card" id="input">
-			    <div class="card-header">
-				  </div>
+			    <div class="card" >
 				  <div class="card-body">
 				  	<div class="col-md-6">
 					    <table class="table table-responsive-sm table-striped">
@@ -188,6 +186,50 @@
 					    </table>
 				    </div>
 				  </div>
+
+					<div class="card">
+						<div class="card-body">
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th rowspan="2" class="text-center">Alternatif</th>
+										<th :colspan="Kriteria.length" class="text-center">Kriteria</th>
+									</tr>
+									<tr>
+										<th v-for="(kriteria, idx) in Kriteria" :key="idx">{{ kriteria.nama_kriteria }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
+										<td><strong>{{ mtx.nama }}</strong></td>
+										<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
+											<select class="form-control"
+												v-model="cell.cellvalue">
+												<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td><strong>X</strong></td>
+										<td v-for="(kriteria, idx) in Kriteria" :key="idx"></td>
+									</tr>
+									<tr>
+										<td><strong>Bobot</strong></td>
+										<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
+									</tr>
+									<!-- <tr>
+										<td><strong>Sifat</strong></td>
+										<td v-for="(kriteria, idx) in Kriteria" :key="idx">
+											<select class="form-control" v-model="maxormin[idx].states" @change="findMaxOrMin(idx)">
+												<option value="max">MAX</option>
+												<option value="max">MIN</option>
+											</select>
+										</td>
+									</tr> -->
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 	     </div>
 	   </div>
@@ -198,187 +240,241 @@
 var app = new Vue({
   el: '#app',
   created(){
-     this.GetTahunAngkatan();
-     this.GetKriteria();
+    this.GetTahunAngkatan();
+    this.GetKriteria();
   },
   data: {
-     TahunAngkatan:[],
-     selected: '',
-     Mahasiswa:[],
-     Kriteria:[],
-     MatrixPerbandingan:[],
-     isCalculate:'',
-     MatriksNormalisasi:[],
-     Konsistensi:[],
-     Lamda:{},
-     IC:{},
-     IR:{},
-     CR:{},
+    TahunAngkatan:[],
+    selected: '',
+    Mahasiswa:[],
+    Kriteria:[],
+    MatrixPerbandingan:[],
+    isCalculate:'',
+    MatriksNormalisasi:[],
+    Konsistensi:[],
+    Lamda:{},
+    IC:{},
+    IR:{},
+    CR:{},
+		MatriksSaw: [],
+		// maxormin: []
   },
   methods: {
   	GetTahunAngkatan()
   	{
-  	   axios
-    	.get('http://localhost/spk-beasiswa/index.php/api/tahunangkatan/tahunangkatans')
-        .then(response => {
-        	this.TahunAngkatan =  response.data;
-       })
-       .catch(error => {
+  	  axios
+    	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
+      .then(response => {
+       	this.TahunAngkatan =  response.data;
+      })
+      .catch(error => {
         console.log(error)
         this.errored = true
       })
       .finally(() => this.loading = false )
   	},
-   GetMahasiswa(idTahun){
-   	axios
-       .get('http://localhost/spk-beasiswa/index.php/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
-        .then(response => {
-        	this.Mahasiswa =  response.data;
-		    this.isCalculate=false;
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-       })
-       .finally(() => this.loading = false )
-   },
-   GetKriteria(){
-   	axios
-       .get('http://localhost/spk-beasiswa/index.php/api/kriteria/getkriterias')
-        .then(response => {
-        	this.Kriteria =  response.data;
-        	this.SetMaxtrixPerbandingan();
-       })
-       .catch(error => {
-        console.log(error)
-        this.errored = true
-       })
-       .finally(() => this.loading = false )
-   },
-   SetMaxtrixPerbandingan(){
-   var MatrixPerbandingan = [];
-   var defaultvalue = 0;
-   var lengkriteria = this.Kriteria.length;
-   	this.Kriteria.forEach(function (value, i) {
-        var row = [];
-    	for (var j = 0; j < lengkriteria;j++) {
-    	    var colum = {
-    	    	row : i,
-    	    	colum:j,
-    	    	value:defaultvalue == j?1:0,
-    	    	isChange:j > i? true:false,
-    	    }
 
-    	    row.push(colum);
+	// BEGIN AHP 
+  	GetMahasiswa(idTahun){
+   		axios
+      .get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
+      .then(response => {
+       	this.Mahasiswa =  response.data;
+		    this.isCalculate=false;
+				this.SetMatriksSawAwal()
+      })
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false)
+   	},
+   	GetKriteria(){
+   		axios
+      .get(locationServer+'/api/kriteria/getkriterias')
+      .then(response => {
+       	this.Kriteria =  response.data;
+       	this.SetMaxtrixPerbandingan();
+      })
+      .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false )
+   	},
+  	SetMaxtrixPerbandingan(){
+			var MatrixPerbandingan = [];
+			var defaultvalue = 0;
+			var lengkriteria = this.Kriteria.length;
+			this.Kriteria.forEach(function (value, i) {
+				var row = [];
+				for (var j = 0; j < lengkriteria;j++) {
+					var colum = {
+						row : i,
+						colum:j,
+						value:defaultvalue == j?1:0,
+						isChange:j > i? true:false,
+					}
+
+					row.push(colum);
+				}
+				var matrix = {
+					kriteria :value.nama_kriteria,
+					row:row,
+					jumlah:1
+				};
+				MatrixPerbandingan.push(matrix);
+				defaultvalue ++;
+			});
+			this.MatrixPerbandingan = MatrixPerbandingan;
+  	},
+   	CalculateMatrix(row,matrix,index,indexparent){
+    	var total = 0;
+    	this.MatrixPerbandingan[row.colum].row[indexparent].value = parseFloat(matrix.row[row.row].value) / parseFloat(row.value);
+    	for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
+    		total += parseFloat(this.MatrixPerbandingan[i].row[row.row].value);
     	}
-    	var matrix = {
-    		kriteria :value.nama_kriteria,
-    		row:row,
-        jumlah:1
-    	};
-    	MatrixPerbandingan.push(matrix);
-      defaultvalue ++;
-	});
-	this.MatrixPerbandingan = MatrixPerbandingan;
-   },
-   CalculateMatrix(row,matrix,index,indexparent){
-    var total = 0;
-    this.MatrixPerbandingan[row.colum].row[indexparent].value = parseFloat(matrix.row[row.row].value) / parseFloat(row.value);
-    for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
-    total += parseFloat(this.MatrixPerbandingan[i].row[row.row].value);
-    }
-    this.MatrixPerbandingan[row.row].jumlah = total.toFixed(2);
+    	this.MatrixPerbandingan[row.row].jumlah = total.toFixed(2);
       total = 0;
       for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
         total += parseFloat(this.MatrixPerbandingan[i].row[index].value);
       }
       this.MatrixPerbandingan[index].jumlah = total.toFixed(2);
-   },
-   Calculate(){
-   	var valid = true;
-   this.MatrixPerbandingan.forEach(function (value, i) {
-   	 if(value.row.filter(x => x.isChange == true && x.value == 0).length > 0){
-   	 	valid =false;
-   	   }
-   	   console.log(value.row.filter(x => x.isChange == true && x.value == 0).length);
-   	});
-   if(!valid){
-    alert("Ada data yang tidak falid");
-   }else{
-    this.isCalculate = true;
-    var MatrixNormalisasi =[];
-    var konsistensi = [];
-    var lamda =[];
-    var baris = 0;
-    var rata2 =0;
-    var length = this.MatrixPerbandingan.length;
-    var MatrixPerbandingan = this.MatrixPerbandingan;
-    //HITUNG Matrix Normalisasi
-      this.MatrixPerbandingan.forEach(function (value, i) {
-        baris = 0;
-        rata2 =0;
-        var row = [];
-        for (var j = 0; j < length; j++) {
-          var colum = {
-            row : i,
-            colum:j,
-            value: (parseFloat(MatrixPerbandingan[i].row[j].value) / parseFloat(MatrixPerbandingan[j].jumlah)).toFixed(5),
-          }
-          baris += parseFloat(colum.value);
-          row.push(colum);
-        }
+   	},
+   	Calculate(){
+   		var valid = true;
+   		this.MatrixPerbandingan.forEach(function (value, i) {
+   	 		if(value.row.filter(x => x.isChange == true && x.value == 0).length > 0){
+   	 			valid =false;
+   	   	}
+   	   	console.log(value.row.filter(x => x.isChange == true && x.value == 0).length);
+   		});
+			if(!valid) {
+				alert("Ada data yang tidak falid");
+			} else {
+				this.isCalculate = true;
+				var MatrixNormalisasi =[];
+				var konsistensi = [];
+				var lamda =[];
+				var baris = 0;
+				var rata2 =0;
+				var length = this.MatrixPerbandingan.length;
+				var MatrixPerbandingan = this.MatrixPerbandingan;
+				//HITUNG Matrix Normalisasi
+				this.MatrixPerbandingan.forEach(function (value, i) {
+					baris = 0;
+					rata2 =0;
+					var row = [];
+					for (var j = 0; j < length; j++) {
+						var colum = {
+							row : i,
+							colum:j,
+							value: (parseFloat(MatrixPerbandingan[i].row[j].value) / parseFloat(MatrixPerbandingan[j].jumlah)).toFixed(5),
+						}
+						baris += parseFloat(colum.value);
+						row.push(colum);
+					}
 
-        var matrix = {
-        kriteria :value.kriteria,
-        row:row,
-        baris:baris,
-        rata2:parseFloat(baris / row.length),
-      };
-      MatrixNormalisasi.push(matrix);
-      });
-   this.MatriksNormalisasi = MatrixNormalisasi;
-  //END Matrix Normalisasi
-  //Hitung Kosistensi
-   MatrixPerbandingan.forEach(function (value, i) {
-       baris = 0;
-        var row = [];
-        for (var j = 0; j < length; j++) {
-          var colum = {
-            row : i,
-            colum:j,
-            value: parseFloat(MatrixPerbandingan[i].row[j].value * MatrixNormalisasi[j].rata2),
-          }
-          baris +=parseFloat(colum.value);
-          row.push(colum);
-        }
+					var matrix = {
+						kriteria :value.kriteria,
+						row:row,
+						baris:baris,
+						rata2:parseFloat(baris / row.length),
+					};
+      		MatrixNormalisasi.push(matrix);
+				});
+				this.MatriksNormalisasi = MatrixNormalisasi;
+				//END Matrix Normalisasi
+				//Hitung Kosistensi
+				MatrixPerbandingan.forEach(function (value, i) {
+					baris = 0;
+					var row = [];
+					for (var j = 0; j < length; j++) {
+						var colum = {
+							row : i,
+							colum:j,
+							value: parseFloat(MatrixPerbandingan[i].row[j].value * MatrixNormalisasi[j].rata2),
+						}
+						baris +=parseFloat(colum.value);
+						row.push(colum);
+					}
 
-        var matrix = {
-        kriteria :value.kriteria,
-        row:row,
-        baris:baris,
-      };
-      konsistensi.push(matrix);
-   });
-    this.Konsistensi = konsistensi;
-  //END Konsistensi
-  //Hitung Lamda
-  rata2 = 0;
-  for (var i = 0; i < length; i++) {
-    lamda.push(parseFloat(konsistensi[i].baris / MatrixNormalisasi[i].rata2));
-    rata2 += parseFloat(konsistensi[i].baris / MatrixNormalisasi[i].rata2); 
-  }
-  this.Lamda ={
-    lamda :lamda,
-    rata2 :parseFloat(rata2 / lamda.length)
-  };
-  //END Lamda
-  //IC,IR,CR
-  this.IC = parseFloat((this.Lamda.rata2 - konsistensi.length)/(konsistensi.length - 1));
-  this.IR = 1.24;
-  this.CR = parseFloat(this.IC / this.IR);
-  }
-   },
-}
+					var matrix = {
+						kriteria :value.kriteria,
+						row:row,
+						baris:baris,
+					};
+					konsistensi.push(matrix);
+				});
+				this.Konsistensi = konsistensi;
+				//END Konsistensi
+				//Hitung Lamda
+				rata2 = 0;
+				for (var i = 0; i < length; i++) {
+					lamda.push(parseFloat(konsistensi[i].baris / MatrixNormalisasi[i].rata2));
+					rata2 += parseFloat(konsistensi[i].baris / MatrixNormalisasi[i].rata2); 
+				}
+				this.Lamda ={
+					lamda :lamda,
+					rata2 :parseFloat(rata2 / lamda.length)
+				};
+				//END Lamda
+				//IC,IR,CR
+				this.IC = parseFloat((this.Lamda.rata2 - konsistensi.length)/(konsistensi.length - 1));
+				this.IR = 1.24;
+				this.CR = parseFloat(this.IC / this.IR);
+			}
+		},
+	// END AHP
+
+	// BEGIN SAW
+		SetMatriksSawAwal: function(){
+			let MatriksSawAwal = []
+			let maxorminAwal = []
+			for(let index = 0; index < this.Mahasiswa.length; index++){
+				let row = []
+				for(let i_index = 0; i_index < this.Kriteria.length; i_index++){
+					let cell = {
+						row_index: index,
+						col_index: i_index,
+						cellvalue: 0
+					}
+
+					row.push(cell)
+
+					// let maxmincell = {
+					// 	col_index: i_index,
+					// 	states: 'max',
+					// 	maxminvalue: 0
+					// }
+
+					// maxormin.push(maxmincell)
+				}
+
+				let matrix = {
+					nama: this.Mahasiswa[index].nama,
+					row: row
+				}
+				MatriksSawAwal.push(matrix)
+			}
+			this.MatriksSaw = MatriksSawAwal
+		}
+	}
+	// computed: {
+	// 	findMaxOrMin(x) {
+	// 		const states = this.maxormin[x].states
+	// 		let col_vals = []
+	// 		this.MatriksSaw.forEach((cols) => {
+	// 			for (let i_index = 0; i_index < cols.row.length; i_index++) {
+	// 				let cell = cols.row.filter((y) => {
+	// 					return y.col_index === x
+	// 				})
+	// 				col_vals.push(cell)
+	// 			}
+	// 		})
+	// 	}
+	// }
+	// END SAW
 })
 loaderStop()
 
