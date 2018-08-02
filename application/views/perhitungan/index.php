@@ -188,46 +188,96 @@
 				  </div>
 
 					<div class="card">
+						<div class="card-header">
+							<strong>Metode SAW</strong>	
+						</div>
 						<div class="card-body">
-							<table class="table table-responsive-sm table-striped">
-								<thead>
-									<tr>
-										<th rowspan="2" class="text-center">Alternatif</th>
-										<th :colspan="Kriteria.length" class="text-center">Kriteria</th>
-									</tr>
-									<tr>
-										<th v-for="(kriteria, idx) in Kriteria" :key="idx">{{ kriteria.nama_kriteria }}</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
-										<td><strong>{{ mtx.nama }}</strong></td>
-										<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
-											<select class="form-control"
-												v-model="cell.cellvalue">
-												<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td><strong>X</strong></td>
-										<td v-for="(col, idx) in maxormin" :key="idx">{{ col.maxminvalue }}</td>
-									</tr>
-									<tr>
-										<td><strong>Bobot</strong></td>
-										<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
-									</tr>
-									<tr>
-										<td><strong>Sifat</strong></td>
-										<td v-for="(col, idx) in maxormin" :key="idx">
-											<select class="form-control" v-model="col.state" @change="findMaxOrMin(idx)">
-												<option value="max">MAX</option>
-												<option value="min">MIN</option>
-											</select>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="card">
+								<table class="table table-responsive-sm table-striped">
+									<thead>
+										<tr>
+											<th rowspan="2" class="text-center">Alternatif</th>
+											<th :colspan="Kriteria.length" class="text-center">Kriteria</th>
+										</tr>
+										<tr>
+											<th v-for="(kriteria, idx) in Kriteria" :key="idx">{{ kriteria.nama_kriteria }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
+											<td><strong>{{ mtx.nama }}</strong></td>
+											<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
+												<select class="form-control"
+													v-model="cell.cellvalue"
+													@change="findMaxOrMin(i_idx)">
+													<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td><strong>X</strong></td>
+											<td v-for="(col, idx) in maxormin" :key="idx">{{ col.maxminvalue }}</td>
+										</tr>
+										<tr>
+											<td><strong>Bobot</strong></td>
+											<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
+										</tr>
+										<tr>
+											<td><strong>Sifat</strong></td>
+											<td v-for="(col, idx) in maxormin" :key="idx">
+												<select class="form-control" v-model="col.state" @change="findMaxOrMin(idx)">
+													<option value="max">MAX</option>
+													<option value="min">MIN</option>
+												</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="card-footer">
+									<button type="button" class="btn btn-primary" @click="CalculateMatriksSaw">Hitung</button>
+								</div>
+							</div>
+
+							<div v-show="sawCalculate">
+								<div class="card">
+									<div class="card-header">
+										<strong>Normalisasi</strong>
+									</div>
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th>Alternatif</th>
+												<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mtx, idx) in MatriksSawNormalisasi" :key="idx">
+												<td><strong>{{ mtx.nama }}</strong></td>
+												<td v-for="(i_mtx, i_idx) in mtx.row">{{ i_mtx.value }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div class="card">
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th>Alternatif</th>
+												<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
+												<th>Jumlah</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mtx, idx) in MatriksSawFinal" :key="idx">
+												<td>{{ mtx.nama }}</td>
+												<td v-for="(i_mtx, i_idx) in mtx.row" :key="i_idx">{{ i_mtx.value }}</td>
+												<td>{{ mtx.jumlah }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -257,7 +307,10 @@ var app = new Vue({
     IR:{},
     CR:{},
 		MatriksSaw: [],
-		maxormin: []
+		maxormin: [],
+		MatriksSawNormalisasi: [],
+		sawCalculate: false,
+		MatriksSawFinal: []
   },
   methods: {
   	GetTahunAngkatan()
@@ -471,6 +524,72 @@ var app = new Vue({
 			})
 			states === 'max' ? this.maxormin[x].maxminvalue = Math.max(...col_vals) : this.maxormin[x].maxminvalue = Math.min(...col_vals)
 			// console.log(this.maxormin[x].maxminvalue)
+		},
+		CalculateMatriksSaw: function() {
+			this.sawCalculate = true
+			let MatriksSawNormalisasiAwal = []
+			for(let index = 0; index < this.MatriksSaw.length; index++) {
+				// console.log(
+				// 	`indeks= ${index}`
+				// )
+				let norm_cell_value
+				let rows = []
+				for(let i_index = 0; i_index < this.maxormin.length; i_index++) {
+					norm_cell_value = {
+						value: parseFloat(this.maxormin[i_index].maxminvalue) / parseFloat(this.MatriksSaw[index].row[i_index].cellvalue)
+					}
+					rows.push(norm_cell_value)
+
+					// console.log(
+					// 	`
+					// 	i_indeks= ${i_index} ,
+					// 	maxorminval= ${this.maxormin[i_index].maxminvalue} ,
+					// 	initval= ${this.MatriksSaw[index].row[i_index].cellvalue} ,
+					// 	norm_cel_value= ${norm_cell_value}
+					// 	`
+					// )
+				}
+				let NormalisasiRow = {
+					nama: this.MatriksSaw[index].nama,
+					row: rows
+				}
+				MatriksSawNormalisasiAwal.push(NormalisasiRow)
+			}
+			this.MatriksSawNormalisasi = MatriksSawNormalisasiAwal
+			this.CalculateSawFinal()
+		},
+		CalculateSawFinal: function() {
+			let MatriksSawFinalAwal = []
+			for(let index = 0; index < this.MatriksSawNormalisasi.length; index++) {
+				let jumlah = 0
+				let final_value
+				let rows = []
+				// console.log(
+				// 	`indeks= ${index}`
+				// )
+				for(let i_index = 0; i_index < this.MatriksNormalisasi.length; i_index++) {
+					const calc_final_value = this.MatriksNormalisasi[i_index].rata2 * this.MatriksSawNormalisasi[index].row[i_index].value 
+					final_value = {
+						value: calc_final_value
+					}
+					jumlah += calc_final_value
+					rows.push(final_value)
+					// console.log(
+					// 	`
+					// 	i_indeks= ${i_index} ,
+					// 	bobot= ${this.MatriksNormalisasi[i_index].rata2} ,
+					// 	norm_cell_value= ${this.MatriksSawNormalisasi[index].row[i_index].value} 
+					// 	`
+					// )
+				}
+				let FinalRow = {
+					nama: this.MatriksSawNormalisasi[index].nama,
+					jumlah: jumlah,
+					row: rows
+				}
+				MatriksSawFinalAwal.push(FinalRow)
+			}
+			this.MatriksSawFinal = MatriksSawFinalAwal
 		}
 	// END SAW
 	}
