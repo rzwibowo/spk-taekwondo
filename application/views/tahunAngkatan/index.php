@@ -22,7 +22,7 @@
 		<div class="tab-content">
 			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 				<!-- BEGIN form input -->
-				<div class="col-md-8 offset-3">
+				<div class="col-md-6 offset-3">
 					<div class="card">
 						<div class="card-header">
 							Input Data 
@@ -31,14 +31,14 @@
 						<div class="card-body">
 							<form action="" method="post" class="form-horizontal">
 								<div class="form-group row">
-									<label class="col-md-3 col-form-label" for="nim">Tahun Angkatan</label>
-									<div class="col-md-9">
-										<input type="text" id="tahun_angkatan" name="tahun_angkatan" v-model="TahunAngkatan.tahun_angkatan" class="form-control" placeholder="Tahun Angkatan">
+									<label class="col-md-4 col-form-label" for="nim">Tahun Angkatan</label>
+									<div class="col-md-4">
+										<input type="number" min="2000" id="tahun_angkatan" name="tahun_angkatan" v-model="TahunAngkatan.tahun_angkatan" class="form-control" placeholder="Tahun Angkatan">
 									</div>
 								</div>
 							</form>
 						</div>
-						<div class="card-footer">
+						<div class="card-footer text-right">
 							<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 								<i class="fa fa-dot-circle-o"></i> Simpan</button>
 							<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
@@ -50,40 +50,43 @@
 			</div>
 			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 				<!-- START list -->
-				<div class="col-md-12">
+				<div class="col-md-6 offset-3">
 					<div class="card">
 						<div class="card-header">
 							Daftar <strong><?php echo $title ?></strong>
 						</div>
-						<div class="card-body">
-							<table class="table table-responsive-sm table-striped">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Tahun</th>
-										<th></th>
-									</tr>
-									<tr>
-										<th></th>
-										<th><input type="text" name="tahun_angkatan" class="form-control" v-model="FilterModel.tahun_angkatan" v-on:keyup="ChangeFilter(FilterModel.tahun_angkatan)"></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(tahunangkatan,index) in TahunAngkatans">
-										<td>{{index + 1}}</td>
-										<td>{{tahunangkatan.tahun_angkatan}}</td>
-										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(tahunangkatan.id_tahun_angkatan)">
-													<i class="fa fa-pencil"></i> Edit</button>
-													<button type="button" class="btn btn-sm btn-success" v-on:click="View(tahunangkatan.id_tahun_angkatan)">
-													<i class="fa fa-dot-circle-o"></i> View</button>
-													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(tahunangkatan.id_tahun_angkatan)">
-													<i class="fa fa-minus-circle"></i> Delete</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<table class="table table-responsive-sm table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th class="text-center">Tahun</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th></th>
+									<th><input type="text" 
+										name="tahun_angkatan" 
+										class="form-control text-center" 
+										v-model="FilterModel.tahun_angkatan" 
+										v-on:keyup="ChangeFilter(FilterModel.tahun_angkatan)"
+										placeholder="Cari tahun angkatan ..."></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(tahunangkatan,index) in TahunAngkatans">
+									<td>{{index + 1}}</td>
+									<td class="text-center">{{tahunangkatan.tahun_angkatan}}</td>
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(tahunangkatan.id_tahun_angkatan)">
+												<i class="fa fa-pencil"></i> Edit</button>
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(tahunangkatan.id_tahun_angkatan)">
+												<i class="fa fa-dot-circle-o"></i> View</button>
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(tahunangkatan.id_tahun_angkatan)">
+												<i class="fa fa-minus-circle"></i> Delete</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<!-- END list -->					

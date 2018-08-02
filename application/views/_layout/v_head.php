@@ -24,6 +24,16 @@
       #app {
         margin: 1em auto;
       }
+      .nav-link.active.nav-menu::after {
+        content: '';
+        background: #ccddee;
+        display: block;
+        height: 5px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1em;
+      }
     </style>
   </head>
   <body class="app header-fixed">
@@ -40,27 +50,27 @@
       </a>
       <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "") { echo " active"; } ?>" href="<?php echo site_url() ?>">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "") { echo " active"; } ?>" href="<?php echo site_url() ?>">
             <i class="nav-icon icon-home"></i> Home
           </a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
             <i class="nav-icon icon-calendar"></i> Tahun Angkatan
           </a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
             <i class="nav-icon icon-equalizer"></i> Kriteria
           </a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
             <i class="nav-icon icon-graduation"></i> Mahasiswa
           </a>
         </li>
         <li class="nav-item px-3">
-          <a class="nav-link<?php if ($this->uri->segment(1) == "perhitungan") { echo " active"; } ?>" href="<?php echo site_url() ?>/perhitungan">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "perhitungan") { echo " active"; } ?>" href="<?php echo site_url() ?>/perhitungan">
             <i class="nav-icon icon-calculator"></i> Perhitungan
           </a>
         </li>
@@ -74,12 +84,12 @@
             <div class="dropdown-header text-center">
               <strong>Pengguna</strong>
             </div>
-            <a class="dropdown-item disabled" href="#">
-              <i class="fa fa-user"></i> {{username}}</a>
+            <a class="dropdown-item disabled bg-gray-300 text-white" style="cursor: default; pointer-events: none;">
+              <i class="fa fa-user text-white"></i> <strong>{{username}}</strong></a>
             <a class="dropdown-item" href="<?php echo site_url() ?>/user">
               <i class="fa fa-users"></i> Daftar Pengguna</a>
-            <a class="dropdown-item" v-on:click="Logout()">
-              <i class="fa fa-lock"></i> Logout</a>
+            <a class="dropdown-item text-danger" v-on:click="Logout()">
+              <i class="fa fa-lock text-danger"></i> Logout</a>
           </div>
         </li>
       </ul>

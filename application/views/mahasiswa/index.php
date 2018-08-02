@@ -9,20 +9,20 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
+				<a class="nav-link" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
+				<a class="nav-link active" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list">
 					<i class="icon-list"></i> List
 				</a>
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div class="tab-pane active" id="tab_input" role="tabpanel">
+			<div class="tab-pane" id="tab_input" role="tabpanel">
 					<!-- BEGIN form input -->
-					<div class="col-md-6 offset-3">
+					<div class="col-md-8 offset-md-2">
 						<div class="card" id="input">
 							<div class="card-header">
 								Input Data 
@@ -116,7 +116,7 @@
 									</div>
 								</form>
 							</div>
-							<div class="card-footer" style="text-align: center;">
+							<div class="card-footer text-right">
 								<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 									<i class="fa fa-dot-circle-o"></i> Simpan</button>
 								<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
@@ -126,72 +126,70 @@
 					</div>
 					<!-- END form input -->		
 			</div>
-			<div class="tab-pane" id="tab_list" role="tabpanel">
+			<div class="tab-pane active" id="tab_list" role="tabpanel">
 					<!-- START list -->
 					<div class="col-md-12">
 						<div class="card" id="list">
 							<div class="card-header">
 								Daftar <strong>Mahasiswa</strong>
 							</div>
-							<div class="card-body">
-								<table class="table table-responsive-sm table-striped">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>NIM</th>
-											<th>Nama</th>
-											<th>Tahun</th>
-											<th>JK</th>
-											<!-- <th>Tempat</th> -->
-											<!-- <th>Alam</th> -->
-											<th>IPK</th>
-											<th>Kendaraan</th>
-											<!-- <th>Penghasilan Orang Tua</th> -->
-											<!-- <th>Pekerjaan Orang Tua</th> -->
-											<!-- <th>Tanggungan Orang Tua</th> -->
-											<th></th>
-										</tr>
-										<tr>
-											<th></th>
-											<th><input type="text" name="nim" class="form-control" v-model="FilterModel.nim" v-on:keyup="ChangeFilter(FilterModel.nim)"></th>
-											<th><input type="text" name="nama" class="form-control" v-model="FilterModel.nama" v-on:keyup="ChangeFilter(FilterModel.nama)"></th>
-											<th><input type="text" name="thn_angkatan" class="form-control" v-model="FilterModel.thn_angkatan" v-on:keyup="ChangeFilter(FilterModel.thn_angkatan)"></th>
-											<th><input type="text" name="jenis_kelamin" class="form-control" v-model="FilterModel.jenis_kelamin" v-on:keyup="ChangeFilter(FilterModel.jenis_kelamin)"></th>
-											<!-- <th><input type="text" name="tempat_lahir" class="form-control" v-model="FilterModel.tempat_lahir" v-on:keyup="ChangeFilter(FilterModel.tempat_lahir)"></th> -->
-											<!-- <th><input type="text" name="alamat" class="form-control" v-model="FilterModel.alamat" v-on:keyup="ChangeFilter(FilterModel.alamat)"></th> -->
-											<th><input type="text" name="ipk" class="form-control" v-model="FilterModel.ipk" v-on:keyup="ChangeFilter(FilterModel.ipk)"></th>
-											<th><input type="text" name="kendaraan" class="form-control" v-model="FilterModel.kendaraan" v-on:keyup="ChangeFilter(FilterModel.kendaraan)"></th>
-											<!-- <th><input type="text" name="pgh_orangtua" class="form-control" v-model="FilterModel.pgh_orangtua" v-on:keyup="ChangeFilter(FilterModel.pgh_orangtua)"></th> -->
-											<!-- <th><input type="text" name="pkj_orangtua" class="form-control" v-model="FilterModel.pkj_orangtua" v-on:keyup="ChangeFilter(FilterModel.pkj_orangtua)"></th> -->
-											<!-- <th><input type="text" name="jml_tanggungan" class="form-control" v-model="FilterModel.jml_tanggungan" v-on:keyup="ChangeFilter(FilterModel.jml_tanggungan)"></th> -->
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-									<tr v-for="(mahasiswa,index) in mahasiswas">
-										<td>{{index + 1}}</td>
-										<td>{{mahasiswa.nim}}</td>
-										<td>{{mahasiswa.nama}}</td>
-										<td>{{mahasiswa.thn_angkatan}}</td>
-										<td>{{mahasiswa.jenis_kelamin}}</td>
-										<!-- <td>{{mahasiswa.tempat_lahir}}</td> -->
-										<!-- <td>{{mahasiswa.alamat}}</td> -->
-										<td>{{mahasiswa.ipk}}</td>
-										<td>{{mahasiswa.kendaraan}}</td>
-										<!-- <td>{{mahasiswa.pgh_orangtua}}</td> -->
-										<!-- <td>{{mahasiswa.pkj_orangtua}}</td> -->
-										<!-- <td>{{mahasiswa.jml_tanggungan}}</td> -->
-										<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.nim)">
-													<i class="fa fa-pencil"></i> Edit</button>
-													<button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.nim)">
-													<i class="fa fa-dot-circle-o"></i> View</button>
-													<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.nim)">
-													<i class="fa fa-minus-circle"></i> Delete</button>
-											</td>
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>NIM</th>
+										<th>Nama</th>
+										<th class="text-center">Tahun</th>
+										<th>JK</th>
+										<!-- <th>Tempat</th> -->
+										<!-- <th>Alam</th> -->
+										<th class="text-center">IPK</th>
+										<th>Kendaraan</th>
+										<!-- <th>Penghasilan Orang Tua</th> -->
+										<!-- <th>Pekerjaan Orang Tua</th> -->
+										<!-- <th>Tanggungan Orang Tua</th> -->
+										<th></th>
 									</tr>
-									</tbody>
-								</table>
-							</div>
+									<tr>
+										<th></th>
+										<th><input type="text" name="nim" class="form-control" v-model="FilterModel.nim" v-on:keyup="ChangeFilter(FilterModel.nim)" placeholder="Cari NIM mahasiswa ..."></th>
+										<th><input type="text" name="nama" class="form-control" v-model="FilterModel.nama" v-on:keyup="ChangeFilter(FilterModel.nama)" placeholder="Cari nama mahasiswa ..."></th>
+										<th><input type="number" name="thn_angkatan" class="form-control text-center" v-model="FilterModel.thn_angkatan" v-on:keyup="ChangeFilter(FilterModel.thn_angkatan)" placeholder="Cari tahun angkatan ..."></th>
+										<th><input type="text" name="jenis_kelamin" class="form-control" v-model="FilterModel.jenis_kelamin" v-on:keyup="ChangeFilter(FilterModel.jenis_kelamin)" placeholder="Cari jenis kelamin mahasiswa ..."></th>
+										<!-- <th><input type="text" name="tempat_lahir" class="form-control" v-model="FilterModel.tempat_lahir" v-on:keyup="ChangeFilter(FilterModel.tempat_lahir)"></th> -->
+										<!-- <th><input type="text" name="alamat" class="form-control" v-model="FilterModel.alamat" v-on:keyup="ChangeFilter(FilterModel.alamat)"></th> -->
+										<th><input type="number" name="ipk" class="form-control text-center" v-model="FilterModel.ipk" v-on:keyup="ChangeFilter(FilterModel.ipk)" placeholder="Cari IPK mahasiswa ..."></th>
+										<th><input type="text" name="kendaraan" class="form-control" v-model="FilterModel.kendaraan" v-on:keyup="ChangeFilter(FilterModel.kendaraan)" placeholder="Cari kendaraan mahasiswa ..."></th>
+										<!-- <th><input type="text" name="pgh_orangtua" class="form-control" v-model="FilterModel.pgh_orangtua" v-on:keyup="ChangeFilter(FilterModel.pgh_orangtua)"></th> -->
+										<!-- <th><input type="text" name="pkj_orangtua" class="form-control" v-model="FilterModel.pkj_orangtua" v-on:keyup="ChangeFilter(FilterModel.pkj_orangtua)"></th> -->
+										<!-- <th><input type="text" name="jml_tanggungan" class="form-control" v-model="FilterModel.jml_tanggungan" v-on:keyup="ChangeFilter(FilterModel.jml_tanggungan)"></th> -->
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								<tr v-for="(mahasiswa,index) in mahasiswas">
+									<td>{{index + 1}}</td>
+									<td>{{mahasiswa.nim}}</td>
+									<td>{{mahasiswa.nama}}</td>
+									<td class="text-center">{{mahasiswa.thn_angkatan}}</td>
+									<td>{{mahasiswa.jenis_kelamin}}</td>
+									<!-- <td>{{mahasiswa.tempat_lahir}}</td> -->
+									<!-- <td>{{mahasiswa.alamat}}</td> -->
+									<td class="text-center">{{mahasiswa.ipk}}</td>
+									<td>{{mahasiswa.kendaraan}}</td>
+									<!-- <td>{{mahasiswa.pgh_orangtua}}</td> -->
+									<!-- <td>{{mahasiswa.pkj_orangtua}}</td> -->
+									<!-- <td>{{mahasiswa.jml_tanggungan}}</td> -->
+									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(mahasiswa.nim)">
+												<i class="fa fa-pencil"></i> Edit</button>
+												<button type="button" class="btn btn-sm btn-success" v-on:click="View(mahasiswa.nim)">
+												<i class="fa fa-dot-circle-o"></i> View</button>
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(mahasiswa.nim)">
+												<i class="fa fa-minus-circle"></i> Delete</button>
+										</td>
+								</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 					<!-- END list -->
