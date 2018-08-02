@@ -22,7 +22,7 @@
 		<div class="tab-content">
 			<div class="tab-pane" id="tab_input" role="tabpanel" v-bind:class="Form == true?'active':''">
 				<!-- BEGIN form input -->
-				<div class="col-md-6 offset-3">
+				<div class="col-md-6 offset-md-3">
 					<div class="card">
 						<div class="card-header">
 							Input Data 
@@ -50,7 +50,7 @@
 			</div>
 			<div class="tab-pane" id="tab_list" role="tabpanel" v-bind:class="Form == false?'active':''">
 				<!-- START list -->
-				<div class="col-md-6 offset-3">
+				<div class="col-md-6 offset-md-3">
 					<div class="card">
 						<div class="card-header">
 							Daftar <strong><?php echo $title ?></strong>
