@@ -129,7 +129,6 @@
      }
     }
   })
-
   var app = new Vue({
   created() {
     this.Initialization()
@@ -147,15 +146,13 @@
    },
   }
 })
-
 var loader = document.querySelectorAll('.loader')
-
 function loaderStop() {
-	setInterval(function() {
+  setInterval(function() {
     if (loader[0].style.opacity > 0) {
       loader[0].style.opacity -= 0.1
     }
-	}, 500)
-	loader[0].style.display = "none"
+  }, 500)
+  loader[0].style.display = "none"
 }
 </script>

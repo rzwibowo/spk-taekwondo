@@ -9,12 +9,12 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form = true">
+				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form = true;Submit = false;">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" v-bind:class="Form == false?'active':''" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list" v-on:click="Form = false">
+				<a class="nav-link" v-bind:class="Form == false?'active':''" data-toggle="tab" href="#tab_list" role="tab" aria-controls="tab_list" v-on:click="Form = false;Submit = false">
 					<i class="icon-list"></i> List
 				</a>
 			</li>
@@ -34,6 +34,7 @@
 									<label class="col-md-4 col-form-label" for="nim">Tahun Angkatan</label>
 									<div class="col-md-4">
 										<input type="number" min="2000" id="tahun_angkatan" name="tahun_angkatan" v-model="TahunAngkatan.tahun_angkatan" class="form-control" placeholder="Tahun Angkatan">
+										<span style="color: red" v-show="!TahunAngkatan.tahun_angkatan && Submit">Fied harus diisi</span>
 									</div>
 								</div>
 							</form>
@@ -41,7 +42,7 @@
 						<div class="card-footer text-right">
 							<button type="submit" class="btn btn-sm btn-primary"  v-on:click="Save">
 								<i class="fa fa-dot-circle-o"></i> Simpan</button>
-							<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger">
+							<button type="reset" v-on:click="reset" class="btn btn-sm btn-danger" v-on:click="Submit = false">
 								<i class="fa fa-ban"></i> Reset</button>
 						</div>
 					</div>
@@ -136,10 +137,13 @@ var app = new Vue({
   	TahunAngkatans:[],
   	FilterModel:{},
   	Form:{},
+  	Submit:{}
   },
   methods: {
    Save() 
    {
+   	this.Submit = true;
+   	if(this.TahunAngkatan.tahun_angkatan){
        axios
     	.post(locationServer+'/api/tahunangkatan/tahunangkatan',{
           body: this.TahunAngkatan
@@ -155,6 +159,8 @@ var app = new Vue({
 	        this.errored = true
 	      })
 	      .finally(() => this.GetData())
+	      this.Submit = false;
+	 }
    },
    GetData()
    {
@@ -165,6 +171,7 @@ var app = new Vue({
         .then(response => {
         	this.TahunAngkatans =  response.data;
         	this.Form = false;
+        	this.Submit = false;
        })
        .catch(error => {
         console.log(error);
@@ -202,6 +209,7 @@ var app = new Vue({
         .then(response => {
         	this.TahunAngkatan =  response.data;
         	this.Form = true;
+        	this.Submit = false;
        })
        .catch(error => {
         console.log(error);
@@ -219,6 +227,7 @@ var app = new Vue({
         .then(response => {
         this.GetData();
         this.Form = false;
+        this.Submit = false;
        })
        .catch(error => {
         console.log(error);
@@ -235,6 +244,7 @@ var app = new Vue({
         .then(response => {
         	this.TahunAngkatan =  response.data;
         	this.Form = false;
+        	this.Submit = false;
          	$("#detail-modal").modal('show');
        })
        .catch(error => {
