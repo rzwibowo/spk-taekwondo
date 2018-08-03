@@ -34,6 +34,9 @@
         right: 0;
         bottom: -1em;
       }
+      .above {
+        margin: 2em auto;
+      }
     </style>
   </head>
   <body class="app header-fixed">
@@ -88,7 +91,7 @@
               <i class="fa fa-user text-white"></i> <strong>{{username}}</strong></a>
             <a class="dropdown-item" href="<?php echo site_url() ?>/user">
               <i class="fa fa-users"></i> Daftar Pengguna</a>
-            <a class="dropdown-item text-danger" v-on:click="Logout()">
+            <a class="dropdown-item text-danger" href="#" v-on:click="Logout()">
               <i class="fa fa-lock text-danger"></i> Logout</a>
           </div>
         </li>

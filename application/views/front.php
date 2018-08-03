@@ -1,33 +1,53 @@
 <div class="row" id="app">
-    <div class="col-md-6">
-        <div class="card text-white bg-primary">
-            <div class="card-body pb-0" style="z-index: 1">
-                <div class="btn-group float-right">
-                    <a href="<?php echo site_url() ?>/mahasiswa" class="btn btn-transparent">
-                        <i class="icon-pencil"></i>
-                    </a>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="above">
+                            <p class="text-center">
+                                <img src="<?php echo base_url() ?>assets/img/mappi_100.png" alt="" class="img-responsive">
+                            </p>
+                            <h1 class="text-center">Aplikasi SPK Seleksi Penerimaan Beasiswa</h1>
+                            <h3 class="text-center text-black-50">Dinas Pendidikan dan Pengajaran</h3>
+                            <h3 class="text-center text-black-50">Kabupaten Mappi</h3>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-value">{{ count_mhs }}</div>
-                <div>Mahasiswa Terdata</div>
-            </div>
-            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
-                <i class="fa fa-graduation-cap ikon-dash"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card text-white bg-warning">
-            <div class="card-body pb-0" style="z-index: 1">
-                <div class="btn-group float-right">
-                    <a href="<?php echo site_url() ?>/kriteria" class="btn btn-transparent">
-                        <i class="icon-pencil"></i>
-                    </a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body pb-0" style="z-index: 1">
+                                <div class="btn-group float-right">
+                                    <a href="<?php echo site_url() ?>/mahasiswa" class="btn btn-transparent">
+                                        <i class="icon-pencil"></i>
+                                    </a>
+                                </div>
+                                <div class="text-value">{{ count_mhs }}</div>
+                                <div>Mahasiswa Terdata</div>
+                            </div>
+                            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                                <i class="fa fa-graduation-cap ikon-dash"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card text-white bg-warning">
+                            <div class="card-body pb-0" style="z-index: 1">
+                                <div class="btn-group float-right">
+                                    <a href="<?php echo site_url() ?>/kriteria" class="btn btn-transparent">
+                                        <i class="icon-pencil"></i>
+                                    </a>
+                                </div>
+                                <div class="text-value">{{ count_kriteria }}</div>
+                                <div>Kriteria Terdata</div>
+                            </div>
+                            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                                <i class="fa fa-tasks ikon-dash"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-value">{{ count_kriteria }}</div>
-                <div>Kriteria Terdata</div>
-            </div>
-            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
-                <i class="fa fa-tasks ikon-dash"></i>
             </div>
         </div>
     </div>
