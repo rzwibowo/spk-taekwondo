@@ -65,11 +65,10 @@ var app = new Vue({
       return this.$cookies.get("tokenUserApp");
     },
 		Initialization() {
-           if(location.search.split('logout=')[1] == "true"){
-           	this.$cookies.remove("tokenUserApp");
-           }
+
+     // this.$cookies.remove("tokenUserApp");
 			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
-				window.location.replace(locationServer); 
+			 	window.location.replace(locationServer); 
 			} else {
 				this.User = {}
 			}
