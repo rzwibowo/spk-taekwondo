@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28 Jul 2018 pada 14.25
+-- Generation Time: 06 Agu 2018 pada 13.24
 -- Versi Server: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -50,7 +50,7 @@ INSERT INTO `beasiswa` (`id_mahasiswa`, `jumlah_beasiswa`, `id_beasiswa`) VALUES
 CREATE TABLE `kriteria` (
   `id_kriteria` int(11) NOT NULL,
   `kode_kriteria` varchar(255) NOT NULL,
-  `nama_kriteria` varchar(20) NOT NULL,
+  `nama_kriteria` varchar(50) NOT NULL,
   `istext` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -59,11 +59,11 @@ CREATE TABLE `kriteria` (
 --
 
 INSERT INTO `kriteria` (`id_kriteria`, `kode_kriteria`, `nama_kriteria`, `istext`) VALUES
-(2, 'B003', 'IPK', 0),
-(3, '002', 'Kendaraan', 0),
-(4, '003', 'Pekerjaan', 0),
-(5, '004', 'Penghasilan', 0),
-(6, '005', 'Tanggungan', 0);
+(7, '001', 'IPK', 0),
+(8, '002', 'Kendaraan', 1),
+(9, '003', 'Penghasilan Orang Tua', 0),
+(10, '004', 'Pekerjaan Orang Tua', 1),
+(11, '005', 'Jumlah Tanggungan', 0);
 
 -- --------------------------------------------------------
 
@@ -75,26 +75,31 @@ CREATE TABLE `mahasiswa` (
   `id_mahasiswa` int(11) NOT NULL,
   `nim` int(11) NOT NULL,
   `nama` varchar(30) NOT NULL,
-  `thn_angkatan` int(4) NOT NULL,
   `jenis_kelamin` enum('laki-laki','perempuan','','') NOT NULL,
   `tempat_lahir` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `alamat` text NOT NULL,
   `ipk` int(11) NOT NULL,
-  `kendaraan` varchar(255) NOT NULL,
-  `pgh_orangtua` int(11) NOT NULL,
-  `pkj_orangtua` varchar(255) NOT NULL,
+  `kendaraan` int(11) NOT NULL,
+  `pkj_orangtua` int(11) NOT NULL,
   `jml_tanggungan` int(11) NOT NULL,
-  `id_tahun_angkatan` int(11) NOT NULL
+  `id_tahun_angkatan` int(11) NOT NULL,
+  `ipkCriteria` int(11) NOT NULL,
+  `penghasilanCriteria` int(11) NOT NULL,
+  `tanggunganCriteria` int(11) NOT NULL,
+  `pgh_orangtua` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`id_mahasiswa`, `nim`, `nama`, `thn_angkatan`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `ipk`, `kendaraan`, `pgh_orangtua`, `pkj_orangtua`, `jml_tanggungan`, `id_tahun_angkatan`) VALUES
-(3, 223244, 'Sahrun', 300, 'laki-laki', 'Jakarta', '2018-06-12', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 0, 'tidak memiliki kendaraan', 0, 'Pekerjaan tetap', 0, 1),
-(4, 234423, 'Ardi', 2003, 'laki-laki', 'Jakarta', '2018-06-23', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 12, 'sdsads', 2321, 'sadsd', 23, 1);
+INSERT INTO `mahasiswa` (`id_mahasiswa`, `nim`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `ipk`, `kendaraan`, `pkj_orangtua`, `jml_tanggungan`, `id_tahun_angkatan`, `ipkCriteria`, `penghasilanCriteria`, `tanggunganCriteria`, `pgh_orangtua`) VALUES
+(3, 223244, 'Sahrun', 'laki-laki', 'Jakarta', '2018-06-12', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 0, 1, 1, 0, 1, 1, 1, 1, 0),
+(4, 234423, 'Ardi', 'laki-laki', 'Jakarta', '2018-06-23', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 12, 1, 1, 23, 1, 1, 1, 1, 0),
+(5, 2323, 'asasa', 'laki-laki', 'Jakarta', '2018-08-08', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 4, 1, 5, 2, 1, 1, 4, 9, 300),
+(6, 345678, 'Sahrun bOys', 'perempuan', 'Jakarta', '2018-08-09', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 3, 1, 5, 1, 1, 2, 5, 11, 1000),
+(7, 56789, 'Sahurn', 'laki-laki', 'Jakarta', '2018-08-22', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 2, 1, 5, 2, 2, 3, 5, 9, 1000000);
 
 -- --------------------------------------------------------
 
@@ -125,15 +130,32 @@ INSERT INTO `pengelola` (`username`, `password`, `nip`, `id_pengelola`) VALUES
 
 CREATE TABLE `sub_criteria_nontext` (
   `id_sub_criteria` int(11) NOT NULL,
-  `max` int(11) NOT NULL,
+  `max` varchar(20) NOT NULL,
   `operator_max` varchar(10) NOT NULL,
-  `min` int(11) NOT NULL,
+  `min` varchar(20) NOT NULL,
   `operator_min` varchar(10) NOT NULL,
   `id_kriteria` int(11) NOT NULL,
   `kriteria` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
   `bobot` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `sub_criteria_nontext`
+--
+
+INSERT INTO `sub_criteria_nontext` (`id_sub_criteria`, `max`, `operator_max`, `min`, `operator_min`, `id_kriteria`, `kriteria`, `keterangan`, `bobot`) VALUES
+(1, '', '', '3.50', '>', 7, '>3.50', 'penting', 3),
+(2, '2.50', '>=', '3.49', '<=', 7, '<=3.49-2.50', 'cukup penting', 2),
+(3, '', '', '2.49', '<', 7, '<2.49', 'kurang penting', 1),
+(4, '', '', '500.000', '<', 9, '<500.000', 'Sangat Penting', 4),
+(5, '1.000.000', '<=', '500.000', '>', 9, '>500.000 - 1.000.000', 'Penting', 3),
+(6, '1.500.000', '<=', '1.000.000', '>', 9, '>1.000.000 - 1.500.000', 'Cukup Penting', 2),
+(7, '', '', '1.500.000', '>', 9, '>1.500.000', 'Kurang Penting', 1),
+(8, '', '', '4', '>', 11, '>4 anak', 'Sangat Penting', 4),
+(9, '', '', '2', '==', 11, '2 anak', 'Cukup Penting', 2),
+(10, '', '', '3', '==', 11, '3 anak', 'Penting', 3),
+(11, '', '', '1', '==', 11, '1 anak', 'Kurang Penting', 1);
 
 -- --------------------------------------------------------
 
@@ -148,6 +170,18 @@ CREATE TABLE `sub_criteria_text` (
   `keterangan` varchar(255) NOT NULL,
   `id_kriteria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `sub_criteria_text`
+--
+
+INSERT INTO `sub_criteria_text` (`id_sub_criteria`, `kriteria`, `bobot`, `keterangan`, `id_kriteria`) VALUES
+(1, 'Tidak memiliki kendaraan', 4, 'Sangat Penting', 8),
+(2, 'Speda', 3, 'Penting', 8),
+(3, 'Motor', 2, 'Cukup penting', 8),
+(4, 'Mobil', 1, 'Kurang penting', 8),
+(5, 'Pekerjaan Tidak Tetap', 2, 'Sangat Penting', 10),
+(6, 'Pekerjaan Tetap', 1, 'Kurang Penting', 10);
 
 -- --------------------------------------------------------
 
@@ -191,7 +225,12 @@ ALTER TABLE `kriteria`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id_mahasiswa`),
-  ADD KEY `id_tahun_angkatan` (`id_tahun_angkatan`);
+  ADD KEY `id_tahun_angkatan` (`id_tahun_angkatan`),
+  ADD KEY `ipkCriteria` (`ipkCriteria`),
+  ADD KEY `penghasilanCriteria` (`penghasilanCriteria`),
+  ADD KEY `tanggunganCriteria` (`tanggunganCriteria`),
+  ADD KEY `kendaraan` (`kendaraan`),
+  ADD KEY `pkj_orangtua` (`pkj_orangtua`);
 
 --
 -- Indexes for table `pengelola`
@@ -232,12 +271,12 @@ ALTER TABLE `beasiswa`
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `pengelola`
 --
@@ -247,12 +286,12 @@ ALTER TABLE `pengelola`
 -- AUTO_INCREMENT for table `sub_criteria_nontext`
 --
 ALTER TABLE `sub_criteria_nontext`
-  MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `sub_criteria_text`
 --
 ALTER TABLE `sub_criteria_text`
-  MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tahun_angkatan`
 --
@@ -272,7 +311,12 @@ ALTER TABLE `beasiswa`
 -- Ketidakleluasaan untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`id_tahun_angkatan`) REFERENCES `tahun_angkatan` (`id_tahun_angkatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`id_tahun_angkatan`) REFERENCES `tahun_angkatan` (`id_tahun_angkatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mahasiswa_ibfk_2` FOREIGN KEY (`ipkCriteria`) REFERENCES `sub_criteria_nontext` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mahasiswa_ibfk_3` FOREIGN KEY (`penghasilanCriteria`) REFERENCES `sub_criteria_nontext` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mahasiswa_ibfk_4` FOREIGN KEY (`tanggunganCriteria`) REFERENCES `sub_criteria_nontext` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mahasiswa_ibfk_5` FOREIGN KEY (`kendaraan`) REFERENCES `sub_criteria_text` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mahasiswa_ibfk_6` FOREIGN KEY (`pkj_orangtua`) REFERENCES `sub_criteria_text` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `sub_criteria_nontext`

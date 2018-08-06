@@ -292,56 +292,56 @@
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
-	      	    <label class="col-md-3 col-form-label">Max</label>
-	      	    <div class="col-md-9">
-	      	    	<input type="number" name="max" v-model="SubKriteria.max" class="form-control">
-	      	    </div>
-	      	  </div>
-	      	  <div class="form-group row" v-show="SubKriteria.max">
-	      	    <label class="col-md-3 col-form-label">Operator Max</label>
-	      	   <div class="col-md-9 col-form-label">
-					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value=">" name="oprator_max">
-							<label class="form-check-label" for="oprator_max">></label>
-					</div>
-					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<" name="oprator_max">
-							<label class="form-check-label" for="oprator_max"><</label>
-					</div>
-					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value=">=" name="oprator_max">
-							<label class="form-check-label" for="oprator_max">>=</label>
-					</div>
-					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<=" name="oprator_max">
-							<label class="form-check-label" for="oprator_max"><=</label>
-					</div>
-				</div>
-	      	  </div>
-	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Min</label>
 	      	    <div class="col-md-9">
 	      	    	<input type="number" name="min" v-model="SubKriteria.min" class="form-control">
 	      	    </div>
 	      	  </div>
-	      	   <div class="form-group row" v-show="SubKriteria.min">
+	      	   <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Operator Min</label>
 	      	   <div class="col-md-9 col-form-label">
 					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">" name="operator_nim" :disabled="SubKriteria.operator_max == '>' || SubKriteria.operator_max == '>='">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">" name="operator_nim">
 							<label class="form-check-label" for="operator_nim">></label>
 					</div>
 					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<" name="operator_nim" :disabled="SubKriteria.operator_max == '<'">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<" name="operator_nim">
 							<label class="form-check-label" for="operator_nim"><</label>
 					</div>
 					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">=" name="operator_nim" :disabled="SubKriteria.operator_max == '>=' || SubKriteria.operator_max == '>'">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value=">=" name="operator_nim">
 							<label class="form-check-label" for="operator_nim">>=</label>
 					</div>
 					<div class="form-check form-check-inline mr-1">
-							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<=" name="operator_nim" :disabled="SubKriteria.operator_max == '<='">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="<=" name="operator_nim" >
 							<label class="form-check-label" for="operator_nim"><=</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="==" name="operator_nim" >
+							<label class="form-check-label" for="operator_nim">==</label>
+					</div>
+				</div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Max</label>
+	      	    <div class="col-md-9">
+	      	    	<input type="number" name="max" v-model="SubKriteria.max" class="form-control" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
+	      	    </div>
+	      	  </div>
+	      	  <div class="form-group row">
+	      	    <label class="col-md-3 col-form-label">Operator Max</label>
+	      	   <div class="col-md-9 col-form-label">
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<" name="oprator_max" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
+							<label class="form-check-label" for="oprator_max"><</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="<=" name="oprator_max" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
+							<label class="form-check-label" for="oprator_max"><=</label>
+					</div>
+					<div class="form-check form-check-inline mr-1">
+							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="==" name="oprator_max" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
+							<label class="form-check-label" for="oprator_max">==</label>
 					</div>
 				</div>
 	      	  </div>

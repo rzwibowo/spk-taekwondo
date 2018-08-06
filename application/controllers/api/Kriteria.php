@@ -75,5 +75,11 @@ class Kriteria extends REST_Controller {
 
         }
     }
+    function detailkriteria_get($kriteria)
+    {
+        $Kriteria=$this->ModelKriteria->detailkriteria($kriteria)->result();
+        $this->set_response($Kriteria, REST_Controller::HTTP_CREATED);
+    }
+    
 
 }

@@ -81,6 +81,27 @@ class ModelKriteria extends CI_Model
 			return false;
 		}
 	}
+	function detailkriteria($kriteria){
+		$Where=array(
+				'nama_kriteria'=>str_replace("_"," ",$kriteria)
+		);
+		$Resultkriteria = $this->db->get_where('kriteria',$Where)->result();
+        if($Resultkriteria[0]->istext == "0"){
+        	$this->db->select('*');
+			$this->db->from('sub_criteria_nontext');
+       		$this->db->join('kriteria', 'sub_criteria_nontext.id_kriteria = kriteria.id_kriteria');
+       		$this->db->where($Where);
+       		return $this->db->get();
+
+        }else{
+         	$this->db->select('*');
+			$this->db->from('sub_criteria_text');
+       		$this->db->join('kriteria', 'sub_criteria_text.id_kriteria = kriteria.id_kriteria');
+       		$this->db->where($Where);
+       		return $this->db->get();
+        }
+
+	}
 
 }
 

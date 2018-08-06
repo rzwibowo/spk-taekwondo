@@ -95,9 +95,9 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-md-3 col-form-label" for="nama">IPK</label>
+										<label class="col-md-3 col-form-label" for="nama">IPK (format: x.xx)</label>
 										<div class="col-md-4">
-											<input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK">
+											<input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK" v-on:change="SearchIPK(mahasiswa.ipk)" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;">
 											<span v-show="Submit && !mahasiswa.ipk" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
@@ -106,10 +106,9 @@
 										<div class="col-md-9">
 											<select name="kendaraan" class="form-control" id="kendaraan" v-model="mahasiswa.kendaraan">
 												<option value="">-Pilih-</option>
-												<option value="tidak memiliki kendaraan">tidak memiliki kendaraan</option>
-												<option value="sepeda">sepeda</option>
-												<option value="motor">motor</option>
-												<option value="mobil">mobil</option>
+												<option v-for="(value, key) in Kendaraan" :value="value.id_sub_criteria">
+								          			 {{value.kriteria}}
+								          		</option>
 											</select>
 											<span v-show="Submit && !mahasiswa.kendaraan" style="color: red">Field harus diisi</span>
 										</div>
@@ -121,7 +120,7 @@
 												<div class="input-group-prepend">
 													<span class="input-group-text">Rp</span>
 												</div>
-												<input type="number" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control">
+											<input type="text" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control" v-on:change="SearchPghOrangtua(mahasiswa.pgh_orangtua)" pattern="^[0-9]*$">
 											</div>
 											<span v-show="Submit && !mahasiswa.pgh_orangtua" style="color: red">Field harus diisi</span>
 										</div>
@@ -134,8 +133,9 @@
 								          	id="pkj_orangtua" 
 								          	v-model="mahasiswa.pkj_orangtua" >
 								          		<option value="">-Pilih-</option>
-								          		<option value="Pekerjaan tetap">Pekerjaan tetap</option>
-								          		<option value="Pekerjaan tidak tetap">Pekerjaan tidak tetap</option>
+								          		<option v-for="(value, key) in PekerjaanOrangTua" :value="value.id_sub_criteria">
+								          			 {{value.kriteria}}
+								          		</option>
 							          		</select>
 											<span v-show="Submit && !mahasiswa.pkj_orangtua" style="color: red">Field harus diisi</span>
 										</div>
@@ -143,7 +143,7 @@
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 										<div class="col-md-3">
-											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control">
+											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control" v-on:change="SearchJumlahTanggungan(mahasiswa.jml_tanggungan)">
 											<span v-show="Submit && !mahasiswa.jml_tanggungan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
@@ -311,176 +311,7 @@
 	</div>
 	<!-- END modal detail -->
 </div>
-<script type="text/javascript">
+<script type="text/javascript" src="http://localhost/spk-beasiswa/assets/js/mahasiswa.js">
 
-var app = new Vue({
-  el: '#app',
-  created(){
-    this.GetData();
-    this.InitializeFrom();
-  },
-  data: {
-  	mahasiswa:{},
-  	mahasiswas:[],
-  	FilterModel:[],
-  	mahasiswaView:{},
-  	tahunangkatan:[],
-  	Form:{},
-  	Submit:{}
-  },
-  methods: {
-    Save() 
-    {
-    	this.Submit = true;
-    	if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan)
-    	{
-    	axios
-    	  .post(locationServer+'/api/mahasiswa/mahasiswa',{
-          body: this.mahasiswa
-    	  })
-        .then(response => {
-       	  this.GetData();
-       	  this.reset();
-        })
-        .catch(error => {
-          console.log("Gagal Simpan Data")
-          this.errored = true
-        })
-				.finally(
-					// () => this.GetData()
-					document.getElementById('list').scrollIntoView({
-						behavior: 'smooth'
-					})
-				)
-	 }
-    },
-    GetData()
-    {
-      axios
-    	  .post(locationServer+'/api/mahasiswa/mahasiswas',{
-    		  body: this.Filter()
-    	  })
-        .then(response => {
-        	this.mahasiswas =  response.data;
-        	this.Submit = false;
-        	this.Form = false;
-        })
-        .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-				// .finally(() => this.loading = false )
-				.finally(
-					document.getElementById('list').scrollIntoView({
-						behavior: 'smooth'
-					})
-				)
-    },
-    reset()
-    {
-   	  this.mahasiswa = {};
-   	  this.mahasiswa.pkj_orangtua = "";
-   	  this.mahasiswa.id_tahun_angkatan ="";
-   	  this.mahasiswa.kendaraan = "";
-   	  this.Submit = false;
-   	  this.Form = true;
-    },
-    Filter()
-    {
-      var FilterParam = {};
-      if(this.FilterModel.nim !== "" && this.FilterModel.nim !== null ){
-        FilterParam.nim =this.FilterModel.nim;
-      }
-      if(this.FilterModel.nama !== null && this.FilterModel.nama !== "" ){
-        FilterParam.nama =this.FilterModel.nama;
-      }
-      if(this.FilterModel.tahun_angkatan !== null && this.FilterModel.tahun_angkatan !== "" ){
-        FilterParam.tahun_angkatan =this.FilterModel.tahun_angkatan;
-      }
-      if(this.FilterModel.jenis_kelamin !== null && this.FilterModel.jenis_kelamin !== "" ){
-        FilterParam.jenis_kelamin =this.FilterModel.jenis_kelamin;
-      }
-      if(this.FilterModel.ipk !== null && this.FilterModel.ipk !== "" ){
-        FilterParam.ipk =this.FilterModel.ipk;
-      }
-      if(this.FilterModel.kendaraan !== null && this.FilterModel.kendaraan !== "" ){
-        FilterParam.kendaraan =this.FilterModel.kendaraan;
-      }
-      return FilterParam;
 
-    },
-    ChangeFilter(Param)
-    {
-   	  if(Param.length > 2){
-        this.GetData();
-      } else if(Param.length == 0){
-        this.GetData();
-      }
-
-    },
-    Edit(Id)
-    {
-    	this.Form = true;
-    	this.Submit = false;
-      axios
-    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaEdit/'+Id)
-        .then(response => {
-        	this.mahasiswa =  response.data;
-        })
-        .catch(error => {
-          console.log("Gagal Ambil Data");
-          this.errored = true
-        })
-				.finally(() => this.loading = false 
-			)
-			document.getElementById('input').scrollIntoView({
-				behavior: 'smooth'
-			})
-		},
-    Delete(Id)
-    {
-			var x = confirm("Are you sure you want to delete?");
-			if (x){
-        axios
-   	      .get(locationServer+'/api/mahasiswa/mahasiswadelete/'+Id)
-          .then(response => {
-            this.GetData();
-          })
-          .catch(error => {
-            console.log("Gagal Hapus");
-            this.errored = true
-          })
-          .finally(() => this.loading = false )
-       }
-    },
-    View(Id)
-    {
-   	  axios
-    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
-        .then(response => {
-        	this.mahasiswaView =  response.data;
-         	$("#detail-modal").modal('show');
-        })
-        .catch(error => {
-          console.log("Gagal Ambil Data");
-          this.errored = true
-        })
-        .finally(() => this.loading = false )
-    },
-    InitializeFrom(){
-    	axios
-    	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
-        .then(response => {
-        	this.tahunangkatan = response.data;
-        })
-        .catch(error => {
-          this.errored = true
-        })
-        .finally(() => console.log())
-    }
-
-  }
-})
-
-loaderStop()
 </script>
