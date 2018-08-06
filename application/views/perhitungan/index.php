@@ -1,135 +1,13 @@
-<!-- <style type="text/css">
-	.wizard {
-		margin: 20px auto;
-		background: #fff;
-	}
-	.wizard .nav-tabs {
-		position: relative;
-		margin: 40px auto;
-		margin-bottom: 0;
-		border-bottom-color: #e0e0e0;
-	}
-	.wizard > div.wizard-inner {
-		position: relative;
-	}
-	.connecting-line {
-		height: 2px;
-		background: #e0e0e0;
-		position: absolute;
-		width: 80%;
-		margin: 0 auto;
-		left: 0;
-		right: 0;
-		top: 50%;
-		z-index: 1;
-	}
-	.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
-		color: #555555;
-		cursor: default;
-		border: 0;
-		border-bottom-color: transparent;
-	}
-	span.round-tab {
-		width: 70px;
-		height: 70px;
-		line-height: 70px;
-		display: inline-block;
-		border-radius: 100px;
-		background: #fff;
-		border: 2px solid #e0e0e0;
-		z-index: 2;
-		position: absolute;
-		left: 0;
-		text-align: center;
-		font-size: 25px;
-	}
-	span.round-tab i{
-		color:#555555;
-	}
-	.wizard li.active span.round-tab {
-		background: #fff;
-		border: 2px solid #5bc0de;
-	}
-	.wizard li.active span.round-tab i{
-		color: #5bc0de;
-	}
-	span.round-tab:hover {
-		color: #333;
-		border: 2px solid #333;
-	}
-	.wizard .nav-tabs > li {
-		width: 25%;
-	}
-	.wizard li:after {
-		content: " ";
-		position: absolute;
-		left: 46%;
-		opacity: 0;
-		margin: 0 auto;
-		bottom: 0px;
-		border: 5px solid transparent;
-		border-bottom-color: #5bc0de;
-		transition: 0.1s ease-in-out;
-	}
-	.wizard li.active:after {
-		content: " ";
-		position: absolute;
-		left: 46%;
-		opacity: 1;
-		margin: 0 auto;
-		bottom: 0px;
-		border: 10px solid transparent;
-		border-bottom-color: #5bc0de;
-	}
-	.wizard .nav-tabs > li a {
-		width: 70px;
-		height: 70px;
-		margin: 20px auto;
-		border-radius: 100%;
-		padding: 0;
-	}
-	.wizard .nav-tabs > li a:hover {
-		background: transparent;
-	}
-	.wizard .tab-pane {
-		position: relative;
-		padding-top: 50px;
-	}
-	.wizard h3 {
-		margin-top: 0;
-	}
-	@media( max-width : 585px ) {
-		.wizard {
-			width: 90%;
-			height: auto !important;
-		}
-		span.round-tab {
-			font-size: 16px;
-			width: 50px;
-			height: 50px;
-			line-height: 50px;
-		}
-		.wizard .nav-tabs > li a {
-			width: 50px;
-			height: 50px;
-			line-height: 50px;
-		}
-		.wizard li.active:after {
-			content: " ";
-			position: absolute;
-			left: 35%;
-		}
-	}
-</style> -->
+<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
 <style>
 	.steps {
-		margin: 25px auto;
+		margin: .5em auto;
 	}
 	.step {
 		opacity: 0.5;
 		height: 2em;
 		width: 2em;
-		background-color: blue;
+		background-color: #63c2de;
 		display: inline-flex;
 		color: white;
 		align-items: center;
@@ -152,357 +30,329 @@
 </style>
 <div class="row" id="app">
 	<div class="col-md-12">
-		<div class="steps text-center">
-			<span class="step" :class="step === 1 ? ' active' : ''">1</span>
-			<span class="step" :class="step === 2 ? ' active' : ''">2</span>
-			<span class="step" :class="step === 3 ? ' active' : ''">3</span>
-			<span class="step" :class="step === 4 ? ' active' : ''">4</span>
-		</div>
-		<div class="steps title text-center">
-			<h4 v-show="step === 1">Pilih Tahun Angkatan</h4>
-			<h4 v-show="step === 2">AHP</h4>
-			<h4 v-show="step === 3">SAW</h4>
-			<h4 v-show="step === 4">Simpan Data Beasiswa</h4>
+		<div class="card">
+			<div class="card-body">
+				<div class="steps title text-center">
+					<transition name="custom-class-trans"
+						enter-active-class="animated fadeInRight faster"
+						leave-active-class="animated fadeOutLeft faster"
+						mode="out-in">
+						<h3 :key="step">{{ stepTitle }}</h3>
+					</transition>
+				</div>
+				<div class="steps text-center">
+					<span class="step" :class="step === 1 ? ' active' : ''">1</span>
+					<span class="step" :class="step === 2 ? ' active' : ''">2</span>
+					<span class="step" :class="step === 3 ? ' active' : ''">3</span>
+					<span class="step" :class="step === 4 ? ' active' : ''">4</span>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<section>
-			<div class="wizard">
-				<!-- <div class="wizard-inner">
-					<div class="connecting-line"></div>
-					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" v-bind:class="wizard == 1?'active':'disabled'">
-							<a  data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
-								<span class="round-tab">
-									SISWA
-								</span>
-							</a>
-						</li>
-						<li role="presentation" v-bind:class="wizard == 2?'active':'disabled'">
-							<a  data-toggle="tab" aria-controls="step2" role="tab" title="Step 2" >
-								<span class="round-tab">
-									AHP
-								</span>
-							</a>
-						</li>
-						<li role="presentation" v-bind:class="wizard == 3?'active':'disabled'">
-							<a  data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-								<span class="round-tab">
-									SAW
-								</span>
-							</a>
-						</li>
-						<li role="presentation" v-bind:class="wizard == 4?'active':'disabled'">
-							<a  data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
-								<span class="round-tab">
-									HASIL
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div> -->
-				<div role="form">
-					<div class="tab-content">
-						<div class="tab-pane" role="tabpanel" id="step1" v-bind:class="step === 1 ? 'active' : 'disabled'">
-							<div class="col-md-12">
-								<div class="card">
-									<div class="col-md-6">
-										<div class="form-group row">
-											<label class="col-md-4 col-form-label" for="nama"><strong>Tahun Angkatan</strong></label>
-											<div class="col-md-6">
-												<select class="form-control"
-													name="tahun_angkatan"
-													id="tahun_angkatan"
-													v-model="selected"
-													v-on:change="GetMahasiswa(selected)">
-													<option value="">-Pilih-</option>
-													<option v-for="(value, key) in TahunAngkatan" :value="value.id_tahun_angkatan">
-														{{value.tahun_angkatan}}
-													</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-12" v-show="selected">
-										<div class="card" id="list">
-											<div class="card-header">
-												Daftar <strong>Mahasiswa</strong>
-											</div>
-											<div class="card-body">
-												<table class="table table-responsive-sm table-striped">
-													<thead>
-														<tr>
-															<th>#</th>
-															<th>NIM</th>
-															<th>Nama</th>
-															<th>Tahun</th>
-															<th>JK</th>
-															<th>IPK</th>
-															<th>Kendaraan</th>
-														</tr>
-														<tr>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="(mahasiswa,index) in Mahasiswa">
-															<td>{{index + 1}}</td>
-															<td>{{mahasiswa.nim}}</td>
-															<td>{{mahasiswa.nama}}</td>
-															<td>{{mahasiswa.thn_angkatan}}</td>
-															<td>{{mahasiswa.jenis_kelamin}}</td>
-															<td>{{mahasiswa.ipk}}</td>
-															<td>{{mahasiswa.kendaraan}}</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
+			<div role="form">
+				<div class="tab-content">
+					<div class="tab-pane" role="tabpanel" id="step1" v-bind:class="step === 1 ? 'active' : 'disabled'">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="col-md-6">
+									<div class="form-group row" style="margin: .5em auto">
+										<label class="col-md-4 col-form-label"><strong>Tahun Angkatan</strong></label>
+										<div class="col-md-6">
+											<select class="form-control"
+												name="tahun_angkatan"
+												id="tahun_angkatan"
+												v-model="selected"
+												v-on:change="GetMahasiswa(selected)">
+												<option value="">-Pilih-</option>
+												<option v-for="(value, key) in TahunAngkatan" :value="value.id_tahun_angkatan">
+													{{value.tahun_angkatan}}
+												</option>
+											</select>
 										</div>
 									</div>
 								</div>
+								<div class="col-md-12" v-show="selected">
+									<div class="card" id="list">
+										<div class="card-header">
+											Daftar <strong>Mahasiswa</strong>
+										</div>
+										<table class="table table-responsive-sm table-striped">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>NIM</th>
+													<th>Nama</th>
+													<th>Tahun</th>
+													<th>JK</th>
+													<th>IPK</th>
+													<th>Kendaraan</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="(mahasiswa,index) in Mahasiswa">
+													<td>{{index + 1}}</td>
+													<td>{{mahasiswa.nim}}</td>
+													<td>{{mahasiswa.nama}}</td>
+													<td>{{mahasiswa.thn_angkatan}}</td>
+													<td>{{mahasiswa.jenis_kelamin}}</td>
+													<td>{{mahasiswa.ipk}}</td>
+													<td>{{mahasiswa.kendaraan}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card-footer text-right">
+									<button type="button" 
+										class="btn btn-success next-step" 
+										v-on:click="step += 1" 
+										:disabled="!selected || !Mahasiswa.length">
+										Selanjutnya
+									</button>
+								</div>
 							</div>
-							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-success next-step" v-on:click="step += 1" :disabled="!selected || !Mahasiswa.length">Selanjutnya</button></li>
-							</ul>
 						</div>
-						<div class="tab-pane" role="tabpanel" id="step2"  v-bind:class="step == 2 ? 'active' : 'disabled'">
-							<div class="col-md-12">
-								<div class="card" >
-									<div class="card-header">
-										<div class="col-md-12" v-show="Mahasiswa.length && selected">
-											<div class="card" id="list">
-												<div class="card-header">
-													<strong>Matriks Perbandingan Berpasangan</strong>
-												</div>
-												<div class="card-body">
-													<table class="table table-responsive-sm table-striped">
-														<thead>
-															<tr>
-																<th>Kriteria</th>
-																<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr v-for="(matrix,indexperent) in MatrixPerbandingan">
-																<td><strong>{{matrix.kriteria}}</strong> </td>
-																<td v-for="(row,index) in matrix.row">
-																	<select class="form-control"
-																		v-model="row.value"
-																		v-show="row.isChange"
-																		v-on:change="CalculateMatrix(row,matrix,index,indexperent)">
-																		<option v-for="i in 9"  :value="i">{{i}}</option>
-																	</select>
-																	<label class="col-form-label"
-																	v-show="!row.isChange">{{row.value}}</label>
-																</td>
-															</tr>
-															<tr>
-																<th><strong>Jumlah</strong></th>
-																<th v-for="(matrix,indexperent) in MatrixPerbandingan">
-																	<strong>{{matrix.jumlah}}</strong>
-																</th>
-															</tr>
-														</tbody>
-													</table>
-													<button class="btn btn-primary" v-on:click="Calculate()"><i class="fa fa-refresh" v-show="isCalculate"></i> Hitung</button>
-												</div>
+					</div>
+					<div class="tab-pane" role="tabpanel" id="step2"  v-bind:class="step == 2 ? 'active' : 'disabled'">
+						<div class="col-md-12">
+							<div class="card" >
+								<div class="card-body">
+									<div class="col-md-12" v-show="Mahasiswa.length && selected">
+										<div class="card" id="list">
+											<div class="card-header">
+												<strong>Matriks Perbandingan Berpasangan</strong>
 											</div>
-											<div class="card" v-show="isCalculate">
-												<div class="card-header">
-													<strong>Matriks Normalisasi</strong>
-												</div>
-												<div class="card-body">
-													<table class="table table-responsive-sm table-striped">
-														<thead>
-															<tr>
-																<th>Kriteria</th>
-																<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
-																<th>∑ Baris</th>
-																<th>Rata-rata Baris</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr v-for="(matrix,index) in MatriksNormalisasi">
-																<td><strong>{{matrix.kriteria}}</strong> </td>
-																<td v-for="(row,index) in matrix.row">
-																	<label class="col-form-label">{{row.value}}</label>
-																</td>
-																<td>{{matrix.baris}}</td>
-																<td>{{matrix.rata2}}</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+											<table class="table table-responsive-sm table-striped">
+												<thead>
+													<tr>
+														<th>Kriteria</th>
+														<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr v-for="(matrix,indexperent) in MatrixPerbandingan">
+														<td><strong>{{matrix.kriteria}}</strong> </td>
+														<td v-for="(row,index) in matrix.row">
+															<select class="form-control"
+																v-model="row.value"
+																v-show="row.isChange"
+																v-on:change="CalculateMatrix(row,matrix,index,indexperent)">
+																<option v-for="i in 9"  :value="i">{{i}}</option>
+															</select>
+															<label class="col-form-label"
+															v-show="!row.isChange">{{row.value}}</label>
+														</td>
+													</tr>
+													<tr>
+														<th><strong>Jumlah</strong></th>
+														<th v-for="(matrix,indexperent) in MatrixPerbandingan">
+															<strong>{{matrix.jumlah}}</strong>
+														</th>
+													</tr>
+												</tbody>
+											</table>
+											<div class="card-footer text-right">
+												<button class="btn btn-primary" v-on:click="Calculate()"><i class="fa fa-refresh" v-show="isCalculate"></i> Hitung</button>
 											</div>
-											<div class="card" v-show="isCalculate">
-												<div class="card-header">
-													<strong>Menghitung konsistensi</strong>
-												</div>
-												<div class="card-body">
-													<table class="table table-responsive-sm table-striped">
-														<thead>
-															<tr>
-																<th>Kriteria</th>
-																<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
-																<th>∑ Baris</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr v-for="(matrix,index) in Konsistensi">
-																<td><strong>{{matrix.kriteria}}</strong> </td>
-																<td v-for="(row,index) in matrix.row">
-																	<label class="col-form-label">{{row.value}}</label>
-																</td>
-																<td>{{matrix.baris}}</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+										</div>
+										<div class="card" v-show="isCalculate">
+											<div class="card-header">
+												<strong>Matriks Normalisasi</strong>
 											</div>
-											<div class="card" v-show="isCalculate">
-												<div class="card-body">
-													<div class="col-md-6">
+											<table class="table table-responsive-sm table-striped">
+												<thead>
+													<tr>
+														<th>Kriteria</th>
+														<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
+														<th>∑ Baris</th>
+														<th>Rata-rata Baris</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr v-for="(matrix,index) in MatriksNormalisasi">
+														<td><strong>{{matrix.kriteria}}</strong> </td>
+														<td v-for="(row,index) in matrix.row">
+															<label class="col-form-label">{{row.value}}</label>
+														</td>
+														<td>{{matrix.baris}}</td>
+														<td>{{matrix.rata2}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="card" v-show="isCalculate">
+											<div class="card-header">
+												<strong>Menghitung konsistensi</strong>
+											</div>
+											<table class="table table-responsive-sm table-striped">
+												<thead>
+													<tr>
+														<th>Kriteria</th>
+														<th v-for="(kriteria,index) in Kriteria">{{kriteria.nama_kriteria}}</th>
+														<th>∑ Baris</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr v-for="(matrix,index) in Konsistensi">
+														<td><strong>{{matrix.kriteria}}</strong> </td>
+														<td v-for="(row,index) in matrix.row">
+															<label class="col-form-label">{{row.value}}</label>
+														</td>
+														<td>{{matrix.baris}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="card" v-show="isCalculate">
+											<div class="card-body">
+												<div class="col-md-6">
+													<div class="card">
 														<table class="table table-responsive-sm table-striped">
-															<tbody>
+															<thead>
 																<tr><th>Lamda:</th><th></th></tr>
+															</thead>
+															<tbody>
 																<tr v-for="(lamda,index) in Lamda.lamda">
 																	<td></td>
 																	<td>{{lamda}}</td>
 																</tr>
+															</tbody>
+															<tfoot>
 																<tr>
 																	<th>Rata-Rata:</th>
 																	<th>{{Lamda.rata2}}</th>
 																</tr>
-															</tbody>
+															</tfoot>
 														</table>
 													</div>
 												</div>
 												<div class="col-md-6">
-													<table class="table table-responsive-sm table-striped">
-														<tbody>
-															<tr><td>IC = </td><td>{{IC}}</td></tr>
-															<tr><td>IR = </td><td>{{IR}}</td></tr>
-															<tr><td>CR = </td><td>{{CR}}</td></tr>
-															<tr><td>Perhitungan diterima jika nilai Crnya kurang dari sama dengan 0,1 kalai lebih ditolak. </td></tr>
-														</tbody>
-													</table>
+													<div class="card">
+														<table class="table table-responsive-sm table-striped">
+															<tbody>
+																<tr><td>IC = </td><td>{{IC}}</td></tr>
+																<tr><td>IR = </td><td>{{IR}}</td></tr>
+																<tr><td>CR = </td><td>{{CR}}</td></tr>
+															</tbody>
+														</table>
+														<div class="card-footer text-center"><strong>{{ terimaAtauTidak }}</strong></div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-on:click="step += 1" :disabled="!isCalculate">Berikutnya</button></li>
-							</ul>
-						</div>
-						<div class="tab-pane" role="tabpanel" id="step3" v-bind:class="step == 3 ? 'active' : 'disabled'">
-							<div class="card">
-								<div class="card-header">
-									<strong>Metode SAW</strong>
-								</div>
-								<div class="card-body">
-									<div class="card">
-										<table class="table table-responsive-sm table-striped">
-											<thead>
-												<tr>
-													<th rowspan="2" class="text-center">Alternatif</th>
-													<th :colspan="Kriteria.length" class="text-center">Kriteria</th>
-												</tr>
-												<tr>
-													<th v-for="(kriteria, idx) in Kriteria" :key="idx">{{ kriteria.nama_kriteria }}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
-													<td><strong>{{ mtx.nama }}</strong></td>
-													<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
-														<select class="form-control"
-															v-model="cell.cellvalue"
-															@change="findMaxOrMin(i_idx)">
-															<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
-														</select>
-													</td>
-												</tr>
-												<tr>
-													<td><strong>X</strong></td>
-													<td v-for="(col, idx) in maxormin" :key="idx">{{ col.maxminvalue }}</td>
-												</tr>
-												<tr>
-													<td><strong>Bobot</strong></td>
-													<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
-												</tr>
-												<tr>
-													<td><strong>Sifat</strong></td>
-													<td v-for="(col, idx) in maxormin" :key="idx">
-														<select class="form-control" v-model="col.state" @change="findMaxOrMin(idx)">
-															<option value="max">MAX</option>
-															<option value="min">MIN</option>
-														</select>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+								<div class="card-footer text-right">
+									<button type="button" class="btn btn-default prev-step" v-on:click="step -= 1">Sebelumnya</button>
+									<button type="button" class="btn btn-success next-step" v-on:click="step += 1; CalculateMatriksSaw()" :disabled="!isCalculate">Berikutnya</button>
 								</div>
 							</div>
-							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-on:click="step +=1;CalculateMatriksSaw()" >Berikutnya</button></li>
-							</ul>
 						</div>
-						<div class="tab-pane" role="tabpanel" id="complete" v-bind:class="step == 4?'active':'disabled'">
-							<div class="card">
-								<div class="card-header">
-									<strong>Metode SAW</strong>
-								</div>
-								<div class="card-body">
-									<div class="card">
-										<div class="card-header">
-											<strong>Normalisasi</strong>
-										</div>
-										<table class="table table-responsive-sm table-striped">
-											<thead>
-												<tr>
-													<th>Alternatif</th>
-													<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr v-for="(mtx, idx) in MatriksSawNormalisasi" :key="idx">
-													<td><strong>{{ mtx.nama }}</strong></td>
-													<td v-for="(i_mtx, i_idx) in mtx.row">{{ i_mtx.value }}</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="card">
-										<table class="table table-responsive-sm table-striped">
-											<thead>
-												<tr>
-													<th>Alternatif</th>
-													<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
-													<th>Jumlah</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr v-for="(mtx, idx) in MatriksSawFinal" :key="idx">
-													<td>{{ mtx.nama }}</td>
-													<td v-for="(i_mtx, i_idx) in mtx.row" :key="i_idx">{{ i_mtx.value }}</td>
-													<td>{{ mtx.jumlah }}</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-show="step === 4" v-on:click="SaveBeasiswa">Simpan</button></li>
-							</ul>
-						</div>
-						<div class="clearfix"></div>
 					</div>
+					<div class="tab-pane" role="tabpanel" id="step3" v-bind:class="step == 3 ? 'active' : 'disabled'">
+						<div class="card">
+							<div class="card-body">
+								<div class="card">
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th rowspan="2" class="text-center">Alternatif</th>
+												<th :colspan="Kriteria.length" class="text-center">Kriteria</th>
+											</tr>
+											<tr>
+												<th v-for="(kriteria, idx) in Kriteria" :key="idx">{{ kriteria.nama_kriteria }}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
+												<td><strong>{{ mtx.nama }}</strong></td>
+												<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
+													<select class="form-control"
+														v-model="cell.cellvalue"
+														@change="findMaxOrMin(i_idx)">
+														<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td><strong>X</strong></td>
+												<td v-for="(col, idx) in maxormin" :key="idx">{{ col.maxminvalue }}</td>
+											</tr>
+											<tr>
+												<td><strong>Bobot</strong></td>
+												<td v-for="(matriks, idx) in MatriksNormalisasi" :key="idx">{{matriks.rata2}}</td>
+											</tr>
+											<tr>
+												<td><strong>Sifat</strong></td>
+												<td v-for="(col, idx) in maxormin" :key="idx">
+													<select class="form-control" v-model="col.state" @change="findMaxOrMin(idx)">
+														<option value="max">MAX</option>
+														<option value="min">MIN</option>
+													</select>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="card">
+									<div class="card-header">
+										<strong>Normalisasi</strong>
+									</div>
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th>Alternatif</th>
+												<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mtx, idx) in MatriksSawNormalisasi" :key="idx">
+												<td><strong>{{ mtx.nama }}</strong></td>
+												<td v-for="(i_mtx, i_idx) in mtx.row">{{ i_mtx.value }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="card">
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th>Alternatif</th>
+												<th v-for="(ktr, idx) in Kriteria" :key="idx">{{ ktr.nama_kriteria }}</th>
+												<th>Jumlah</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mtx, idx) in MatriksSawFinal" :key="idx">
+												<td>{{ mtx.nama }}</td>
+												<td v-for="(i_mtx, i_idx) in mtx.row" :key="i_idx">{{ i_mtx.value }}</td>
+												<td>{{ mtx.jumlah }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="card-footer text-right">
+								<button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button>
+								<button type="button" class="btn btn-success next-step" v-on:click="step +=1" >Berikutnya</button>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" role="tabpanel" id="complete" v-bind:class="step == 4?'active':'disabled'">
+						<div class="card">
+							<div class="card-body">
+							</div>
+							<div class="card-footer text-right">
+								<button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button>
+								<button type="button" class="btn btn-success next-step" v-show="step === 4" v-on:click="SaveBeasiswa">Simpan</button>
+							</div>
+						</div>
+						<ul class="list-inline pull-right">
+						</ul>
+					</div>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		</section>
@@ -515,6 +365,23 @@ var app = new Vue({
 		this.GetTahunAngkatan();
 		this.GetKriteria();
 		this.wizard = 1;
+	},
+	computed: {
+		stepTitle: function() {
+			switch (this.step) {
+				case 1 : return 'Pilih Tahun Angkatan'
+				case 2 : return 'AHP'
+				case 3 : return 'SAW'
+				case 4 : return 'Simpan Data Beasiswa'
+			}
+		},
+		terimaAtauTidak: function() {
+			if (this.CR <= 0.1) {
+				return 'Perhitungan diterima karena CR <= 0.1'
+			} else {
+				return 'Perhitungan ditolak karena CR > 0.1'
+			}
+		}
 	},
 	data: {
 		TahunAngkatan:[],
@@ -759,7 +626,7 @@ var app = new Vue({
 				}
 				this.CR = parseFloat(this.IC / this.IR);
 			}
-			},
+		},
 		// END AHP
 		// BEGIN SAW
 		SetMatriksSawAwal: function(){
