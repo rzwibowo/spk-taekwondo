@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 06 Agu 2018 pada 13.24
+-- Generation Time: 06 Agu 2018 pada 13.11
 -- Versi Server: 10.1.24-MariaDB
 -- PHP Version: 7.1.6
 
@@ -33,13 +33,6 @@ CREATE TABLE `beasiswa` (
   `jumlah_beasiswa` int(11) NOT NULL,
   `id_beasiswa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `beasiswa`
---
-
-INSERT INTO `beasiswa` (`id_mahasiswa`, `jumlah_beasiswa`, `id_beasiswa`) VALUES
-(4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -95,10 +88,6 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`id_mahasiswa`, `nim`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `ipk`, `kendaraan`, `pkj_orangtua`, `jml_tanggungan`, `id_tahun_angkatan`, `ipkCriteria`, `penghasilanCriteria`, `tanggunganCriteria`, `pgh_orangtua`) VALUES
-(3, 223244, 'Sahrun', 'laki-laki', 'Jakarta', '2018-06-12', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 0, 1, 1, 0, 1, 1, 1, 1, 0),
-(4, 234423, 'Ardi', 'laki-laki', 'Jakarta', '2018-06-23', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 12, 1, 1, 23, 1, 1, 1, 1, 0),
-(5, 2323, 'asasa', 'laki-laki', 'Jakarta', '2018-08-08', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 4, 1, 5, 2, 1, 1, 4, 9, 300),
-(6, 345678, 'Sahrun bOys', 'perempuan', 'Jakarta', '2018-08-09', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 3, 1, 5, 1, 1, 2, 5, 11, 1000),
 (7, 56789, 'Sahurn', 'laki-laki', 'Jakarta', '2018-08-22', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 2, 1, 5, 2, 2, 3, 5, 9, 1000000);
 
 -- --------------------------------------------------------

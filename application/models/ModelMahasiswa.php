@@ -75,9 +75,35 @@ class ModelMahasiswa extends CI_Model
 		{
 			return false;
 		}
-	}
-	function GetMahasiswaWithTahunAngkatan($where){
-		return $this->db->get_where('mahasiswa',$where);
+	}	
+	function GetMahasiswaWithTahunAngkatan($id_tahun){
+		$this->db->select('mahasiswa.jenis_kelamin,
+			mahasiswa.tempat_lahir,
+			mahasiswa.tgl_lahir,
+			mahasiswa.alamat,
+			mahasiswa.nama,
+			mahasiswa.nim,
+			mahasiswa.id_mahasiswa,
+			mahasiswa.pgh_orangtua,
+			mahasiswa.ipk,
+			tahun_angkatan.tahun_angkatan,
+			kendaraan.kriteria kendaraan,
+			pekerjaan.kriteria pkj_orangtua,
+			mahasiswa.jml_tanggungan,
+			kendaraan.bobot bobotkendaraan,
+			pekerjaan.bobot bobotpkj_orangtua,
+			tanggungan.bobot bobotJmlTanggungan,
+			ipk.bobot bobotipk,
+			phasilan.bobot bobotpenghasilanorg');
+		$this->db->from('mahasiswa');
+        $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
+        $this->db->join('sub_criteria_text kendaraan', 'mahasiswa.kendaraan = kendaraan.id_sub_criteria');
+        $this->db->join('sub_criteria_text pekerjaan', 'mahasiswa.pkj_orangtua = pekerjaan.id_sub_criteria');
+        $this->db->join('sub_criteria_nontext tanggungan', 'mahasiswa.tanggunganCriteria = tanggungan.id_sub_criteria');
+        $this->db->join('sub_criteria_nontext ipk', 'mahasiswa.ipkCriteria = ipk.id_sub_criteria');
+        $this->db->join('sub_criteria_nontext phasilan', 'mahasiswa.penghasilanCriteria = phasilan.id_sub_criteria');
+		$this->db->where('mahasiswa.id_tahun_angkatan',$id_tahun);
+    	return $this->db->get();
 	}
 
 }

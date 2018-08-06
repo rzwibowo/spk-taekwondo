@@ -78,8 +78,7 @@ class Mahasiswa extends REST_Controller {
         }
     }
     function getmahasiswawithtahunangkatan_get($id_tahun){
-        $where=array('id_tahun_angkatan'=>$id_tahun);
-        $MHS=$this->ModelMahasiswa->GetMahasiswaWithTahunAngkatan($where)->result();
+        $MHS=$this->ModelMahasiswa->GetMahasiswaWithTahunAngkatan($id_tahun)->result();
         $this->set_response($MHS, REST_Controller::HTTP_CREATED);
     }
 
