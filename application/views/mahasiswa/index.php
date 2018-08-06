@@ -186,7 +186,7 @@
 										<th><input type="number" name="tahun_angkatan" class="form-control text-center" v-model="FilterModel.tahun_angkatan" v-on:keyup="ChangeFilter(FilterModel.tahun_angkatan)" placeholder="Cari tahun angkatan ..."></th>
 										<th><input type="text" name="jenis_kelamin" class="form-control" v-model="FilterModel.jenis_kelamin" v-on:keyup="ChangeFilter(FilterModel.jenis_kelamin)" placeholder="Cari jenis kelamin mahasiswa ..."></th>
 										<th><input type="number" name="ipk" class="form-control text-center" v-model="FilterModel.ipk" v-on:keyup="ChangeFilter(FilterModel.ipk)" placeholder="Cari IPK mahasiswa ..."></th>
-										<th><input type="text" name="kendaraan" class="form-control" v-model="FilterModel.kendaraan" v-on:keyup="ChangeFilter(FilterModel.kendaraan)" placeholder="Cari kendaraan mahasiswa ..."></th>
+										<th><input type="text" name="kriteria" class="form-control" v-model="FilterModel.kriteria" v-on:keyup="ChangeFilter(FilterModel.kriteria)" placeholder="Cari kendaraan mahasiswa ..."></th>
 										<th></th>
 									</tr>
 								</thead>
@@ -231,73 +231,73 @@
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">NIM</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.nim}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.nim}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Nama</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.nama}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.nama}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tahun Angkatan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.tahun_angkatan}}</b></p>
+	      	       <label class="col-form-label"><b>{{mahasiswaView.tahun_angkatan}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Jenis Kelamin</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.jenis_kelamin}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.jenis_kelamin}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tempat Lahir</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.tempat_lahir}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.tempat_lahir}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Tanggal Lahir</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.tgl_lahir}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.tgl_lahir}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Alamat</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.alamat}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.alamat}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">IPK</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.ipk}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.ipk}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Kendaraan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.kriteria}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.kendaraan}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Penghasilan Orang Tua</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>Rp.{{mahasiswaView.pgh_orangtua}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.pgh_orangtua}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Pekerjaan Orang Tua</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.kriteria}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.pkj_orangtua}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Jumlah Tanggungan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.jml_tanggungan}}</b></p>
+	      	      <label class="col-form-label"><b>{{mahasiswaView.jml_tanggungan}}</b></label>
 	      	    </div>
 	      	  </div>
 	      	</form>
@@ -425,8 +425,8 @@ var app = new Vue({
       if(this.FilterModel.ipk !== null && this.FilterModel.ipk !== "" ){
         FilterParam.ipk =this.FilterModel.ipk;
       }
-      if(this.FilterModel.kendaraan !== null && this.FilterModel.kendaraan !== "" ){
-        FilterParam.kendaraan =this.FilterModel.kendaraan;
+      if(this.FilterModel.kriteria !== null && this.FilterModel.kriteria !== "" ){
+        FilterParam.kriteria =this.FilterModel.kriteria;
       }
       return FilterParam;
 

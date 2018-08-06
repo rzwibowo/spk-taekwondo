@@ -113,7 +113,7 @@
 										<th>Max</th>
 										<th>Oprator Max</th>
 										<th>Min</th>
-										<th>Operator Nim</th>
+										<th>Operator Min</th>
 										<th></th>
 									</tr>
 									<tr  v-for="(sub,index) in SubKriterias">
