@@ -98,6 +98,7 @@
 										<label class="col-md-3 col-form-label" for="nama">IPK (format: x.xx)</label>
 										<div class="col-md-4">
 											<input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK" v-on:change="SearchIPK(mahasiswa.ipk)" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;">
+											<span v-show="mahasiswa.ipk && GetFormatIPK(mahasiswa.ipk)" style="color: red">Format salah contoh 2.34</span>
 											<span v-show="Submit && !mahasiswa.ipk" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
@@ -120,7 +121,7 @@
 												<div class="input-group-prepend">
 													<span class="input-group-text">Rp</span>
 												</div>
-											<input type="text" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control" v-on:change="SearchPghOrangtua(mahasiswa.pgh_orangtua)" pattern="^[0-9]*$">
+											<input type="text" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control" v-on:change="SearchPghOrangtua(mahasiswa.pgh_orangtua)" onkeypress="return isNumber(event)">
 											</div>
 											<span v-show="Submit && !mahasiswa.pgh_orangtua" style="color: red">Field harus diisi</span>
 										</div>
@@ -143,7 +144,7 @@
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
 										<div class="col-md-3">
-											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control" v-on:change="SearchJumlahTanggungan(mahasiswa.jml_tanggungan)">
+											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control" v-on:change="SearchJumlahTanggungan(mahasiswa.jml_tanggungan)"  min="1">
 											<span v-show="Submit && !mahasiswa.jml_tanggungan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
@@ -312,6 +313,7 @@
 	<!-- END modal detail -->
 </div>
 <script type="text/javascript">
+
 var app = new Vue({
   el: '#app',
   created(){
@@ -319,18 +321,18 @@ var app = new Vue({
     this.InitializeFrom();
   },
   data: {
-  	mahasiswas:[],
-  	FilterModel:[],
-  	mahasiswaView:{},
-  	tahunangkatan:[],
-  	Form:{},
-  	Submit:{},
-  	PekerjaanOrangTua:[],
-  	Kendaraan:[],
-  	JumlahTanggungan:[],
-  	PenghasilanOrangTua:[],
-  	IPK:[],
-  	IPKValue:{},
+    mahasiswas:[],
+    FilterModel:[],
+    mahasiswaView:{},
+    tahunangkatan:[],
+    Form:{},
+    Submit:{},
+    PekerjaanOrangTua:[],
+    Kendaraan:[],
+    JumlahTanggungan:[],
+    PenghasilanOrangTua:[],
+    IPK:[],
+    IPKValue:{},
     mahasiswa:{
       nim:"",
       nama:"",
@@ -352,58 +354,58 @@ var app = new Vue({
   methods: {
     Save() 
     {
-    	this.Submit = true;
-    	if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan)
-    	{
-    	axios
-    	  .post(locationServer+'/api/mahasiswa/mahasiswa',{
+      this.Submit = true;
+      if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan)
+      {
+      axios
+        .post(locationServer+'/api/mahasiswa/mahasiswa',{
           body: this.mahasiswa
-    	  })
+        })
         .then(response => {
-       	  this.GetData();
-       	  this.reset();
+          this.GetData();
+          this.reset();
         })
         .catch(error => {
           console.log("Gagal Simpan Data")
           this.errored = true
         })
-				.finally(
-					document.getElementById('list').scrollIntoView({
-						behavior: 'smooth'
-					})
-				)
-	 }
+        .finally(
+          document.getElementById('list').scrollIntoView({
+            behavior: 'smooth'
+          })
+        )
+   }
     },
     GetData()
     {
       axios
-    	  .post(locationServer+'/api/mahasiswa/mahasiswas',{
-    		  body: this.Filter()
-    	  })
+        .post(locationServer+'/api/mahasiswa/mahasiswas',{
+          body: this.Filter()
+        })
         .then(response => {
-        	this.mahasiswas =  response.data;
-        	this.Submit = false;
-        	this.Form = false;
+          this.mahasiswas =  response.data;
+          this.Submit = false;
+          this.Form = false;
         })
         .catch(error => {
           console.log(error)
           this.errored = true
         })
-				// .finally(() => this.loading = false )
-				.finally(
-					document.getElementById('list').scrollIntoView({
-						behavior: 'smooth'
-					})
-				)
+        // .finally(() => this.loading = false )
+        .finally(
+          document.getElementById('list').scrollIntoView({
+            behavior: 'smooth'
+          })
+        )
     },
     reset()
     {
-   	  this.mahasiswa = {};
-   	  this.mahasiswa.pkj_orangtua = "";
-   	  this.mahasiswa.id_tahun_angkatan ="";
-   	  this.mahasiswa.kendaraan = "";
-   	  this.Submit = false;
-   	  this.Form = true;
+      this.mahasiswa = {};
+      this.mahasiswa.pkj_orangtua = "";
+      this.mahasiswa.id_tahun_angkatan ="";
+      this.mahasiswa.kendaraan = "";
+      this.Submit = false;
+      this.Form = true;
     },
     Filter()
     {
@@ -431,7 +433,7 @@ var app = new Vue({
     },
     ChangeFilter(Param)
     {
-   	  if(Param.length > 2){
+      if(Param.length > 2){
         this.GetData();
       } else if(Param.length == 0){
         this.GetData();
@@ -440,29 +442,29 @@ var app = new Vue({
     },
     Edit(Id)
     {
-    	this.Form = true;
-    	this.Submit = false;
+      this.Form = true;
+      this.Submit = false;
       axios
-    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaEdit/'+Id)
+        .get(locationServer+'/api/mahasiswa/GetDataMahasiswaEdit/'+Id)
         .then(response => {
-        	this.mahasiswa =  response.data;
+          this.mahasiswa =  response.data;
         })
         .catch(error => {
           console.log("Gagal Ambil Data");
           this.errored = true
         })
-				.finally(() => this.loading = false 
-			)
-			document.getElementById('input').scrollIntoView({
-				behavior: 'smooth'
-			})
-		},
+        .finally(() => this.loading = false 
+      )
+      document.getElementById('input').scrollIntoView({
+        behavior: 'smooth'
+      })
+    },
     Delete(Id)
     {
-			var x = confirm("Are you sure you want to delete?");
-			if (x){
+      var x = confirm("Are you sure you want to delete?");
+      if (x){
         axios
-   	      .get(locationServer+'/api/mahasiswa/mahasiswadelete/'+Id)
+          .get(locationServer+'/api/mahasiswa/mahasiswadelete/'+Id)
           .then(response => {
             this.GetData();
           })
@@ -475,11 +477,11 @@ var app = new Vue({
     },
     View(Id)
     {
-   	  axios
-    	  .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
+      axios
+        .get(locationServer+'/api/mahasiswa/GetDataMahasiswaById/'+Id)
         .then(response => {
-        	this.mahasiswaView =  response.data;
-         	$("#detail-modal").modal('show');
+          this.mahasiswaView =  response.data;
+          $("#detail-modal").modal('show');
         })
         .catch(error => {
           console.log("Gagal Ambil Data");
@@ -505,10 +507,10 @@ var app = new Vue({
       tanggunganCriteria:"",
       penghasilanCriteria:""
     };
-    	axios
-    	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
+      axios
+      .get(locationServer+'/api/tahunangkatan/tahunangkatans')
         .then(response => {
-        	this.tahunangkatan = response.data;
+          this.tahunangkatan = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -516,9 +518,9 @@ var app = new Vue({
         .finally(() => console.log())
         // PekerjaanOrangTua
         axios
-    	.get(locationServer+'/api/kriteria/detailkriteria/'+'Pekerjaan_Orang_Tua')
+      .get(locationServer+'/api/kriteria/detailkriteria/'+'Pekerjaan_Orang_Tua')
         .then(response => {
-        	this.PekerjaanOrangTua = response.data;
+          this.PekerjaanOrangTua = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -526,9 +528,9 @@ var app = new Vue({
         .finally(() => console.log())
         //Kendaraan
         axios
-    	.get(locationServer+'/api/kriteria/detailkriteria/'+'Kendaraan')
+      .get(locationServer+'/api/kriteria/detailkriteria/'+'Kendaraan')
         .then(response => {
-        	this.Kendaraan = response.data;
+          this.Kendaraan = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -536,9 +538,9 @@ var app = new Vue({
         .finally(() => console.log())
         //JumlahTanggungan
         axios
-    	.get(locationServer+'/api/kriteria/detailkriteria/'+'Jumlah_Tanggungan')
+      .get(locationServer+'/api/kriteria/detailkriteria/'+'Jumlah_Tanggungan')
         .then(response => {
-        	this.JumlahTanggungan = response.data;
+          this.JumlahTanggungan = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -546,9 +548,9 @@ var app = new Vue({
         .finally(() => console.log())
         //PenghasilanOrangTua
         axios
-    	.get(locationServer+'/api/kriteria/detailkriteria/'+'Penghasilan_Orang_Tua')
+      .get(locationServer+'/api/kriteria/detailkriteria/'+'Penghasilan_Orang_Tua')
         .then(response => {
-        	this.PenghasilanOrangTua = response.data;
+          this.PenghasilanOrangTua = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -556,9 +558,9 @@ var app = new Vue({
         .finally(() => console.log())
         //IPK
         axios
-    	.get(locationServer+'/api/kriteria/detailkriteria/'+'IPK')
+      .get(locationServer+'/api/kriteria/detailkriteria/'+'IPK')
         .then(response => {
-        	this.IPK = response.data;
+          this.IPK = response.data;
         })
         .catch(error => {
           this.errored = true
@@ -566,26 +568,26 @@ var app = new Vue({
         .finally(() => console.log())
     },
     SearchIPK(IPK){
-    	var BreakException = {};
+      var BreakException = {};
       var criteria ="";
-    	try {
-	    	this.IPK.forEach(function (value, i) {
-	    	    if(value.min !== '' && value.max !== '')
-	    	    {
-	    	    	if(eval(IPK+value.operator_min+value.min+'&&'+IPK+value.operator_max+value.max)){
+      try {
+        this.IPK.forEach(function (value, i) {
+            if(value.min !== '' && value.max !== '')
+            {
+              if(eval(IPK+value.operator_min+value.min+'&&'+IPK+value.operator_max+value.max)){
                 criteria = value.id_sub_criteria;
-	    	    		throw BreakException;
-	    	    	}
-	    	    }else if(value.min !== '' && value.max == '')
-	    	    {
-	    	    	if(eval(IPK+value.operator_min+value.min)){
+                throw BreakException;
+              }
+            }else if(value.min !== '' && value.max == '')
+            {
+              if(eval(IPK+value.operator_min+value.min)){
                 criteria = value.id_sub_criteria;
-	    	    	 	throw BreakException;
-	    	    	 }
-	    	    }
-	    	});
-    	} catch (e) {  
-		}
+                throw BreakException;
+               }
+            }
+        });
+      } catch (e) {  
+    }
     this.mahasiswa.ipkCriteria = criteria;
     },
     SearchJumlahTanggungan(anak){
@@ -633,10 +635,27 @@ var app = new Vue({
       } catch (e) {  
     }
     this.mahasiswa.penghasilanCriteria = criteria;
+    },
+    GetFormatIPK(ipk){
+     let NotValid = false;
+     let dot =  ipk.substr(1, 1);
+     if(ipk.substr(0, 1) === "."){
+      NotValid = true;
+     }else if(dot !=="."){
+       NotValid = true;
+     }
+     return NotValid; 
     }
   }
 })
 
 loaderStop()
-
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
 </script>
