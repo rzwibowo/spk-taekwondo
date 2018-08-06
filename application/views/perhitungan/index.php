@@ -1,131 +1,174 @@
-<style type="text/css">
-.wizard {
-	margin: 20px auto;
-	background: #fff;
-}
-.wizard .nav-tabs {
-	position: relative;
-	margin: 40px auto;
-	margin-bottom: 0;
-	border-bottom-color: #e0e0e0;
-}
-.wizard > div.wizard-inner {
-	position: relative;
-}
-.connecting-line {
-	height: 2px;
-	background: #e0e0e0;
-	position: absolute;
-	width: 80%;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
-	top: 50%;
-	z-index: 1;
-}
-.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
-	color: #555555;
-	cursor: default;
-	border: 0;
-	border-bottom-color: transparent;
-}
-span.round-tab {
-	width: 70px;
-	height: 70px;
-	line-height: 70px;
-	display: inline-block;
-	border-radius: 100px;
-	background: #fff;
-	border: 2px solid #e0e0e0;
-	z-index: 2;
-	position: absolute;
-	left: 0;
-	text-align: center;
-	font-size: 25px;
-}
-span.round-tab i{
-	color:#555555;
-}
-.wizard li.active span.round-tab {
-	background: #fff;
-	border: 2px solid #5bc0de;
-}
-.wizard li.active span.round-tab i{
-	color: #5bc0de;
-}
-span.round-tab:hover {
-	color: #333;
-	border: 2px solid #333;
-}
-.wizard .nav-tabs > li {
-	width: 25%;
-}
-.wizard li:after {
-	content: " ";
-	position: absolute;
-	left: 46%;
-	opacity: 0;
-	margin: 0 auto;
-	bottom: 0px;
-	border: 5px solid transparent;
-	border-bottom-color: #5bc0de;
-	transition: 0.1s ease-in-out;
-}
-.wizard li.active:after {
-	content: " ";
-	position: absolute;
-	left: 46%;
-	opacity: 1;
-	margin: 0 auto;
-	bottom: 0px;
-	border: 10px solid transparent;
-	border-bottom-color: #5bc0de;
-}
-.wizard .nav-tabs > li a {
-	width: 70px;
-	height: 70px;
-	margin: 20px auto;
-	border-radius: 100%;
-	padding: 0;
-}
-.wizard .nav-tabs > li a:hover {
-	background: transparent;
-}
-.wizard .tab-pane {
-	position: relative;
-	padding-top: 50px;
-}
-.wizard h3 {
-	margin-top: 0;
-}
-@media( max-width : 585px ) {
+<!-- <style type="text/css">
 	.wizard {
-	width: 90%;
-	height: auto !important;
-}
-span.round-tab {
-	font-size: 16px;
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
-}
-.wizard .nav-tabs > li a {
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
-}
-.wizard li.active:after {
-	content: " ";
-	position: absolute;
-	left: 35%;
-}
-}
+		margin: 20px auto;
+		background: #fff;
+	}
+	.wizard .nav-tabs {
+		position: relative;
+		margin: 40px auto;
+		margin-bottom: 0;
+		border-bottom-color: #e0e0e0;
+	}
+	.wizard > div.wizard-inner {
+		position: relative;
+	}
+	.connecting-line {
+		height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 80%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		z-index: 1;
+	}
+	.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+		color: #555555;
+		cursor: default;
+		border: 0;
+		border-bottom-color: transparent;
+	}
+	span.round-tab {
+		width: 70px;
+		height: 70px;
+		line-height: 70px;
+		display: inline-block;
+		border-radius: 100px;
+		background: #fff;
+		border: 2px solid #e0e0e0;
+		z-index: 2;
+		position: absolute;
+		left: 0;
+		text-align: center;
+		font-size: 25px;
+	}
+	span.round-tab i{
+		color:#555555;
+	}
+	.wizard li.active span.round-tab {
+		background: #fff;
+		border: 2px solid #5bc0de;
+	}
+	.wizard li.active span.round-tab i{
+		color: #5bc0de;
+	}
+	span.round-tab:hover {
+		color: #333;
+		border: 2px solid #333;
+	}
+	.wizard .nav-tabs > li {
+		width: 25%;
+	}
+	.wizard li:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 0;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 5px solid transparent;
+		border-bottom-color: #5bc0de;
+		transition: 0.1s ease-in-out;
+	}
+	.wizard li.active:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 1;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 10px solid transparent;
+		border-bottom-color: #5bc0de;
+	}
+	.wizard .nav-tabs > li a {
+		width: 70px;
+		height: 70px;
+		margin: 20px auto;
+		border-radius: 100%;
+		padding: 0;
+	}
+	.wizard .nav-tabs > li a:hover {
+		background: transparent;
+	}
+	.wizard .tab-pane {
+		position: relative;
+		padding-top: 50px;
+	}
+	.wizard h3 {
+		margin-top: 0;
+	}
+	@media( max-width : 585px ) {
+		.wizard {
+			width: 90%;
+			height: auto !important;
+		}
+		span.round-tab {
+			font-size: 16px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+		.wizard .nav-tabs > li a {
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+		.wizard li.active:after {
+			content: " ";
+			position: absolute;
+			left: 35%;
+		}
+	}
+</style> -->
+<style>
+	.steps {
+		margin: 25px auto;
+	}
+	.step {
+		opacity: 0.5;
+		height: 2em;
+		width: 2em;
+		background-color: blue;
+		display: inline-flex;
+		color: white;
+		align-items: center;
+		justify-content: center;
+		margin-left: 20px;
+		margin-right: 20px;
+		border-radius: 3px;
+	}
+	.step:not(:first-child)::before{
+		content: '';
+		width: 20px;
+		height: 3px;
+		position: absolute;
+		margin-left: -35px;
+		background-color: grey;
+	}
+	.step.active{
+		opacity: 1;
+	}
 </style>
 <div class="row" id="app">
 	<div class="col-md-12">
+		<div class="steps text-center">
+			<span class="step" :class="step === 1 ? ' active' : ''">1</span>
+			<span class="step" :class="step === 2 ? ' active' : ''">2</span>
+			<span class="step" :class="step === 3 ? ' active' : ''">3</span>
+			<span class="step" :class="step === 4 ? ' active' : ''">4</span>
+		</div>
+		<div class="steps title text-center">
+			<h4 v-show="step === 1">Pilih Tahun Angkatan</h4>
+			<h4 v-show="step === 2">AHP</h4>
+			<h4 v-show="step === 3">SAW</h4>
+			<h4 v-show="step === 4">Simpan Data Beasiswa</h4>
+		</div>
+	</div>
+	<div class="col-md-12">
 		<section>
 			<div class="wizard">
-				<div class="wizard-inner">
+				<!-- <div class="wizard-inner">
 					<div class="connecting-line"></div>
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" v-bind:class="wizard == 1?'active':'disabled'">
@@ -157,10 +200,10 @@ span.round-tab {
 							</a>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<div role="form">
 					<div class="tab-content">
-						<div class="tab-pane" role="tabpanel" id="step1" v-bind:class="wizard == 1?'active':'disabled'">
+						<div class="tab-pane" role="tabpanel" id="step1" v-bind:class="step === 1 ? 'active' : 'disabled'">
 							<div class="col-md-12">
 								<div class="card">
 									<div class="col-md-6">
@@ -218,10 +261,10 @@ span.round-tab {
 								</div>
 							</div>
 							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-success next-step" v-on:click="wizard += 1" :disabled="!selected || !Mahasiswa.length">Next</button></li>
+								<li><button type="button" class="btn btn-success next-step" v-on:click="step += 1" :disabled="!selected || !Mahasiswa.length">Selanjutnya</button></li>
 							</ul>
 						</div>
-						<div class="tab-pane" role="tabpanel" id="step2"  v-bind:class="wizard == 2?'active':'disabled'">
+						<div class="tab-pane" role="tabpanel" id="step2"  v-bind:class="step == 2 ? 'active' : 'disabled'">
 							<div class="col-md-12">
 								<div class="card" >
 									<div class="card-header">
@@ -349,11 +392,11 @@ span.round-tab {
 								</div>
 							</div>
 							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="wizard -=1">Previous</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-on:click="wizard += 1" :disabled="!isCalculate">Next</button></li>
+								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
+								<li><button type="button" class="btn btn-success next-step" v-on:click="step += 1" :disabled="!isCalculate">Berikutnya</button></li>
 							</ul>
 						</div>
-						<div class="tab-pane" role="tabpanel" id="step3" v-bind:class="wizard == 3?'active':'disabled'">
+						<div class="tab-pane" role="tabpanel" id="step3" v-bind:class="step == 3 ? 'active' : 'disabled'">
 							<div class="card">
 								<div class="card-header">
 									<strong>Metode SAW</strong>
@@ -404,11 +447,11 @@ span.round-tab {
 								</div>
 							</div>
 							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="wizard -=1">Previous</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-on:click="wizard +=1;CalculateMatriksSaw()" >Next</button></li>
+								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
+								<li><button type="button" class="btn btn-success next-step" v-on:click="step +=1;CalculateMatriksSaw()" >Berikutnya</button></li>
 							</ul>
 						</div>
-						<div class="tab-pane" role="tabpanel" id="complete" v-bind:class="wizard == 4?'active':'disabled'">
+						<div class="tab-pane" role="tabpanel" id="complete" v-bind:class="step == 4?'active':'disabled'">
 							<div class="card">
 								<div class="card-header">
 									<strong>Metode SAW</strong>
@@ -454,8 +497,8 @@ span.round-tab {
 								</div>
 							</div>
 							<ul class="list-inline pull-right">
-								<li><button type="button" class="btn btn-default prev-step" v-on:click="wizard -=1">Previous</button></li>
-								<li><button type="button" class="btn btn-success next-step" v-show="wizard == 4" v-on:click="SaveBeasiswa">Save</button></li>
+								<li><button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button></li>
+								<li><button type="button" class="btn btn-success next-step" v-show="step === 4" v-on:click="SaveBeasiswa">Simpan</button></li>
 							</ul>
 						</div>
 						<div class="clearfix"></div>
@@ -464,92 +507,88 @@ span.round-tab {
 			</div>
 		</section>
 	</div>
-	<!-- BEGIN form input -->
 </div>
 <script type="text/javascript">
 var app = new Vue({
-el: '#app',
-created(){
-this.GetTahunAngkatan();
-this.GetKriteria();
-this.wizard = 1;
-},
-data: {
-	TahunAngkatan:[],
-	selected: '',
-	Mahasiswa:[],
-	Kriteria:[],
-	MatrixPerbandingan:[],
-	isCalculate:'',
-	MatriksNormalisasi:[],
-	Konsistensi:[],
-	Lamda:{},
-	IC:{},
-	IR:{},
-	CR:{},
-	MatriksSaw: [],
-	maxormin: [],
-	MatriksSawNormalisasi: [],
-	sawCalculate: false,
-	MatriksSawFinal: [],
-	wizard:{}
-},
-methods: {
-	GetTahunAngkatan()
-	{
-	axios
-	.get(locationServer+'/api/tahunangkatan/tahunangkatans')
-	.then(response => {
-		this.TahunAngkatan =  response.data;
-	})
-	.catch(error => {
-		console.log(error)
-		this.errored = true
-	})
-	.finally(() => this.loading = false )
-		},
-	// BEGIN AHP
-	GetMahasiswa(idTahun){
-		axios
-		.get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
-		.then(response => {
-			this.Mahasiswa =  response.data;
-			this.isCalculate=false;
-			this.SetMatriksSawAwal()
-	})
-	.catch(error => {
-		console.log(error)
-		this.errored = true
-	})
-	.finally(() => this.loading = false)
+	el: '#app',
+	created(){
+		this.GetTahunAngkatan();
+		this.GetKriteria();
+		this.wizard = 1;
 	},
-	GetKriteria(){
-		axios
-		.get(locationServer+'/api/kriteria/getkriterias')
-		.then(response => {
-			this.Kriteria =  response.data;
-			this.SetMaxtrixPerbandingan();
-		})
-		.catch(error => {
-			console.log(error)
-			this.errored = true
-		})
-		.finally(() => this.loading = false )
+	data: {
+		TahunAngkatan:[],
+		selected: '',
+		Mahasiswa:[],
+		Kriteria:[],
+		MatrixPerbandingan:[],
+		isCalculate:'',
+		MatriksNormalisasi:[],
+		Konsistensi:[],
+		Lamda:{},
+		IC:{},
+		IR:{},
+		CR:{},
+		MatriksSaw: [],
+		maxormin: [],
+		MatriksSawNormalisasi: [],
+		sawCalculate: false,
+		MatriksSawFinal: [],
+		wizard:{},
+		step: 1
+	},
+	methods: {
+		GetTahunAngkatan() {
+			axios.get(locationServer+'/api/tahunangkatan/tahunangkatans')
+			.then(response => {
+				this.TahunAngkatan =  response.data;
+			})
+			.catch(error => {
+				console.log(error)
+				this.errored = true
+			})
+			.finally(() => this.loading = false )
 		},
-	SetMaxtrixPerbandingan(){
-		var MatrixPerbandingan = [];
-		var defaultvalue = 0;
-		var lengkriteria = this.Kriteria.length;
-		this.Kriteria.forEach(function (value, i) {
-			var row = [];
-			for (var j = 0; j < lengkriteria;j++) {
-			var colum = {
-					row : i,
-					colum:j,
-					value:defaultvalue == j?1:0,
-					isChange:j > i? true:false,
-			    }
-				row.push(colum);
+		// BEGIN AHP
+		GetMahasiswa(idTahun) {
+			axios.get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+idTahun)
+			.then(response => {
+				this.Mahasiswa =  response.data;
+				this.isCalculate=false;
+				this.SetMatriksSawAwal()
+			})
+			.catch(error => {
+				console.log(error)
+				this.errored = true
+			})
+			.finally(() => this.loading = false)
+		},
+		GetKriteria(){
+			axios.get(locationServer+'/api/kriteria/getkriterias')
+			.then(response => {
+				this.Kriteria =  response.data;
+				this.SetMaxtrixPerbandingan();
+			})
+			.catch(error => {
+				console.log(error)
+				this.errored = true
+			})
+			.finally(() => this.loading = false )
+		},
+		SetMaxtrixPerbandingan(){
+			var MatrixPerbandingan = [];
+			var defaultvalue = 0;
+			var lengkriteria = this.Kriteria.length;
+			this.Kriteria.forEach(function (value, i) {
+				var row = [];
+				for (var j = 0; j < lengkriteria;j++) {
+					var colum = {
+						row : i,
+						colum:j,
+						value:defaultvalue == j?1:0,
+						isChange:j > i? true:false,
+					}
+					row.push(colum);
 				}
 				var matrix = {
 					kriteria :value.nama_kriteria,
@@ -560,27 +599,27 @@ methods: {
 				defaultvalue ++;
 			});
 			this.MatrixPerbandingan = MatrixPerbandingan;
-	},
-	CalculateMatrix(row,matrix,index,indexparent){
-		var total = 0;
-		this.MatrixPerbandingan[row.colum].row[indexparent].value = parseFloat(matrix.row[row.row].value) / parseFloat(row.value);
-			for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
-				total += parseFloat(this.MatrixPerbandingan[i].row[row.row].value);
+		},
+		CalculateMatrix(row,matrix,index,indexparent){
+			var total = 0;
+			this.MatrixPerbandingan[row.colum].row[indexparent].value = parseFloat(matrix.row[row.row].value) / parseFloat(row.value);
+				for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
+					total += parseFloat(this.MatrixPerbandingan[i].row[row.row].value);
+				}
+				this.MatrixPerbandingan[row.row].jumlah = total.toFixed(2);
+				total = 0;
+				for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
+				total += parseFloat(this.MatrixPerbandingan[i].row[index].value);
 			}
-		    this.MatrixPerbandingan[row.row].jumlah = total.toFixed(2);
-	        total = 0;
-			for (var i = 0; i < this.MatrixPerbandingan.length; i++) {
-			total += parseFloat(this.MatrixPerbandingan[i].row[index].value);
-   		}
-        this.MatrixPerbandingan[index].jumlah = total.toFixed(2);
-	},
-	Calculate(){
-		var valid = true;
-		this.MatrixPerbandingan.forEach(function (value, i) {
-			if(value.row.filter(x => x.isChange == true && x.value == 0).length > 0){
-				valid =false;
-		    }
-		});
+			this.MatrixPerbandingan[index].jumlah = total.toFixed(2);
+		},
+		Calculate(){
+			var valid = true;
+			this.MatrixPerbandingan.forEach(function (value, i) {
+				if(value.row.filter(x => x.isChange == true && x.value == 0).length > 0){
+					valid =false;
+				}
+			});
 			if(!valid) {
 				alert("Ada data yang tidak falid");
 			} else {
@@ -673,7 +712,7 @@ methods: {
 						baris:baris,
 						rata2:parseFloat(baris / row.length),
 					};
-		            MatrixNormalisasi.push(matrix);
+					MatrixNormalisasi.push(matrix);
 				});
 				this.MatriksNormalisasi = MatrixNormalisasi;
 				//END Matrix Normalisasi
@@ -720,9 +759,9 @@ methods: {
 				}
 				this.CR = parseFloat(this.IC / this.IR);
 			}
-		},
-	// END AHP
-	// BEGIN SAW
+			},
+		// END AHP
+		// BEGIN SAW
 		SetMatriksSawAwal: function(){
 			let MatriksSawAwal = []
 			for(let index = 0; index < this.Mahasiswa.length; index++){
@@ -813,29 +852,28 @@ methods: {
 			}
 			this.MatriksSawFinal = MatriksSawFinalAwal
 		},
-	// END SAW
-	SaveBeasiswa(){
-var Beasiswa ={};
-this.MatriksSawFinal.forEach(function (value, i) {
-		Beasiswa = {
-				jumlah_beasiswa	 :value.jumlah,
-			id_mahasiswa : value.id_mahasiswa
-		}
-	});
-	axios
-	.post(locationServer+'/api/beasiswa/beasiswa',{
-body: Beasiswa
-	})
-.then(response => {
-	alert("Data Berhasil Disimpan");
-	window.location.replace(locationServer);
-	})
-	.catch(error => {
-	console.log(error);
-		alert("Save Gagal");
-	this.errored = true
-	})
-	.finally(() => console.log())
+		// END SAW
+		SaveBeasiswa() {
+			var Beasiswa ={};
+			this.MatriksSawFinal.forEach(function (value, i) {
+				Beasiswa = {
+					jumlah_beasiswa	 : value.jumlah,
+					id_mahasiswa : value.id_mahasiswa
+				}
+			});
+			axios.post(locationServer+'/api/beasiswa/beasiswa',{
+				body: Beasiswa
+			})
+			.then(response => {
+				alert("Data Berhasil Disimpan");
+				window.location.replace(locationServer);
+			})
+			.catch(error => {
+				console.log(error);
+				alert("Save Gagal");
+				this.errored = true
+			})
+			.finally(() => console.log())
 		}
 	}
 })
