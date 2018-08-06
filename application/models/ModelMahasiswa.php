@@ -42,6 +42,8 @@ class ModelMahasiswa extends CI_Model
 		$this->db->select('*');
 		$this->db->from('mahasiswa');
         $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
+        $this->db->join('sub_criteria_text kendaraan', 'mahasiswa.kendaraan = kendaraan.id_sub_criteria');
+        $this->db->join('sub_criteria_text pekerjaan', 'mahasiswa.pkj_orangtua = pekerjaan.id_sub_criteria');
 		$this->db->where($Where);
 
 	  return $this->db->get();

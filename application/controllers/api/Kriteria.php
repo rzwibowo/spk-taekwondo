@@ -64,8 +64,8 @@ class Kriteria extends REST_Controller {
     {
         # code...
         $where=array('id_kriteria'=>$Id);
-        $MHS=$this->ModelKriteria->GatById($where)->result();
-        $this->set_response($MHS[0], REST_Controller::HTTP_CREATED);
+        $Kriteria=$this->ModelKriteria->GatById($where)->result();
+        $this->set_response($Kriteria[0], REST_Controller::HTTP_CREATED);
     }
     function kriteriadelete_get($Id)
     {
@@ -78,6 +78,12 @@ class Kriteria extends REST_Controller {
     function detailkriteria_get($kriteria)
     {
         $Kriteria=$this->ModelKriteria->detailkriteria($kriteria)->result();
+        $this->set_response($Kriteria, REST_Controller::HTTP_CREATED);
+    }
+    function GetDetailKriteria_get($Id,$Type)
+    {
+        $where=array('id_kriteria'=>$Id);
+        $Kriteria=$this->ModelKriteria->GetDetailKriteria($where,$Type)->result();
         $this->set_response($Kriteria, REST_Controller::HTTP_CREATED);
     }
     

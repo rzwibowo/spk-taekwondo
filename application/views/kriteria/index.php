@@ -9,7 +9,7 @@
 	<div class="col-md-12">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form =true;Submit = false">
+				<a class="nav-link" v-bind:class="Form == true?'active':''" data-toggle="tab" href="#tab_input" role="tab" aria-controls="tab_input" v-on:click="Form =true;Submit = false;reset()">
 					<i class="icon-pencil"></i> Input
 				</a>
 			</li>
@@ -183,12 +183,12 @@
 									<td>{{index + 1}}</td>
 									<td>{{kriteria.kode_kriteria}}</td>
 									<td>{{kriteria.nama_kriteria}}</td>
-									<td> <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.id_kriteria)">
-												<i class="fa fa-pencil"></i> Edit</button>
+									<td> <!-- <button type="button" class="btn btn-sm btn-primary" v-on:click="Edit(kriteria.id_kriteria)">
+												<i class="fa fa-pencil"></i> Edit</button> -->
 												<button type="button" class="btn btn-sm btn-success" v-on:click="View(kriteria.id_kriteria)">
 												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.id_kriteria)">
-												<i class="fa fa-minus-circle"></i> Delete</button>
+												<!-- <button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(kriteria.id_kriteria)">
+												<i class="fa fa-minus-circle"></i> Delete</button> -->
 									</td>
 								</tr>
 							</tbody>
@@ -205,7 +205,7 @@
 	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h4 class="modal-title">Detail kriteria</h4>
+	        <h4 class="modal-title">kriteria</h4>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -224,6 +224,58 @@
 	      	      <p class="form-control-static"><b>{{kriteriaView.nama_kriteria}}</b></p>
 	      	    </div>
 	      	  </div>
+	      	  <div class="card" v-show="kriteriaView.istext == 1">
+						<div class="card-header">
+							   <strong>Detail Kriteria</strong>
+							</div>
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Kriteria</th>
+										<th>Bobot</th>
+										<th>Keterangan</th>
+									</tr>
+									
+								</thead>
+								<tbody>
+									<tr v-for="(sub,index) in SubKriterias">
+										<td>{{index + 1}}</td>
+										<td>{{sub.kriteria}}</td>
+										<td>{{sub.bobot}}</td>
+										<td>{{sub.keterangan}}</td>
+									</tr>
+								</tbody>
+							</table>
+			       </div>
+						<div class="card" v-show="kriteriaView.istext == 0">
+						<div class="card-header">
+							   <strong>Detail Kriteria</strong>
+						 </div>
+							<table class="table table-responsive-sm table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Kriteria</th>
+										<th>Max</th>
+										<th>Oprator Max</th>
+										<th>Min</th>
+										<th>Operator Nim</th>
+									</tr>
+									<tr  v-for="(sub,index) in SubKriterias">
+										<td>{{index+1}}</td>
+										<td>{{sub.kriteria}}</td>
+										<td>{{sub.max}}</td>
+										<td>{{sub.operator_max}}</td>
+										<td>{{sub.min}}</td>
+										<td>{{sub.operator_min}}</td>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+					</div>
 	      	</form>
 	      </div>
 	      <div class="modal-footer">
@@ -233,7 +285,7 @@
 	  </div>
 	</div>
 
-	<div class="modal fade" id="modalDetailkriteriaText" tabindex="-1" role="dialog" aria-labelledby="modalDetailkriteriaText" aria-hidden="true">
+	<div class="modal fade" id="modalDetailkriteriaText" tabindex="-1" role="dialog" aria-labelledby="modalDetailkriteriaText" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
 	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -249,12 +301,14 @@
 	      	    <div class="col-md-9">
 	      	      <input type="text" name="kriteria" v-model="SubKriteria.kriteria" class="form-control">
 	      	      <input type="hidden" name="id_kriteria" v-model="SubKriteria.id_kriteria">
+	      	      <span v-show="SubmitKriteria && !SubKriteria.kriteria" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Bobot</label>
 	      	    <div class="col-md-9">
 	      	    	<input type="number" name="bobot" v-model="SubKriteria.bobot" class="form-control">
+	      	        <span v-show="SubmitKriteria && !SubKriteria.bobot" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
@@ -263,6 +317,7 @@
 	      	    	<textarea name="keterangan" v-model="SubKriteria.keterangan" class="form-control">
 	      	    		
 	      	    	</textarea>
+	      	    	<span v-show="SubmitKriteria && !SubKriteria.bobot" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	</form>
@@ -273,7 +328,7 @@
 	    </div>
 	  </div>
 	</div>
-	<div class="modal fade" id="modalDetailkriterianonText" tabindex="-1" role="dialog" aria-labelledby="modalDetailkriteriaText" aria-hidden="true">
+	<div class="modal fade" id="modalDetailkriterianonText" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modalDetailkriteriaText" aria-hidden="true">
 	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -289,12 +344,14 @@
 	      	    <div class="col-md-9">
 	      	      <input type="text" name="kriteria" v-model="SubKriteria.kriteria" class="form-control">
 	      	      <input type="hidden" name="id_kriteria" v-model="SubKriteria.id_kriteria">
+	      	      <span v-show="SubmitKriteria && !SubKriteria.kriteria" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Min</label>
 	      	    <div class="col-md-9">
 	      	    	<input type="number" name="min" v-model="SubKriteria.min" class="form-control">
+	      	       <span v-show="SubmitKriteria && !SubKriteria.min" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	   <div class="form-group row">
@@ -320,12 +377,14 @@
 							<input class="form-check-input" type="radio" id="operator_nim" v-model="SubKriteria.operator_min" value="==" name="operator_nim" >
 							<label class="form-check-label" for="operator_nim">==</label>
 					</div>
+					<span v-show="SubmitKriteria && !SubKriteria.operator_min" style="color: red">Field Harus Diisi</span>
 				</div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Max</label>
 	      	    <div class="col-md-9">
 	      	    	<input type="number" name="max" v-model="SubKriteria.max" class="form-control" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
+	      	    	<span v-show="SubmitKriteria && !SubKriteria.max" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
@@ -343,12 +402,14 @@
 							<input class="form-check-input" type="radio" id="oprator_max" v-model="SubKriteria.operator_max" value="==" name="oprator_max" :disabled="SubKriteria.operator_min == '<' || SubKriteria.operator_min == '<=' ">
 							<label class="form-check-label" for="oprator_max">==</label>
 					</div>
+					<span v-show="SubmitKriteria && !SubKriteria.operator_max" style="color: red">Field Harus Diisi</span>
 				</div>
 	      	  </div>
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Bobot</label>
 	      	    <div class="col-md-9">
 	      	    	<input type="number" name="bobot" v-model="SubKriteria.bobot" class="form-control">
+	      	    	<span v-show="SubmitKriteria && !SubKriteria.bobot" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
@@ -357,6 +418,7 @@
 	      	    	<textarea name="keterangan" v-model="SubKriteria.keterangan" class="form-control">
 	      	    		
 	      	    	</textarea>
+	      	    	<span v-show="SubmitKriteria && !SubKriteria.keterangan" style="color: red">Field Harus Diisi</span>
 	      	    </div>
 	      	  </div>
 	      	</form>
@@ -432,6 +494,7 @@ var app = new Vue({
    {
    	this.kriteria = {};
    	this.Submit = false;
+   	this.SubKriterias = [];
    },
    Filter()
    {
@@ -461,6 +524,7 @@ var app = new Vue({
         .then(response => {
         	this.kriteria =  response.data;
         	this.Form = true;
+        	this.EditDetail(Id,response.data.istext);
        })
        .catch(error => {
         console.log(error)
@@ -491,6 +555,7 @@ var app = new Vue({
         .then(response => {
         	this.kriteriaView =  response.data;
          	$("#detail-modal").modal('show');
+        	this.GetDetailKriteria(Id,response.data.istext);
        })
        .catch(error => {
         console.log(error)
@@ -510,15 +575,31 @@ var app = new Vue({
    },
    AddKriteriatext(){
    	this.SubmitKriteria = true;
-   	var sub = this.SubKriteria;
-   	this.SubKriterias.push(sub);
-    $("#modalDetailkriteriaText").modal('hide');
+    if(this.SubKriteria.kriteria && this.SubKriteria.bobot && this.SubKriteria.keterangan){
+        var sub = this.SubKriteria;
+	   	this.SubKriterias.push(sub);
+	   $("#modalDetailkriteriaText").modal('hide');
+    }
    },
     AddKriterianontext(){
    	this.SubmitKriteria = true;
-   	var sub = this.SubKriteria;
-   	this.SubKriterias.push(sub);
-    $("#modalDetailkriterianonText").modal('hide');
+   	if(this.SubKriteria.kriteria && this.SubKriteria.min && this.SubKriteria.operator_nim && this.SubKriteria.max && this.SubKriteria.operator_max && this.SubKriteria.bobot && this.SubKriteria.keterangan ){
+   		var sub = this.SubKriteria;
+   		this.SubKriterias.push(sub);
+    	$("#modalDetailkriterianonText").modal('hide');
+   	}
+   },
+   GetDetailKriteria(Id,Type){
+   	    axios
+    	.get(locationServer+'/api/kriteria/GetDetailKriteria/'+Id+'/'+Type)
+        .then(response => {
+        	this.SubKriterias =  response.data;
+       })
+       .catch(error => {
+        console.log(error)
+        this.errored = true
+      })
+      .finally(() => this.loading = false )
    }
   }
 })

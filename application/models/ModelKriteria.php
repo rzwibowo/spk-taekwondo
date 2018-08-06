@@ -60,9 +60,24 @@ class ModelKriteria extends CI_Model
 	    $Where=array(
 				'id_kriteria'=>$Data->id_kriteria
 		);
-
+	    $SubKriteria = $Data->SubKriteria;
+		unset($Data->SubKriteria);
         $this->db->where($Where);
 		if($this->db->update('kriteria',$Data)){
+			$this->db->where($Where);
+			if($Data->istext == "1"){
+			  $this->db->delete('sub_criteria_text');
+			  foreach ($SubKriteria as $key => $value) {
+            	$value['id_kriteria'] = $Data->id_kriteria;
+          		$this->db->insert('sub_criteria_text',$value);
+              }
+			}else{
+			  $this->db->delete('sub_criteria_nontext');
+			  foreach ($SubKriteria as $key => $value) {
+          		$value['id_kriteria'] = $Data->id_kriteria;
+          	  $this->db->insert('sub_criteria_nontext',$value);
+            }	
+			}
 			return true;
 		}else {
 			return false;
@@ -101,6 +116,14 @@ class ModelKriteria extends CI_Model
        		return $this->db->get();
         }
 
+	}
+	function GetDetailKriteria($Where,$type)
+	{
+		if($type == "1"){
+			return $this->db->get_where('sub_criteria_text',$Where);
+		}else{
+			return $this->db->get_where('sub_criteria_nontext',$Where);
+		}
 	}
 
 }

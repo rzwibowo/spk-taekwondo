@@ -217,7 +217,7 @@
 	</div>
 
 	<!-- BEGIN modal detail -->
-	<div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 	  <div class="modal-dialog modal-info modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -279,7 +279,7 @@
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Kendaraan</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.kendaraan}}</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.kriteria}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
@@ -291,7 +291,7 @@
 	      	  <div class="form-group row">
 	      	    <label class="col-md-3 col-form-label">Pekerjaan Orang Tua</label>
 	      	    <div class="col-md-9">
-	      	      <p class="form-control-static"><b>{{mahasiswaView.pkj_orangtua}}</b></p>
+	      	      <p class="form-control-static"><b>{{mahasiswaView.kriteria}}</b></p>
 	      	    </div>
 	      	  </div>
 	      	  <div class="form-group row">
