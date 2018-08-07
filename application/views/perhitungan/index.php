@@ -246,7 +246,7 @@
 								</div>
 								<div class="card-footer text-right">
 									<button type="button" class="btn btn-default prev-step" v-on:click="step -= 1">Sebelumnya</button>
-									<button type="button" class="btn btn-success next-step" v-on:click="step += 1; CalculateMatriksSaw()" :disabled="!isCalculate">Berikutnya</button>
+									<button type="button" class="btn btn-success next-step" v-on:click="step += 1" :disabled="!isCalculate">Berikutnya</button>
 								</div>
 							</div>
 						</div>
@@ -269,11 +269,12 @@
 											<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
 												<td><strong>{{ mtx.nama }}</strong></td>
 												<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
-													<select class="form-control"
+													<!-- <select class="form-control"
 														v-model="cell.cellvalue"
 														@change="findMaxOrMin(i_idx)">
 														<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
-													</select>
+													</select> -->
+													{{ cell.cellvalue }}
 												</td>
 											</tr>
 											<tr>
@@ -295,6 +296,9 @@
 											</tr>
 										</tbody>
 									</table>
+									<div class="card-footer text-right">
+										<button class="btn btn-primary" v-on:click="CalculateMatriksSaw()">Hitung</button>
+									</div>
 								</div>
 								<div class="card">
 									<div class="card-header">
@@ -401,7 +405,6 @@ var app = new Vue({
 		MatriksSawNormalisasi: [],
 		sawCalculate: false,
 		MatriksSawFinal: [],
-		wizard:{},
 		step: 1
 	},
 	methods: {
@@ -632,15 +635,23 @@ var app = new Vue({
 		SetMatriksSawAwal: function(){
 			let MatriksSawAwal = []
 			for(let index = 0; index < this.Mahasiswa.length; index++){
-				let row = []
-				for(let i_index = 0; i_index < this.Kriteria.length; i_index++){
-					let cell = {
-						row_index: index,
-						col_index: i_index,
-						cellvalue: 0
+				let row = [
+					{
+						cellvalue: this.Mahasiswa[index].bobotipk
+					},
+					{
+						cellvalue: this.Mahasiswa[index].bobotkendaraan
+					},
+					{
+						cellvalue: this.Mahasiswa[index].bobotpenghasilanorg
+					},
+					{
+						cellvalue: this.Mahasiswa[index].bobotpkj_orangtua
+					},
+					{
+						cellvalue: this.Mahasiswa[index].bobotJmlTanggungan
 					}
-					row.push(cell)
-				}
+				]
 				let matrix = {
 					nama: this.Mahasiswa[index].nama,
 					id_mahasiswa: this.Mahasiswa[index].id_mahasiswa,
