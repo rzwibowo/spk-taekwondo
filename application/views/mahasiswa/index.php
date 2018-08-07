@@ -32,7 +32,7 @@
 								<form action="" method="post" class="form-horizontal">
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="nim">NIM</label>
-										<div class="col-md-9">
+										<div class="col-md-5">
 											<input type="text" id="nim" name="nim" v-model="mahasiswa.nim" class="form-control" placeholder="Masukkan NIM">
 											<span v-show="Submit && !mahasiswa.nim" style="color: red">Field harus diisi</span>
 										</div>
@@ -46,7 +46,7 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="thn_angkatan">Tahun Angkatan</label>
-										<div class="col-md-5">
+										<div class="col-md-3">
 											<select class="form-control" 
 								          	name="thn_angkatan" 
 								          	id="thn_angkatan" 
@@ -75,14 +75,14 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="tempat_lahir">Tempat Lahir</label>
-										<div class="col-md-9">
+										<div class="col-md-5">
 											<input type="text" id="tempat_lahir" name="tempat_lahir"  v-model="mahasiswa.tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir"/>
 											<span v-show="Submit && !mahasiswa.tempat_lahir" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="tgl_lahir">Tanggal Lahir</label>
-										<div class="col-md-5">
+										<div class="col-md-4">
 											<input type="date" id="tgl_lahir" name="tgl_lahir" v-model="mahasiswa.tgl_lahir" class="form-control">
 											<span v-show="Submit && !mahasiswa.tgl_lahir" style="color: red">Field harus diisi</span>
 										</div>
@@ -96,15 +96,15 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="nama">IPK (format: x.xx)</label>
-										<div class="col-md-4">
-											<input type="number" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="Masukkan IPK" v-on:change="SearchIPK(mahasiswa.ipk)" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;">
+										<div class="col-md-2">
+											<input type="number" step="0.01" id="nama" name="nama" v-model="mahasiswa.ipk" class="form-control" placeholder="0.00" v-on:change="SearchIPK(mahasiswa.ipk)" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;">
 											<span v-show="mahasiswa.ipk && GetFormatIPK(mahasiswa.ipk)" style="color: red">Format salah contoh 2.34</span>
 											<span v-show="Submit && !mahasiswa.ipk" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="kendaraan">Kendaraan</label>
-										<div class="col-md-9">
+										<div class="col-md-4">
 											<select name="kendaraan" class="form-control" id="kendaraan" v-model="mahasiswa.kendaraan">
 												<option value="">-Pilih-</option>
 												<option v-for="(value, key) in Kendaraan" :value="value.id_sub_criteria">
@@ -116,19 +116,19 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="pgh_orangtua">Penghasilan Orang Tua</label>
-										<div class="col-md-7">
+										<div class="col-md-6">
 											<div class="input-group">
 												<div class="input-group-prepend">
 													<span class="input-group-text">Rp</span>
 												</div>
-											<input type="text" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control" v-on:change="SearchPghOrangtua(mahasiswa.pgh_orangtua)" onkeypress="return isNumber(event)">
+											<input type="number" step="500" id="pgh_orangtua" name="pgh_orangtua" v-model="mahasiswa.pgh_orangtua" class="form-control" v-on:change="SearchPghOrangtua(mahasiswa.pgh_orangtua)" onkeypress="return isNumber(event)" placeholder="0">
 											</div>
 											<span v-show="Submit && !mahasiswa.pgh_orangtua" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="pkj_orangtua">Pekerjaan Orang Tua</label>
-										<div class="col-md-9">
+										<div class="col-md-4">
 											<select class="form-control" 
 								          	name="pkj_orangtua" 
 								          	id="pkj_orangtua" 
@@ -143,8 +143,8 @@
 									</div>
 									<div class="form-group row">
 										<label class="col-md-3 col-form-label" for="jml_tanggungan">Jumlah Tanggungan</label>
-										<div class="col-md-3">
-											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control" v-on:change="SearchJumlahTanggungan(mahasiswa.jml_tanggungan)"  min="1">
+										<div class="col-md-2">
+											<input type="number" id="jml_tanggungan" name="jml_tanggungan" v-model="mahasiswa.jml_tanggungan" class="form-control" v-on:change="SearchJumlahTanggungan(mahasiswa.jml_tanggungan)"  min="1" placeholder="0">
 											<span v-show="Submit && !mahasiswa.jml_tanggungan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>

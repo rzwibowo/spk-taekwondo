@@ -77,6 +77,11 @@
             <i class="nav-icon icon-calculator"></i> Perhitungan
           </a>
         </li>
+        <li class="nav-item px-3">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "laporan") { echo " active"; } ?>" href="<?php echo site_url() ?>/laporan">
+            <i class="nav-icon icon-docs"></i> Laporan
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav ml-auto" id="identity">
         <li class="nav-item dropdown">

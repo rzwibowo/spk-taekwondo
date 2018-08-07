@@ -32,6 +32,12 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
+				<div class="steps text-center">
+					<span class="step" :class="step === 1 ? ' active' : ''">1</span>
+					<span class="step" :class="step === 2 ? ' active' : ''">2</span>
+					<span class="step" :class="step === 3 ? ' active' : ''">3</span>
+					<span class="step" :class="step === 4 ? ' active' : ''">4</span>
+				</div>
 				<div class="steps title text-center">
 					<transition name="custom-class-trans"
 						enter-active-class="animated fadeInRight faster"
@@ -39,12 +45,6 @@
 						mode="out-in">
 						<h3 :key="step">{{ stepTitle }}</h3>
 					</transition>
-				</div>
-				<div class="steps text-center">
-					<span class="step" :class="step === 1 ? ' active' : ''">1</span>
-					<span class="step" :class="step === 2 ? ' active' : ''">2</span>
-					<span class="step" :class="step === 3 ? ' active' : ''">3</span>
-					<span class="step" :class="step === 4 ? ' active' : ''">4</span>
 				</div>
 			</div>
 		</div>
@@ -269,11 +269,6 @@
 											<tr v-for="(mtx, idx) in MatriksSaw" :key="idx">
 												<td><strong>{{ mtx.nama }}</strong></td>
 												<td v-for="(cell, i_idx) in mtx.row" :key="i_idx">
-													<!-- <select class="form-control"
-														v-model="cell.cellvalue"
-														@change="findMaxOrMin(i_idx)">
-														<option v-for="(val, idx) in 9" :value="val" :key="idx">{{val}}</option>
-													</select> -->
 													{{ cell.cellvalue }}
 												</td>
 											</tr>
@@ -300,7 +295,7 @@
 										<button class="btn btn-primary" v-on:click="CalculateMatriksSaw()">Hitung</button>
 									</div>
 								</div>
-								<div class="card">
+								<div class="card" v-show="sawCalculate">
 									<div class="card-header">
 										<strong>Normalisasi</strong>
 									</div>
@@ -319,7 +314,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="card">
+								<div class="card" v-show="sawCalculate">
 									<table class="table table-responsive-sm table-striped">
 										<thead>
 											<tr>
@@ -330,7 +325,7 @@
 										</thead>
 										<tbody>
 											<tr v-for="(mtx, idx) in MatriksSawFinal" :key="idx">
-												<td>{{ mtx.nama }}</td>
+												<td><strong>{{ mtx.nama }}</strong></td>
 												<td v-for="(i_mtx, i_idx) in mtx.row" :key="i_idx">{{ i_mtx.value }}</td>
 												<td>{{ mtx.jumlah }}</td>
 											</tr>

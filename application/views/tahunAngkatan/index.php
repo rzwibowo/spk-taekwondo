@@ -33,7 +33,7 @@
 								<div class="form-group row">
 									<label class="col-md-4 col-form-label" for="nim">Tahun Angkatan</label>
 									<div class="col-md-4">
-										<input type="number" min="2000" id="tahun_angkatan" name="tahun_angkatan" v-model="TahunAngkatan.tahun_angkatan" class="form-control" placeholder="Tahun Angkatan">
+										<input type="number" min="2000" id="tahun_angkatan" name="tahun_angkatan" v-model="TahunAngkatan.tahun_angkatan" class="form-control" placeholder="2000">
 										<span style="color: red" v-show="!TahunAngkatan.tahun_angkatan && Submit">Fied harus diisi</span>
 									</div>
 								</div>

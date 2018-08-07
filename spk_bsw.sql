@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 06 Agu 2018 pada 13.11
--- Versi Server: 10.1.24-MariaDB
--- PHP Version: 7.1.6
+-- Generation Time: Aug 07, 2018 at 03:55 PM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,11 +21,13 @@ SET time_zone = "+00:00";
 --
 -- Database: `spk_bsw`
 --
+CREATE DATABASE IF NOT EXISTS `spk_bsw` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `spk_bsw`;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `beasiswa`
+-- Table structure for table `beasiswa`
 --
 
 CREATE TABLE `beasiswa` (
@@ -37,7 +39,7 @@ CREATE TABLE `beasiswa` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kriteria`
+-- Table structure for table `kriteria`
 --
 
 CREATE TABLE `kriteria` (
@@ -48,7 +50,7 @@ CREATE TABLE `kriteria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `kriteria`
+-- Dumping data for table `kriteria`
 --
 
 INSERT INTO `kriteria` (`id_kriteria`, `kode_kriteria`, `nama_kriteria`, `istext`) VALUES
@@ -61,18 +63,18 @@ INSERT INTO `kriteria` (`id_kriteria`, `kode_kriteria`, `nama_kriteria`, `istext
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mahasiswa`
+-- Table structure for table `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
   `id_mahasiswa` int(11) NOT NULL,
   `nim` int(11) NOT NULL,
   `nama` varchar(30) NOT NULL,
-  `jenis_kelamin` enum('laki-laki','perempuan','','') NOT NULL,
+  `jenis_kelamin` enum('laki-laki','perempuan') NOT NULL,
   `tempat_lahir` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `alamat` text NOT NULL,
-  `ipk` int(11) NOT NULL,
+  `ipk` decimal(3,2) NOT NULL,
   `kendaraan` int(11) NOT NULL,
   `pkj_orangtua` int(11) NOT NULL,
   `jml_tanggungan` int(11) NOT NULL,
@@ -84,16 +86,18 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `mahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`id_mahasiswa`, `nim`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `ipk`, `kendaraan`, `pkj_orangtua`, `jml_tanggungan`, `id_tahun_angkatan`, `ipkCriteria`, `penghasilanCriteria`, `tanggunganCriteria`, `pgh_orangtua`) VALUES
-(7, 56789, 'Sahurn', 'laki-laki', 'Jakarta', '2018-08-22', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', 2, 1, 5, 2, 2, 3, 5, 9, 1000000);
+(7, 56789, 'Sahurn', 'laki-laki', 'Jakarta', '2018-08-22', 'Jalan R.A.Kartini No. 9, RT. 10 / RW. 4, Cilandak Barat, Cilandak, RT.10/RW.4, Cilandak Bar., Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440', '2.00', 1, 5, 2, 2, 3, 5, 9, 1000000),
+(8, 3243, 'handayono', 'perempuan', 'kulonkidul', '1995-06-13', 'kulonkali, kulonkidul', '3.00', 3, 5, 5, 2, 2, 4, 8, 12000),
+(9, 3233455, 'handa yani', 'perempuan', 'kulonkidul', '2018-08-07', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '1.28', 2, 6, 1, 2, 3, 4, 11, 12000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pengelola`
+-- Table structure for table `pengelola`
 --
 
 CREATE TABLE `pengelola` (
@@ -104,7 +108,7 @@ CREATE TABLE `pengelola` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pengelola`
+-- Dumping data for table `pengelola`
 --
 
 INSERT INTO `pengelola` (`username`, `password`, `nip`, `id_pengelola`) VALUES
@@ -114,7 +118,7 @@ INSERT INTO `pengelola` (`username`, `password`, `nip`, `id_pengelola`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sub_criteria_nontext`
+-- Table structure for table `sub_criteria_nontext`
 --
 
 CREATE TABLE `sub_criteria_nontext` (
@@ -130,7 +134,7 @@ CREATE TABLE `sub_criteria_nontext` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sub_criteria_nontext`
+-- Dumping data for table `sub_criteria_nontext`
 --
 
 INSERT INTO `sub_criteria_nontext` (`id_sub_criteria`, `max`, `operator_max`, `min`, `operator_min`, `id_kriteria`, `kriteria`, `keterangan`, `bobot`) VALUES
@@ -149,7 +153,7 @@ INSERT INTO `sub_criteria_nontext` (`id_sub_criteria`, `max`, `operator_max`, `m
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sub_criteria_text`
+-- Table structure for table `sub_criteria_text`
 --
 
 CREATE TABLE `sub_criteria_text` (
@@ -161,12 +165,12 @@ CREATE TABLE `sub_criteria_text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sub_criteria_text`
+-- Dumping data for table `sub_criteria_text`
 --
 
 INSERT INTO `sub_criteria_text` (`id_sub_criteria`, `kriteria`, `bobot`, `keterangan`, `id_kriteria`) VALUES
 (1, 'Tidak memiliki kendaraan', 4, 'Sangat Penting', 8),
-(2, 'Speda', 3, 'Penting', 8),
+(2, 'Sepeda', 3, 'Penting', 8),
 (3, 'Motor', 2, 'Cukup penting', 8),
 (4, 'Mobil', 1, 'Kurang penting', 8),
 (5, 'Pekerjaan Tidak Tetap', 2, 'Sangat Penting', 10),
@@ -175,7 +179,7 @@ INSERT INTO `sub_criteria_text` (`id_sub_criteria`, `kriteria`, `bobot`, `ketera
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tahun_angkatan`
+-- Table structure for table `tahun_angkatan`
 --
 
 CREATE TABLE `tahun_angkatan` (
@@ -184,7 +188,7 @@ CREATE TABLE `tahun_angkatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tahun_angkatan`
+-- Dumping data for table `tahun_angkatan`
 --
 
 INSERT INTO `tahun_angkatan` (`id_tahun_angkatan`, `tahun_angkatan`) VALUES
@@ -256,48 +260,55 @@ ALTER TABLE `tahun_angkatan`
 --
 ALTER TABLE `beasiswa`
   MODIFY `id_beasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
   MODIFY `id_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `pengelola`
 --
 ALTER TABLE `pengelola`
   MODIFY `id_pengelola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `sub_criteria_nontext`
 --
 ALTER TABLE `sub_criteria_nontext`
   MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `sub_criteria_text`
 --
 ALTER TABLE `sub_criteria_text`
   MODIFY `id_sub_criteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `tahun_angkatan`
 --
 ALTER TABLE `tahun_angkatan`
   MODIFY `id_tahun_angkatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `beasiswa`
+-- Constraints for table `beasiswa`
 --
 ALTER TABLE `beasiswa`
   ADD CONSTRAINT `beasiswa_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswa` (`id_mahasiswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `mahasiswa`
+-- Constraints for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`id_tahun_angkatan`) REFERENCES `tahun_angkatan` (`id_tahun_angkatan`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -308,13 +319,13 @@ ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_6` FOREIGN KEY (`pkj_orangtua`) REFERENCES `sub_criteria_text` (`id_sub_criteria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `sub_criteria_nontext`
+-- Constraints for table `sub_criteria_nontext`
 --
 ALTER TABLE `sub_criteria_nontext`
   ADD CONSTRAINT `sub_criteria_nontext_ibfk_1` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `sub_criteria_text`
+-- Constraints for table `sub_criteria_text`
 --
 ALTER TABLE `sub_criteria_text`
   ADD CONSTRAINT `sub_criteria_text_ibfk_1` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE CASCADE ON UPDATE CASCADE;
