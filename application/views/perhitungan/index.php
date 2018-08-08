@@ -627,7 +627,7 @@ var app = new Vue({
 		},
 		// END AHP
 		// BEGIN SAW
-		SetMatriksSawAwal: function(){
+		SetMatriksSawAwal: function() {
 			let MatriksSawAwal = []
 			for(let index = 0; index < this.Mahasiswa.length; index++){
 				let row = [
@@ -668,6 +668,9 @@ var app = new Vue({
 				maxorminAwal.push(maxmincell)
 			}
 			this.maxormin = maxorminAwal
+			for(let index = 0; index < this.maxormin.length; index++) {
+				this.findMaxOrMin(index)
+			}
 		},
 		findMaxOrMin: function(x) {
 			const states = this.maxormin[x].state
