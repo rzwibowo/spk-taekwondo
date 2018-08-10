@@ -335,13 +335,34 @@
 							</div>
 							<div class="card-footer text-right">
 								<button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button>
-								<button type="button" class="btn btn-success next-step" v-on:click="step +=1" >Berikutnya</button>
+								<button type="button" class="btn btn-success next-step" :disabled="!sawCalculate" v-on:click="step +=1" >Berikutnya</button>
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" role="tabpanel" id="complete" v-bind:class="step == 4?'active':'disabled'">
 						<div class="card">
 							<div class="card-body">
+								<div class="card">
+									<div class="card-header">
+										<strong>Penerima Beasiswa</strong>
+									</div>
+									<table class="table table-responsive-sm table-striped">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Nama</th>
+												<th>Nilai</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(mhs, idx) in TerimaBeasiswa" :key="idx">
+												<td>{{ idx + 1 }}</td>
+												<td>{{ mhs.nama }}</td>
+												<td>{{ mhs.jumlah }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 							<div class="card-footer text-right">
 								<button type="button" class="btn btn-default prev-step" v-on:click="step -=1">Sebelumnya</button>
@@ -363,7 +384,6 @@ var app = new Vue({
 	created(){
 		this.GetTahunAngkatan();
 		this.GetKriteria();
-		this.wizard = 1;
 	},
 	computed: {
 		stepTitle: function() {
@@ -400,7 +420,8 @@ var app = new Vue({
 		MatriksSawNormalisasi: [],
 		sawCalculate: false,
 		MatriksSawFinal: [],
-		step: 1
+		step: 1,
+		TerimaBeasiswa: []
 	},
 	methods: {
 		GetTahunAngkatan() {
@@ -727,8 +748,22 @@ var app = new Vue({
 				MatriksSawFinalAwal.push(FinalRow)
 			}
 			this.MatriksSawFinal = MatriksSawFinalAwal
+
+			this.RankPenerima()
 		},
 		// END SAW
+		RankPenerima: function() {
+			let terimaBeasiswa = this.MatriksSawFinal.slice(0, 5)
+									.sort((a, b) => b.jumlah - a.jumlah)
+									.map(item => { 
+										return {
+											id_mhs: item.id_mahasiswa,
+											nama: item.nama,
+											jumlah: item.jumlah
+										}
+									})
+			this.TerimaBeasiswa = terimaBeasiswa
+		},
 		SaveBeasiswa() {
 			var Beasiswa ={};
 			this.MatriksSawFinal.forEach(function (value, i) {

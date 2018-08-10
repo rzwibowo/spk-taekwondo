@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2018 at 03:55 PM
+-- Generation Time: Aug 10, 2018 at 09:37 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -32,7 +32,6 @@ USE `spk_bsw`;
 
 CREATE TABLE `beasiswa` (
   `id_mahasiswa` int(11) NOT NULL,
-  `jumlah_beasiswa` int(11) NOT NULL,
   `id_beasiswa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -259,7 +258,7 @@ ALTER TABLE `tahun_angkatan`
 -- AUTO_INCREMENT for table `beasiswa`
 --
 ALTER TABLE `beasiswa`
-  MODIFY `id_beasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_beasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kriteria`
