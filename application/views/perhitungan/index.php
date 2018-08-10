@@ -753,7 +753,7 @@ var app = new Vue({
 		},
 		// END SAW
 		RankPenerima: function() {
-			let terimaBeasiswa = this.MatriksSawFinal.slice(0, 5)
+			let terimaBeasiswa = this.MatriksSawFinal.slice(0)
 									.sort((a, b) => b.jumlah - a.jumlah)
 									.map(item => { 
 										return {
@@ -762,6 +762,7 @@ var app = new Vue({
 											jumlah: item.jumlah
 										}
 									})
+									.slice(0, 5)
 			this.TerimaBeasiswa = terimaBeasiswa
 		},
 		SaveBeasiswa() {

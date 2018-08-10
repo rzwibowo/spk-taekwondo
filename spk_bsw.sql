@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2018 at 09:37 AM
+-- Generation Time: Aug 10, 2018 at 10:04 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -32,7 +32,8 @@ USE `spk_bsw`;
 
 CREATE TABLE `beasiswa` (
   `id_mahasiswa` int(11) NOT NULL,
-  `id_beasiswa` int(11) NOT NULL
+  `id_beasiswa` int(11) NOT NULL,
+  `peringkat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
