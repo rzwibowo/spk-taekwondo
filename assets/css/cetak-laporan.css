@@ -1,0 +1,71 @@
+.laporan-preview {
+    margin: 3em auto;
+}
+
+.laporan .align-left {
+    text-align: left;
+}
+.laporan .align-center {
+    text-align: center;
+}
+.laporan .align-right {
+    text-align: right;
+}
+
+.laporan .__line {
+    border-top: 3px solid #000;
+    border-bottom: 1px dashed #000;
+    width: 100%;
+    height: 7px;
+    margin: 20px auto;
+}
+.laporan .__table {
+    margin: 5px auto;
+}
+.laporan .__table th,
+.laporan .__table td {
+    padding: 5px;
+}
+/* BEGIN styling daftar calon penerima beasiswa */
+.laporan#laporan-calon .__table th,
+.laporan#laporan-calon .__table td {
+    border: 1px solid #000;
+}
+/* END styling daftar calon penerima beasiswa */
+/* BEGIN styling laporan penerima beasiswa */
+.laporan#laporan-penerima .__table tbody tr:first-child td:first-child {
+    vertical-align: top;
+    text-align: right;
+}
+.laporan#laporan-penerima .__table tbody tr:not(:first-child) td:first-child {
+    width: 170px;
+}
+.laporan#laporan-penerima .__table tbody tr:not(:first-child):not(:nth-child(n+8)) td {
+    padding-left: 10px;
+}
+.laporan#laporan-penerima .__table th,
+.laporan#laporan-penerima .__table tbody tr:first-child td,
+.laporan#laporan-penerima .__table tbody tr:nth-child(n+8) td {
+    border: 1px solid #000;
+}
+.laporan#laporan-penerima .__table tbody tr td:last-child {
+    border-right: 1px solid #000;
+}
+.laporan .__table .inner-head {
+    background-color: #ddd;
+    font-weight: bold;
+}
+.laporan .__foot {
+    width: 100%;
+}
+.laporan .__signature {
+    width: 20em;
+    margin: 20px auto;
+    float: right;
+}
+.laporan .__signature .__space {
+    height: 3em;
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+/* END styling laporan penerima beasiswa */

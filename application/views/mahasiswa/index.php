@@ -56,7 +56,7 @@
 								          			 {{value.tahun_angkatan}}
 								          		</option>
 							          		</select>
-											<span v-show="Submit && !mahasiswa.thn_angkatan" style="color: red">Field harus diisi</span>
+											<span v-show="Submit && !mahasiswa.id_tahun_angkatan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -355,7 +355,8 @@ var app = new Vue({
     Save() 
     {
       this.Submit = true;
-      if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan && !this.GetFormatIPK(this.mahasiswa.ipk))
+      // if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.id_tahun_angkatan && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan && !this.GetFormatIPK(this.mahasiswa.ipk))
+      if(this.mahasiswa.nim && this.mahasiswa.nama && this.mahasiswa.jenis_kelamin && this.mahasiswa.tempat_lahir && this.mahasiswa.tgl_lahir && this.mahasiswa.alamat && this.mahasiswa.ipk && this.mahasiswa.kendaraan && this.mahasiswa.pgh_orangtua && this.mahasiswa.pkj_orangtua && this.mahasiswa.jml_tanggungan && !this.GetFormatIPK(this.mahasiswa.ipk))
       {
       axios
         .post(locationServer+'/api/mahasiswa/mahasiswa',{
