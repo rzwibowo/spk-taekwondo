@@ -766,15 +766,8 @@ var app = new Vue({
 			this.TerimaBeasiswa = terimaBeasiswa
 		},
 		SaveBeasiswa() {
-			var Beasiswa ={};
-			this.MatriksSawFinal.forEach(function (value, i) {
-				Beasiswa = {
-					jumlah_beasiswa	 : value.jumlah,
-					id_mahasiswa : value.id_mahasiswa
-				}
-			});
 			axios.post(locationServer+'/api/beasiswa/beasiswa',{
-				body: Beasiswa
+				body: this.TerimaBeasiswa
 			})
 			.then(response => {
 				alert("Data Berhasil Disimpan");

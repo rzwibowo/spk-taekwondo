@@ -40,5 +40,9 @@ class Beasiswa extends REST_Controller {
             $this->set_response(array('error' => 'Error saat simpan data'), 404);
         }
     }
+    public function GetBeasiswaByTahunAngkatan_get($tahun_angkatan){
+        $Beasiswa=$this->ModelBeasiswa->GetBeasiswaByTahunAngkatan($tahun_angkatan)->result();
+        $this->set_response($Beasiswa, REST_Controller::HTTP_CREATED);
+    }
 
 }

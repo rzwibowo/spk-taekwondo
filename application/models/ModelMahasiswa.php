@@ -28,7 +28,8 @@ class ModelMahasiswa extends CI_Model
     function GetMahasiswaWithFilter($Filter)
 	{
 		# code...
-		$this->db->select('mahasiswa.nim,
+		$this->db->select('mahasiswa.id_mahasiswa,
+			               mahasiswa.nim,
 						   mahasiswa.nama,
 						   tahun_angkatan.tahun_angkatan,
 						   mahasiswa.jenis_kelamin,
@@ -45,7 +46,8 @@ class ModelMahasiswa extends CI_Model
 	function GetById($Where)
 	{
 		# code...
-		$this->db->select('mahasiswa.nim,
+		$this->db->select('mahasiswa.id_mahasiswa,
+						  mahasiswa.nim,
 						  mahasiswa.nama,
 						  tahun_angkatan.tahun_angkatan,
 						  mahasiswa.jenis_kelamin,
