@@ -143,7 +143,7 @@
      if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
       window.location.replace(locationServer+"/login");
      }else{
-      this.isAdmin = this.GetCokies() == '32323'? true:false;
+      this.isAdmin = this.GetCokies() == '1'? true:false;
      }
     },
     }

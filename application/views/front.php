@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" v-show="isAdmin">
                     <div class="col-md-6">
                         <div class="card text-white bg-primary">
                             <div class="card-body pb-0" style="z-index: 1">
@@ -60,7 +60,8 @@ var app = new Vue({
   },
   data: {
   	count_mhs: 0,
-    count_kriteria: 0
+    count_kriteria: 0,
+    isAdmin:false,
   },
   methods: {
     GetData()
@@ -85,6 +86,10 @@ var app = new Vue({
                 this.errored = true
             })
             .finally(() => this.loading = false )
+
+            if(this.$cookies.get("tokenUserApp") !== "" && this.$cookies.get("tokenUserApp") !== null && this.$cookies.get("tokenUserApp") !== "undefined"){
+               this.isAdmin = this.$cookies.get("tokenUserApp") == '1'? true:false;
+            }
     },
   }
 })

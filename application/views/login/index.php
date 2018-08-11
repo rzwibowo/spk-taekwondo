@@ -51,7 +51,7 @@ var app = new Vue({
     	})
 			.then(response => {
 				if(response.data.length > 0){ 
-                  this.$cookies.set("tokenUserApp",response.data[0].nip,60 * 60 * 1);
+                  this.$cookies.set("tokenUserApp",response.data[0].id_pengelola,60 * 60 * 1);
 				  window.location.replace(locationServer); 
 				}
 			})
@@ -64,15 +64,17 @@ var app = new Vue({
     GetCokies () {
       return this.$cookies.get("tokenUserApp");
     },
-		Initialization() {
-
-     // this.$cookies.remove("tokenUserApp");
-			if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
-			 	window.location.replace(locationServer); 
-			} else {
-				this.User = {}
-			}
-		},
+	Initialization() {
+     if(location.search.split('logout=')[1] == "true"){
+           	this.$cookies.remove("tokenUserApp");
+     }else{
+		if(this.GetCokies() !== "" && this.GetCokies() !== null && this.GetCokies() !== "undefined"){
+		   window.location.replace(locationServer);
+		} else {
+			this.User = {}
+		}
+	}
+	},
   }
 })
         

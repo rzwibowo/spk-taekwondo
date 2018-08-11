@@ -77,10 +77,10 @@ class ModelUser extends CI_Model
         # code...
         return $this->db->get_where('pengelola',$Where);
     }
-   function getUserName($Where){
+   function getUserName($id_pengelola){
         $this->db->select('username');
         $this->db->from('pengelola');
-        $this->db->where('nip', $Where);
+        $this->db->where('id_pengelola', $id_pengelola);
 		return $this->db->get();
    }
 
