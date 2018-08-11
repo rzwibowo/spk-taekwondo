@@ -91,7 +91,7 @@
 												<i class="fa fa-pencil"></i> Edit</button>
 												<button type="button" class="btn btn-sm btn-success" v-on:click="View(user.id_pengelola)">
 												<i class="fa fa-dot-circle-o"></i> View</button>
-												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.id_pengelola)">
+												<button type="button" class="btn btn-sm btn-danger" v-on:click="Delete(user.id_pengelola)" v-show="user.id_pengelola !== '1'">
 												<i class="fa fa-minus-circle"></i> Delete</button>
 									</td>
 								</tr>
