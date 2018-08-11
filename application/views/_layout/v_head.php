@@ -43,7 +43,7 @@
     <div class="loader">
       <img src="<?php echo base_url() ?>assets/img/load.svg" alt="Loading ...">
     </div>
-    <header class="app-header navbar">
+    <header class="app-header navbar" id="header">
       <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -57,22 +57,22 @@
             <i class="nav-icon icon-home"></i> Home
           </a>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-3" v-show="isAdmin">
           <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
             <i class="nav-icon icon-calendar"></i> Tahun Angkatan
           </a>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-3" v-show="isAdmin">
           <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "kriteria") { echo " active"; } ?>" href="<?php echo site_url() ?>/kriteria">
             <i class="nav-icon icon-equalizer"></i> Kriteria
           </a>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-3" v-show="isAdmin">
           <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "mahasiswa") { echo " active"; } ?>" href="<?php echo site_url() ?>/mahasiswa">
             <i class="nav-icon icon-graduation"></i> Mahasiswa
           </a>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-3" v-show="isAdmin">
           <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "perhitungan") { echo " active"; } ?>" href="<?php echo site_url() ?>/perhitungan">
             <i class="nav-icon icon-calculator"></i> Perhitungan
           </a>
@@ -83,7 +83,7 @@
           </a>
         </li>
       </ul>
-      <ul class="nav navbar-nav ml-auto" id="identity">
+      <ul class="nav navbar-nav ml-auto" >
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <img class="img-avatar" src="<?php echo base_url() ?>assets/img/avatars/1.png" alt="admin@bootstrapmaster.com">
@@ -109,14 +109,20 @@
 
 <script type="text/javascript">
   var idt = new Vue({
-    el: '#identity',
+    el: '#header',
     data: {
-      username: ''
+      username: '',
+      isAdmin:null,
     },
     created() {
+      this.isAdmin = true;
+      this.Initialization();
       this.GetUserName();
     },
     methods: {
+      GetCokies () {
+       return this.$cookies.get("tokenUserApp");
+    },
       GetUserName () {
         axios.get(locationServer+'/api/login/GetUserName/'+this.$cookies.get("tokenUserApp"))
         .then(response => {
@@ -131,25 +137,17 @@
      {
       this.$cookies.remove("tokenUserApp");
       window.location.replace(locationServer+"/login?logout=true"); 
-     }
-    }
-  })
-  var app = new Vue({
-  created() {
-    this.Initialization()
-  },
-  methods: {
-   GetCokies () {
-    return this.$cookies.get("tokenUserApp");
-   },
-   Initialization()
-   {
+     },
+      Initialization()
+    {
      if(this.GetCokies() == "" || this.GetCokies() == null || this.GetCokies() == "undefined"){
       window.location.replace(locationServer+"/login");
+     }else{
+      this.isAdmin = this.GetCokies() == '32323'? true:false;
      }
-   },
-  }
-})
+    },
+    }
+  });
 var loader = document.querySelectorAll('.loader')
 function loaderStop() {
   setInterval(function() {
