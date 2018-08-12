@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/cetak-laporan.css">
 <div class="row" id="app">
 	<div class="col-md-12">
 		<div class="card">
@@ -14,15 +15,23 @@
                         <div class="text-left">
                             <label class="col-md-4">Pilih Tahun Angkatan:</label>
                             <div class="col-md-4">
-                                <select class="form-control">
-                                    <option>2018</option>
+                                <select class="form-control" v-model="tahun_angkatan_selected">
+                                    <option value=""> - </option>
+                                    <option v-for="(thn, idx) in tahun_angkatan"
+                                        :key="idx"
+                                        :value="thn.id_tahun_angkatan">
+                                        {{ thn.tahun_angkatan }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="text-right">
-                            <button type="button" class="btn btn-info">
+                        <div class="text-right" v-show="tahun_angkatan_selected != ''">
+                            <button type="button"
+                                class="btn btn-info"
+                                @click="getCalonBeasiswa(tahun_angkatan_selected)"
+                                :class="tipe_laporan === 'calon' ? 'active' : ''">
                                 <i class="icon-paper-clip"></i>
                                 Daftar Calon Penerima Beasiswa
                             </button>
@@ -33,82 +42,124 @@
                         </div>
                     </div>
                 </div>
-                <div class="card laporan-preview">
+                <div class="card laporan-preview" v-if="tahun_angkatan_selected != '' && tipe_laporan === 'calon'">
                     <div class="card-header">
                         <strong>Daftar Calon Penerima Beasiswa</strong>
                     </div>
                     <div class="card-body">
-                        <div class="text-center">
-                            <h4>Daftar Calon Penerima Beasiswa Tahun Angkatan</h4>
-                            <h3>PEMERINTAH KABUPATEN MAPPI</h3>
-                            <h3>DINAS PENDIDIKAN DAN PENGAJARAN</h3>
-                            <h5>Jl. Poros Agham Km. 05, Kec. Obaa Kepi, Kab. Mappi</h5>
+                        <div class="laporan" id="laporan-calon">
+                            <div class="__head align-center">
+                                <h4>Daftar Calon Penerima Beasiswa Tahun Angkatan {{ tahun_angkatan_selected_ }}</h4>
+                                <h3>PEMERINTAH KABUPATEN MAPPI</h3>
+                                <h3>DINAS PENDIDIKAN DAN PENGAJARAN</h3>
+                                <h5>Jl. Poros Agham Km. 05, Kec. Obaa Kepi, Kab. Mappi</h5>
+                            </div>
+                            <div class="__line"></div>
+                            <div>
+                                <table class="__table">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th colspan="5">Mahasiswa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody is="calon-penerima"
+                                        v-for="(mhs, idx) in mahasiswa"
+                                        :key="idx"
+                                        :nomer="idx + 1"
+                                        :nama="mhs.nama | capitalize"
+                                        :nim="mhs.nim"
+                                        :tahunangkatan="mhs.tahun_angkatan"
+                                        :jeniskelamin="mhs.jenis_kelamin | capitalize"
+                                        :tempatlahir="mhs.tempat_lahir | capitalize"
+                                        :tgllahir="mhs.tgl_lahir | formatDate"
+                                        :alamat="mhs.alamat"
+                                        :ipk="mhs.ipk"
+                                        :kendaraan="mhs.kendaraan"
+                                        :pkjorangtua="mhs.pkj_orangtua"
+                                        :pghorangtua="mhs.pgh_orangtua"
+                                        :jmltanggungan="mhs.jml_tanggungan">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="horizontal-line"></div>
-                        <div>
-                            <ol>
-                                <li v-for="(mhs, idx) in mahasiswa" :key="idx">
-                                    <b>{{ mhs.nama | capitalize }}</b>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>NIM:</td>
-                                                <td>{{ mhs.nim }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tahun Angkatan: </td>
-                                                <td>{{ mhs.tahun_angkatan }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jenis Kelamin: </td>
-                                                <td>{{ mhs.jenis_kelamin | capitalize }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tempat, Tanggal Lahir:</td>
-                                                <td>{{ mhs.tempat_lahir }}, {{ mhs.tgl_lahir | formatDate }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Alamat:</td>
-                                                <td>{{ mhs.alamat }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>IPK:</td>
-                                                <td>{{ mhs.ipk }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kendaraan:</td>
-                                                <td>{{ mhs.kendaraan }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pekerjaan Orang Tua:</td>
-                                                <td>{{ mhs.pkj_orangtua }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Penghasilan Orang Tua:</td>
-                                                <td>{{ mhs.pgh_orangtua }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jumlah Tanggungan Orang Tua:</td>
-                                                <td>{{ mhs.jml_tanggungan }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </li>
-                            </ol>
-                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="button"
+                            class="btn btn-success"
+                            onclick="printJS({printable: 'laporan-calon',
+                                type: 'html',
+                                css: '<?php echo base_url() ?>assets/css/cetak-laporan.css'})">
+                            <i class="icon-printer"></i>
+                            Cetak
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 	</div>
 </div>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 <script type="text/javascript">
+let CalonPenerima = {
+    props: ['nomer', 'nama', 'nim', 'tahunangkatan', 'jeniskelamin',
+            'tempatlahir', 'tgllahir', 'alamat', 'ipk', 'kendaraan',
+            'pkjorangtua', 'pghorangtua', 'jmltanggungan'],
+    template: `<tbody>
+            <tr>
+                <td rowspan="9">{{ nomer }}.</td>
+                <td colspan="5"><b>{{ nama }}</b></td>
+            </tr>
+            <tr>
+                <td>NIM: </td>
+                <td colspan="4">{{ nim }}</td>
+            </tr>
+            <tr>
+                <td>Tahun Angkatan: </td>
+                <td colspan="4">{{ tahunangkatan }}</td>
+            </tr>
+            <tr>
+                <td>Jenis Kelamin: </td>
+                <td colspan="4">{{ jeniskelamin }}</td>
+            </tr>
+            <tr>
+                <td>Tempat, Tanggal Lahir: </td>
+                <td colspan="4">{{ tempatlahir }}, {{ tgllahir }}</td>
+            </tr>
+            <tr>
+                <td>Alamat: </td>
+                <td colspan="4">{{ alamat }}</td>
+            </tr>
+            <tr>
+                <td colspan="5">Keterangan: </td>
+            </tr>
+            <tr class="inner-head">
+                <td class="align-center">IPK</td>
+                <td class="align-center">Kendaraan</td>
+                <td class="align-center">Pekerjaan Orang Tua</td>
+                <td class="align-center">Penghasilan Orang Tua</td>
+                <td class="align-center">Jumlah Tanggungan Orang Tua</td>
+            </tr>
+            <tr>
+                <td class="align-right">{{ ipk }}</td>
+                <td>{{ kendaraan }}</td>
+                <td>{{ pkjorangtua }}</td>
+                <td class="align-right">{{ pghorangtua }}</td>
+                <td class="align-right">{{ jmltanggungan }}</td>
+            </tr>
+        </tbody>`
+}
 
 var app = new Vue({
     el: '#app',
     data: {
         tahun_angkatan: [],
-        mahasiswa: []
+        mahasiswa: [],
+        tahun_angkatan_selected: '',
+        tipe_laporan: ''
+    },
+    components: {
+        'calon-penerima': CalonPenerima
     },
     filters: {
         formatDate: function (date) {
@@ -122,7 +173,7 @@ var app = new Vue({
             let month = month_name[date_.getMonth()]
             let year = date_.getFullYear()
 
-            return `${day}, ${month} ${year}`
+            return `${day} ${month} ${year}`
         },
         capitalize: function (value) {
             if (!value) return ''
@@ -130,11 +181,34 @@ var app = new Vue({
             return value.charAt(0).toUpperCase() + value.slice(1)
         }
     },
+    created() {
+        this.getTahunAngkatan()
+    },
+    computed: {
+        tahun_angkatan_selected_: function() {
+            if (this.mahasiswa.length > 1) {
+                const tahun = this.tahun_angkatan.filter( thn =>
+                    thn.id_tahun_angkatan === this.tahun_angkatan_selected
+                )
+                return tahun[0].tahun_angkatan
+            }
+        }
+    },
     methods: {
-        getCalonBeasiswa: function () {
-            axios.get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+2)
+        getTahunAngkatan() {
+			axios.get(locationServer+'/api/tahunangkatan/tahunangkatans')
+			.then(response => {
+				this.tahun_angkatan =  response.data;
+			})
+			.catch(error => {
+				console.log(error)
+			})
+		},
+        getCalonBeasiswa: function (id_thn) {
+            axios.get(locationServer+'/api/mahasiswa/getmahasiswawithtahunangkatan/'+id_thn)
                 .then(response => {
-                    this.mahasiswa =  response.data;
+                    this.mahasiswa =  response.data
+                    this.tipe_laporan = 'calon'
                 })
                 .catch(error => {
                     console.error(error)
