@@ -35,7 +35,10 @@
                                 <i class="icon-paper-clip"></i>
                                 Daftar Calon Penerima Beasiswa
                             </button>
-                            <button type="button" class="btn btn-info">
+                            <button type="button"
+                                class="btn btn-info"
+                                @click="getPenerimaBeasiswa(tahun_angkatan_selected)"
+                                :class="tipe_laporan === 'penerima' ? 'active' : ''">
                                 <i class="icon-paper-clip"></i>
                                 Laporan Penerima Beasiswa
                             </button>
@@ -63,7 +66,7 @@
                                             <th colspan="5">Mahasiswa</th>
                                         </tr>
                                     </thead>
-                                    <tbody is="calon-penerima"
+                                    <tbody is="table-body"
                                         v-for="(mhs, idx) in mahasiswa"
                                         :key="idx"
                                         :nomer="idx + 1"
@@ -95,13 +98,74 @@
                         </button>
                     </div>
                 </div>
+                <div class="card laporan-preview" v-if="tahun_angkatan_selected != '' && tipe_laporan === 'penerima'">
+                    <div class="card-header">
+                        <strong>Laporan Penerima Beasiswa</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="laporan" id="laporan-penerima">
+                            <div class="__head align-center">
+                                <h4>Laporan Penerima Beasiswa Tahun Angkatan {{ tahun_angkatan_selected_ }}</h4>
+                                <h3>PEMERINTAH KABUPATEN MAPPI</h3>
+                                <h3>DINAS PENDIDIKAN DAN PENGAJARAN</h3>
+                                <h5>Jl. Poros Agham Km. 05, Kec. Obaa Kepi, Kab. Mappi</h5>
+                            </div>
+                            <div class="__line"></div>
+                            <div>
+                                <table class="__table">
+                                    <thead>
+                                        <tr>
+                                            <th>Peringkat</th>
+                                            <th colspan="5">Mahasiswa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody is="table-body"
+                                        v-for="(mhs, idx) in mahasiswa"
+                                        :key="idx"
+                                        :nomer="mhs.peringkat"
+                                        :nama="mhs.nama | capitalize"
+                                        :nim="mhs.nim"
+                                        :tahunangkatan="mhs.tahun_angkatan"
+                                        :jeniskelamin="mhs.jenis_kelamin | capitalize"
+                                        :tempatlahir="mhs.tempat_lahir | capitalize"
+                                        :tgllahir="mhs.tgl_lahir | formatDate"
+                                        :alamat="mhs.alamat"
+                                        :ipk="mhs.ipk"
+                                        :kendaraan="mhs.kendaraan"
+                                        :pkjorangtua="mhs.pkj_orangtua"
+                                        :pghorangtua="mhs.pgh_orangtua"
+                                        :jmltanggungan="mhs.jml_tanggungan">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="__foot">
+                                <div class="__signature align-left">
+                                    <p>Mappi, {{ new Date() | formatDate }}</p>
+                                    <p>Kepala Dinas</p>
+                                    <p class="__space"></p>
+                                    <p>NIP.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="button"
+                            class="btn btn-success"
+                            onclick="printJS({printable: 'laporan-penerima',
+                                type: 'html',
+                                css: '<?php echo base_url() ?>assets/css/cetak-laporan.css'})">
+                            <i class="icon-printer"></i>
+                            Cetak
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 	</div>
 </div>
 <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 <script type="text/javascript">
-let CalonPenerima = {
+let TableBody = {
     props: ['nomer', 'nama', 'nim', 'tahunangkatan', 'jeniskelamin',
             'tempatlahir', 'tgllahir', 'alamat', 'ipk', 'kendaraan',
             'pkjorangtua', 'pghorangtua', 'jmltanggungan'],
@@ -159,7 +223,7 @@ var app = new Vue({
         tipe_laporan: ''
     },
     components: {
-        'calon-penerima': CalonPenerima
+        'table-body': TableBody
     },
     filters: {
         formatDate: function (date) {
@@ -209,6 +273,18 @@ var app = new Vue({
                 .then(response => {
                     this.mahasiswa =  response.data
                     this.tipe_laporan = 'calon'
+                })
+                .catch(error => {
+                    console.error(error)
+                    this.errored = true
+                })
+                .finally(() => this.loading = false)
+        },
+        getPenerimaBeasiswa: function (id_thn) {
+            axios.get(locationServer+'/api/beasiswa/GetBeasiswaByTahunAngkatan/'+id_thn)
+                .then(response => {
+                    this.mahasiswa =  response.data
+                    this.tipe_laporan = 'penerima'
                 })
                 .catch(error => {
                     console.error(error)

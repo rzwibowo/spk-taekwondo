@@ -2,11 +2,14 @@
     margin: 3em auto;
 }
 
-.laporan .align-right {
-    text-align: right;
+.laporan .align-left {
+    text-align: left;
 }
 .laporan .align-center {
     text-align: center;
+}
+.laporan .align-right {
+    text-align: right;
 }
 
 .laporan .__line {
@@ -44,4 +47,17 @@
 .laporan .__table .inner-head {
     background-color: #ddd;
     font-weight: bold;
+}
+.laporan .__foot {
+    width: 100%;
+}
+.laporan .__signature {
+    width: 20em;
+    margin: 20px auto;
+    float: right;
+}
+.laporan .__signature .__space {
+    height: 3em;
+    width: 100%;
+    border-bottom: 1px solid #000;
 }
