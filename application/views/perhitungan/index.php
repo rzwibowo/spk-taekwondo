@@ -95,7 +95,7 @@
 													<td>{{index + 1}}</td>
 													<td>{{mahasiswa.nim}}</td>
 													<td>{{mahasiswa.nama}}</td>
-													<td>{{mahasiswa.thn_angkatan}}</td>
+													<td>{{mahasiswa.tahun_angkatan}}</td>
 													<td>{{mahasiswa.jenis_kelamin}}</td>
 													<td>{{mahasiswa.ipk}}</td>
 													<td>{{mahasiswa.kendaraan}}</td>
