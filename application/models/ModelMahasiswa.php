@@ -28,9 +28,16 @@ class ModelMahasiswa extends CI_Model
     function GetMahasiswaWithFilter($Filter)
 	{
 		# code...
-		$this->db->select('*');
+		$this->db->select('mahasiswa.id_mahasiswa,
+			               mahasiswa.nim,
+						   mahasiswa.nama,
+						   tahun_angkatan.tahun_angkatan,
+						   mahasiswa.jenis_kelamin,
+						   mahasiswa.ipk,
+						   kendaraan.kriteria kendaraan');
 		$this->db->from('mahasiswa');
         $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
+        $this->db->join('sub_criteria_text kendaraan', 'mahasiswa.kendaraan = kendaraan.id_sub_criteria');
 		if(count($Filter) > 0){
 			$this->db->like($Filter);
 		}
@@ -39,7 +46,19 @@ class ModelMahasiswa extends CI_Model
 	function GetById($Where)
 	{
 		# code...
-		$this->db->select('*');
+		$this->db->select('mahasiswa.id_mahasiswa,
+						  mahasiswa.nim,
+						  mahasiswa.nama,
+						  tahun_angkatan.tahun_angkatan,
+						  mahasiswa.jenis_kelamin,
+						  mahasiswa.tempat_lahir,
+						  mahasiswa.tgl_lahir,
+						  mahasiswa.alamat,
+						  mahasiswa.ipk,
+						  kendaraan.kriteria kendaraan,
+						  mahasiswa.pgh_orangtua,
+						  pekerjaan.kriteria pkj_orangtua,
+						  mahasiswa.jml_tanggungan');
 		$this->db->from('mahasiswa');
         $this->db->join('tahun_angkatan', 'mahasiswa.id_tahun_angkatan = tahun_angkatan.id_tahun_angkatan');
         $this->db->join('sub_criteria_text kendaraan', 'mahasiswa.kendaraan = kendaraan.id_sub_criteria');
