@@ -33,6 +33,7 @@ class ModelBeasiswa extends CI_Model
 	{
 		$this->db->select('beasiswa.peringkat,
 			tahun_angkatan.tahun_angkatan,
+			mahasiswa.nim,
 			mahasiswa.nama,
 			mahasiswa.jenis_kelamin,
 			mahasiswa.tempat_lahir,
