@@ -56,7 +56,7 @@
 								          			 {{value.tahun_angkatan}}
 								          		</option>
 							          		</select>
-											<span v-show="Submit && !mahasiswa.thn_angkatan" style="color: red">Field harus diisi</span>
+											<span v-show="Submit && !mahasiswa.id_tahun_angkatan" style="color: red">Field harus diisi</span>
 										</div>
 									</div>
 									<div class="form-group row">
