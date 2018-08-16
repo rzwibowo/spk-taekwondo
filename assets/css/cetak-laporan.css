@@ -20,28 +20,35 @@
     margin: 20px auto;
 }
 .laporan .__table {
-    margin: 5px 10px;
+    margin: 5px auto;
 }
 .laporan .__table th,
 .laporan .__table td {
     padding: 5px;
 }
-.laporan .__table tbody tr:first-child td:first-child {
+/* BEGIN styling daftar calon penerima beasiswa */
+.laporan#laporan-calon .__table th,
+.laporan#laporan-calon .__table td {
+    border: 1px solid #000;
+}
+/* END styling daftar calon penerima beasiswa */
+/* BEGIN styling laporan penerima beasiswa */
+.laporan#laporan-penerima .__table tbody tr:first-child td:first-child {
     vertical-align: top;
     text-align: right;
 }
-.laporan .__table tbody tr:not(:first-child) td:first-child {
+.laporan#laporan-penerima .__table tbody tr:not(:first-child) td:first-child {
     width: 170px;
 }
-.laporan .__table tbody tr:not(:first-child):not(:nth-child(n+8)) td {
+.laporan#laporan-penerima .__table tbody tr:not(:first-child):not(:nth-child(n+8)) td {
     padding-left: 10px;
 }
-.laporan .__table th,
-.laporan .__table tbody tr:first-child td,
-.laporan .__table tbody tr:nth-child(n+8) td {
+.laporan#laporan-penerima .__table th,
+.laporan#laporan-penerima .__table tbody tr:first-child td,
+.laporan#laporan-penerima .__table tbody tr:nth-child(n+8) td {
     border: 1px solid #000;
 }
-.laporan .__table tbody tr td:last-child {
+.laporan#laporan-penerima .__table tbody tr td:last-child {
     border-right: 1px solid #000;
 }
 .laporan .__table .inner-head {
@@ -61,3 +68,4 @@
     width: 100%;
     border-bottom: 1px solid #000;
 }
+/* END styling laporan penerima beasiswa */

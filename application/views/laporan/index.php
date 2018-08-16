@@ -63,25 +63,28 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th colspan="5">Mahasiswa</th>
+                                            <th>Nama Mahasiswa</th>
+                                            <th>NIM</th>
+                                            <th>IPK</th>
+                                            <th>Kendaraan</th>
+                                            <th>Pekerjaan Orang Tua</th>
+                                            <th>Penghasilan Orang Tua</th>
+                                            <th>Jumlah Tanggungan Orang Tua</th>
                                         </tr>
                                     </thead>
-                                    <tbody is="table-body"
-                                        v-for="(mhs, idx) in mahasiswa"
-                                        :key="idx"
-                                        :nomer="idx + 1"
-                                        :nama="mhs.nama | capitalize"
-                                        :nim="mhs.nim"
-                                        :tahunangkatan="mhs.tahun_angkatan"
-                                        :jeniskelamin="mhs.jenis_kelamin | capitalize"
-                                        :tempatlahir="mhs.tempat_lahir | capitalize"
-                                        :tgllahir="mhs.tgl_lahir | formatDate"
-                                        :alamat="mhs.alamat"
-                                        :ipk="mhs.ipk"
-                                        :kendaraan="mhs.kendaraan"
-                                        :pkjorangtua="mhs.pkj_orangtua"
-                                        :pghorangtua="mhs.pgh_orangtua"
-                                        :jmltanggungan="mhs.jml_tanggungan">
+                                    <tbody>
+                                        <tr is="table-body-calon"
+                                            v-for="(mhs, idx) in mahasiswa"
+                                            :key="idx"
+                                            :nomer="++idx"
+                                            :nama="mhs.nama | capitalize"
+                                            :nim="mhs.nim"
+                                            :ipk="mhs.ipk"
+                                            :kendaraan="mhs.kendaraan"
+                                            :pkjorangtua="mhs.pkj_orangtua"
+                                            :pghorangtua="mhs.pgh_orangtua"
+                                            :jmltanggungan="mhs.jml_tanggungan">
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -119,7 +122,7 @@
                                             <th colspan="5">Mahasiswa</th>
                                         </tr>
                                     </thead>
-                                    <tbody is="table-body"
+                                    <tbody is="table-body-penerima"
                                         v-for="(mhs, idx) in mahasiswa"
                                         :key="idx"
                                         :nomer="mhs.peringkat"
@@ -165,7 +168,7 @@
 </div>
 <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 <script type="text/javascript">
-let TableBody = {
+let TableBodyPenerima = {
     props: ['nomer', 'nama', 'nim', 'tahunangkatan', 'jeniskelamin',
             'tempatlahir', 'tgllahir', 'alamat', 'ipk', 'kendaraan',
             'pkjorangtua', 'pghorangtua', 'jmltanggungan'],
@@ -208,10 +211,27 @@ let TableBody = {
                 <td class="align-right">{{ ipk }}</td>
                 <td>{{ kendaraan }}</td>
                 <td>{{ pkjorangtua }}</td>
-                <td class="align-right">{{ pghorangtua }}</td>
+                <td class="align-right">Rp {{ pghorangtua }}</td>
                 <td class="align-right">{{ jmltanggungan }}</td>
             </tr>
         </tbody>`
+}
+
+let TableBodyCalon = {
+    props: ['nomer', 'nama', 'nim', 'ipk', 'kendaraan', 'ipk', 'kendaraan',
+        'pkjorangtua', 'pghorangtua', 'jmltanggungan'],
+    template: `
+        <tr>
+            <td class="align-right">{{ nomer }}</td>
+            <td>{{ nama }}</td>
+            <td>{{ nim }}</td>
+            <td class="align-right">{{ ipk }}</td>
+            <td>{{ kendaraan }}</td>
+            <td>{{ pkjorangtua }}</td>
+            <td class="align-right">Rp {{ pghorangtua }}</td>
+            <td class="align-right">{{ jmltanggungan }}</td>
+        </tr>
+    `
 }
 
 var app = new Vue({
@@ -223,7 +243,8 @@ var app = new Vue({
         tipe_laporan: ''
     },
     components: {
-        'table-body': TableBody
+        'table-body-penerima': TableBodyPenerima,
+        'table-body-calon': TableBodyCalon
     },
     filters: {
         formatDate: function (date) {
