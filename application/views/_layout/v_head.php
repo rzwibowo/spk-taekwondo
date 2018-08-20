@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="nav-item px-3" v-show="isAdmin">
-          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "tahunangkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunangkatan">
+          <a class="nav-link nav-menu<?php if ($this->uri->segment(1) == "tahunAngkatan") { echo " active"; } ?>" href="<?php echo site_url() ?>/tahunAngkatan">
             <i class="nav-icon icon-calendar"></i> Tahun Angkatan
           </a>
         </li>
