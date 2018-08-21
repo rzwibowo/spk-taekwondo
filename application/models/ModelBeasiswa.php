@@ -53,7 +53,7 @@ class ModelBeasiswa extends CI_Model
         $this->db->join('sub_criteria_nontext tanggungan', 'mahasiswa.tanggunganCriteria = tanggungan.id_sub_criteria');
         $this->db->join('sub_criteria_nontext ipk', 'mahasiswa.ipkCriteria = ipk.id_sub_criteria');
         $this->db->join('sub_criteria_nontext phasilan', 'mahasiswa.penghasilanCriteria = phasilan.id_sub_criteria');
-		$this->db->where('tahun_angkatan.tahun_angkatan',$tahun_angkatan);
+		$this->db->where('tahun_angkatan.id_tahun_angkatan',$tahun_angkatan);
 		return $this->db->get();
 	}
 }
