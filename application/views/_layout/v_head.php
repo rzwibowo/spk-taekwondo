@@ -44,7 +44,7 @@
                   <!-- ============================================================== -->
                   <!-- Logo -->
                   <!-- ============================================================== -->
-                  <a class="navbar-brand" href="index.html">
+                  <a class="navbar-brand" href="<?php echo site_url() ?>">
                       <!-- Logo icon -->
                       <b class="logo-icon p-l-10">
                           <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -97,7 +97,7 @@
                           <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url() ?>assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                           <div class="dropdown-menu dropdown-menu-right user-dd animated">
                               <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                              <a class="dropdown-item" href="javascript:void(0)"><i class="ti-panel m-r-5 m-l-5"></i> Kelola User</a>
+                              <a class="dropdown-item" href="<?php echo site_url() ?>/user"><i class="ti-panel m-r-5 m-l-5"></i> Kelola User</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                           </div>
@@ -131,6 +131,36 @@
                           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/tempatlatihan" aria-expanded="false">
                               <i class="mdi mdi-bank"></i>
                               <span class="hide-menu">Tempat Latihan</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/levelpelatih" aria-expanded="false">
+                              <i class="mdi mdi-account-star"></i>
+                              <span class="hide-menu">Level Pelatih</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/biayalatihan" aria-expanded="false">
+                              <i class="mdi mdi-cash"></i>
+                              <span class="hide-menu">Biaya Latihan</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/jarak" aria-expanded="false">
+                              <i class="mdi mdi-ruler"></i>
+                              <span class="hide-menu">Jarak</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/fasilitas" aria-expanded="false">
+                              <i class="mdi mdi-lightbulb"></i>
+                              <span class="hide-menu">Fasilitas</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/prestasianggota" aria-expanded="false">
+                              <i class="mdi mdi-star-circle"></i>
+                              <span class="hide-menu">Prestasi Anggota</span>
                           </a>
                       </li>
                   </ul>

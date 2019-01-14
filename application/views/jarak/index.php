@@ -27,31 +27,19 @@
                                     <div class="form-group row">
                                         <label for="i-nama" 
                                             class="col-sm-3 text-right control-label col-form-label">
-                                            Username
+                                            Nama Tempat Latihan
                                         </label>
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control" id="i-nama" placeholder="Nama Pengguna">
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" id="i-nama" placeholder="Nama Tempat Latihan">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="i-psw"
+                                        <label for="i-jarak"
                                             class="col-sm-3 text-right control-label col-form-label">
-                                            Password
+                                            Jarak
                                         </label>
-                                        <div class="col-sm-5">
-                                            <input type="password" class="form-control" id="i-psw" placeholder="Password Pengguna">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="i-lvl"
-                                            class="col-sm-3 text-right control-label col-form-label">
-                                            Level
-                                        </label>
-                                        <div class="col-sm-4">
-                                            <select class="form-control" id="i-lvl">
-																							<option value="user">User</option>
-																							<option value="admin">Admin</option>
-																						</select>
+                                        <div class="col-sm-3">
+                                            <input type="number" class="form-control" id="i-jarak" placeholder="###">
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +53,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="list" role="tabpanel">
-                    <div class="col-md-6 offset-md-3">
+                    <div class="col-md-8 offset-md-2">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title text-center">Daftar <?php echo $title ?></h4>
@@ -74,16 +62,16 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Level</th>
+                                        <th>Nama Tempat Latihan</th>
+                                        <th>Jarak</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <th>1</th>
-                                        <td>Mulhadi</td>
-                                        <td>Admin</td>
+                                        <td>Wakanda</td>
+                                        <td>128 km</td>
                                         <td>
                                             <button type="button" class="btn btn-default">Ubah</button>
                                             <button type="button" class="btn btn-danger">Hapus</button>
