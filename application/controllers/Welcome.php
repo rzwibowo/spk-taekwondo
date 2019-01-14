@@ -20,6 +20,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		$pageprop['title'] = "Home";
+
 		$this->load->view('_layout/v_head');
 		// $this->load->view('welcome_message');
 		$this->load->view('front');
