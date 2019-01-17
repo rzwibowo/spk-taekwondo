@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="main">
     <div class="col-md-12">
         <div class="card">
             <!-- Nav tabs -->
@@ -21,7 +21,7 @@
                 <div class="tab-pane active" id="input" role="tabpanel">
                     <div class="col-md-6 offset-md-3">
                         <div class="card">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" @submit.prevent="saveTl">
                                 <div class="card-body">
                                     <h4 class="card-title text-center">Input Data <?php echo $title ?></h4>
                                     <div class="form-group row">
@@ -30,7 +30,8 @@
                                             Nama
                                         </label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" id="i-nama" placeholder="Nama Tempat Latihan">
+                                            <input type="text" class="form-control" id="i-nama"
+												placeholder="Nama Tempat Latihan" v-model="tempatlatihan.nama">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -39,7 +40,8 @@
                                             Alamat
                                         </label>
                                         <div class="col-sm-9">
-                                            <textarea id="i-alamat" class="form-control" placeholder="Alamat Tempat Latihan"></textarea>
+                                            <textarea id="i-alamat" class="form-control"
+												placeholder="Alamat Tempat Latihan" v-model="tempatlatihan.alamat"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -48,7 +50,8 @@
                                             Latitude
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="number" class="form-control" id="i-lat" placeholder="##.####">
+                                            <input type="number" class="form-control" id="i-lat"
+												placeholder="##.####" v-model="tempatlatihan.latitude">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -57,13 +60,14 @@
                                             Longitude
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="number" class="form-control" id="i-lng" placeholder="##.####">
+                                            <input type="number" class="form-control" id="i-lng"
+												placeholder="##.####" v-model="tempatlatihan.longitude">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body text-right">
-                                        <button type="button" class="btn btn-primary">Simpan</button>
+                                        <button type="button" class="btn btn-primary" @click="saveTl">Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -88,15 +92,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td>Mulhadi</td>
-                                        <td>Papringan Utara</td>
-                                        <td>7.2312</td>
-                                        <td>-12.3141</td>
+                                    <tr v-for="(tl, i) in tempatlatihans">
+                                        <th>{{ i+1 }}</th>
+                                        <td>{{ tl.nama }}</td>
+                                        <td>{{ tl.alamat }}</td>
+                                        <td>{{ tl.latitude }}</td>
+                                        <td>{{ tl.longitude }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-default">Ubah</button>
-                                            <button type="button" class="btn btn-danger">Hapus</button>
+                                            <button type="button" class="btn btn-default" @click="ediTl(tl.id_tempat_latihan)">Ubah</button>
+                                            <button type="button" class="btn btn-danger" @click="deleteTl(tl.id_tempat_latihan)">Hapus</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -108,3 +112,63 @@
         </div>
     </div>
 </div>
+
+<script src="<?php echo base_url() ?>assets/js/vue.js"></script>
+<script src="<?php echo base_url() ?>assets/js/axios.min.js"></script>
+
+<script>
+	const main_script = new Vue({
+		el: '#main',
+		data: {
+			tempatlatihans: [],
+			tempatlatihan: {
+				nama: '',
+				alamat: '',
+				latitude: 0,
+				longitude: 0
+			}
+		},
+		mounted: function() {
+			this.getListTl();
+		},
+		methods: {
+			getListTl: function () {
+				axios.get(server_host + '/api/tempatlatihan/ambilTl')
+				.then(res => this.tempatlatihans = res.data)
+				.catch(err => console.error(err));
+			},
+			saveTl: function () {
+				axios.post(server_host + '/api/tempatlatihan/simpanTl',
+					{ 
+						body: this.tempatlatihan
+					})
+				.then(res => {
+					console.log(res);
+					this.tempatlatihan.id_tempat_latihan = '';
+					this.tempatlatihan.nama = '';
+					this.tempatlatihan.alamat = '';
+					this.tempatlatihan.latitude = 0;
+					this.tempatlatihan.longitude = 0;
+					this.getListTl();
+				})
+				.catch(err => console.error(err));
+			},
+			ediTl: function (id) {
+				axios.get(server_host+'/api/tempatlatihan/ambilTlDenganId/'+id)
+				.then(res => this.tempatlatihan = res.data)
+				.catch(err => console.error(err));
+			},
+			deleteTl: function (id) {
+				const cnf = confirm('Hapus Data?');
+				if (cnf) {
+					axios.delete(server_host+'/api/tempatlatihan/hapusTl/'+id)
+					.then(res => {
+						console.log(res);
+						this.getListTl();
+					})
+					.catch(err => console.error(err));
+				}
+			}
+		}
+	})
+</script>

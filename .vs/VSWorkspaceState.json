@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\application",
+    "\\application\\controllers",
+    "\\application\\controllers\\api",
+    "\\application\\models",
+    "\\application\\views",
+    "\\application\\views\\tempatlatihan",
+    "\\application\\views\\_layout",
+    "\\assets",
+    "\\assets\\libs"
+  ],
+  "SelectedNode": "\\application\\views\\_layout\\v_foot.php",
+  "PreviewInSolutionExplorer": false
+}
