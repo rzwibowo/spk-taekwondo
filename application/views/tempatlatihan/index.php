@@ -27,6 +27,17 @@
                                     <div class="form-group row">
                                         <label for="i-nama" 
                                             class="col-sm-3 text-right control-label col-form-label">
+                                            ID
+                                        </label>
+                                        <div class="col-sm-3">
+                                            <input type="number" class="form-control" id="i-nama"
+												placeholder="BARU" v-model="tempatlatihan.id_tempat_latihan"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="i-nama" 
+                                            class="col-sm-3 text-right control-label col-form-label">
                                             Nama
                                         </label>
                                         <div class="col-sm-7">
@@ -67,6 +78,7 @@
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body text-right">
+                                        <button type="reset" class="btn" @click="resetTl">Reset</button>
                                         <button type="button" class="btn btn-primary" @click="saveTl">Simpan</button>
                                     </div>
                                 </div>
@@ -122,6 +134,7 @@
 		data: {
 			tempatlatihans: [],
 			tempatlatihan: {
+                id_tempat_latihan: null,
 				nama: '',
 				alamat: '',
 				latitude: 0,
@@ -138,24 +151,38 @@
 				.catch(err => console.error(err));
 			},
 			saveTl: function () {
-				axios.post(server_host + '/api/tempatlatihan/simpanTl',
-					{ 
-						body: this.tempatlatihan
-					})
-				.then(res => {
-					console.log(res);
-					this.tempatlatihan.id_tempat_latihan = '';
-					this.tempatlatihan.nama = '';
-					this.tempatlatihan.alamat = '';
-					this.tempatlatihan.latitude = 0;
-					this.tempatlatihan.longitude = 0;
-					this.getListTl();
-				})
-				.catch(err => console.error(err));
+                if (this.tempatlatihan.id_tempat_latihan) {
+                    axios.put(server_host + '/api/tempatlatihan/updateTl',
+                        { 
+                            body: this.tempatlatihan
+                        })
+                    .then(res => {
+                        console.log(res);
+                        toastr.success('Data disimpan', 'Berhasil');
+                        this.resetTl();
+                        this.getListTl();
+                    })
+                    .catch(err => console.error(err));
+                } else {
+                    axios.post(server_host + '/api/tempatlatihan/simpanTl',
+                        { 
+                            body: this.tempatlatihan
+                        })
+                    .then(res => {
+                        console.log(res);
+                        toastr.success('Data disimpan', 'Berhasil');
+                        this.resetTl();
+                        this.getListTl();
+                    })
+                    .catch(err => console.error(err));
+                }
 			},
 			ediTl: function (id) {
 				axios.get(server_host+'/api/tempatlatihan/ambilTlDenganId/'+id)
-				.then(res => this.tempatlatihan = res.data)
+				.then(res => { 
+                    this.tempatlatihan = res.data;
+                    $('a[href="#input"]').tab('show');
+                })
 				.catch(err => console.error(err));
 			},
 			deleteTl: function (id) {
@@ -164,11 +191,19 @@
 					axios.delete(server_host+'/api/tempatlatihan/hapusTl/'+id)
 					.then(res => {
 						console.log(res);
+                        toastr.success('Data dihapus', 'Berhasil');
 						this.getListTl();
 					})
 					.catch(err => console.error(err));
 				}
-			}
+			},
+            resetTl: function () {
+                this.tempatlatihan.id_tempat_latihan = null;
+                this.tempatlatihan.nama = '';
+                this.tempatlatihan.alamat = '';
+                this.tempatlatihan.latitude = 0;
+                this.tempatlatihan.longitude = 0;
+            }
 		}
 	})
 </script>

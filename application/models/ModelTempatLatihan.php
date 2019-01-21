@@ -19,7 +19,13 @@ class ModelTempatLatihan extends CI_Model
 	function InsertTempatLatihan($Data)
 	{
 		# code...
-		if($this->db->insert('tempat_latihan',$Data)){
+		$data_ready = array(
+			'nama' => $Data['nama'],
+			'alamat' => $Data['alamat'],
+			'latitude' => $Data['latitude'],
+			'longitude' => $Data['longitude']
+		);
+		if($this->db->insert('tempat_latihan',$data_ready)){
 			return true;
 		}else{
 			return false;

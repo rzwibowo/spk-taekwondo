@@ -18,6 +18,9 @@
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <!-- Notification -->
+  <link href="<?php echo base_url() ?>assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
 </head>
 <body>
   <script>
@@ -221,4 +224,5 @@
           <script src="<?php echo base_url() ?>assets/js/sidebarmenu.js"></script>
           <!--Custom JavaScript -->
           <script src="<?php echo base_url() ?>assets/js/custom.min.js"></script>
-
+          <!-- Notification -->
+          <script src="<?php echo base_url() ?>assets/libs/toastr/build/toastr.min.js"></script>
