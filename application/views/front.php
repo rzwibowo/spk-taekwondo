@@ -5,9 +5,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="above">
-                            <p class="text-center">
-                                <img src="<?php echo base_url() ?>assets/img/mappi_100.png" alt="" class="img-responsive">
-                            </p>
                             <h1 class="text-center">Aplikasi SPK Pemilihan Tempat Latihan Taekwondo</h1>
                             <h3 class="text-center text-black-50">Kabupaten Bantul</h3>
                         </div>

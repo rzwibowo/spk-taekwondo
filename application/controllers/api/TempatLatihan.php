@@ -41,7 +41,7 @@ class TempatLatihan extends REST_Controller {
     }
     public function simpanTl_post()
     {
-        $TL = (array) $this->post('body');
+        $TL = (object) $this->post('body');
         if ($this->ModelTempatLatihan->InsertTempatLatihan($TL)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
