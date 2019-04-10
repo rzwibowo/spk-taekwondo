@@ -105,13 +105,13 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(tl, i) in tempatlatihans">
-                                        <th>{{ i+1 }}</th>
+                                        <td>{{ i+1 }}</td>
                                         <td>{{ tl.nama }}</td>
                                         <td>{{ tl.alamat }}</td>
                                         <td>{{ tl.latitude }}</td>
                                         <td>{{ tl.longitude }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-default" @click="ediTl(tl.id_tempat_latihan)">Ubah</button>
+                                            <button type="button" class="btn btn-default" @click="editTl(tl.id_tempat_latihan)">Ubah</button>
                                             <button type="button" class="btn btn-danger" @click="deleteTl(tl.id_tempat_latihan)">Hapus</button>
                                         </td>
                                     </tr>
@@ -177,7 +177,7 @@
                     .catch(err => console.error(err));
                 }
 			},
-			ediTl: function (id) {
+			editTl: function (id) {
 				axios.get(server_host+'/api/tempatlatihan/ambilTlDenganId/'+id)
 				.then(res => { 
                     this.tempatlatihan = res.data;

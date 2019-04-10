@@ -12,8 +12,12 @@ class ModelBiayaLatihan extends CI_Model
 	}
 	
     function GetBiaya(){
-        $this->db->select('*');
-        $this->db->from('detail_kriteria');
+		$this->db->select('dk.id_detail_kriteria,
+			dk.nilai, dk.id_tempat_latihan,
+			tl.nama');
+		$this->db->from('detail_kriteria as dk');
+		$this->db->join('tempat_latihan as tl',
+			'dk.id_tempat_latihan = tl.id_tempat_latihan');	
         $this->db->where('id_kriteria', 2);
 
     	return $this->db->get_where();

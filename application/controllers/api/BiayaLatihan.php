@@ -41,8 +41,8 @@ class BiayaLatihan extends REST_Controller {
     }
     public function simpanBya_post()
     {
-        $TL = (object) $this->post('body');
-        if ($this->ModelBiayaLatihan->InsertBiaya($TL)) {
+        $Bya = (object) $this->post('body');
+        if ($this->ModelBiayaLatihan->InsertBiaya($Bya)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
@@ -50,8 +50,8 @@ class BiayaLatihan extends REST_Controller {
     }
     public function updateBya_put()
     {
-        $TL = (object) $this->put('body');
-        if ($this->ModelBiayaLatihan->UpdateBiaya($TL)){
+        $Bya = (object) $this->put('body');
+        if ($this->ModelBiayaLatihan->UpdateBiaya($Bya)){
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
@@ -61,9 +61,9 @@ class BiayaLatihan extends REST_Controller {
     {
         # code...
         $where = array('detail_kriteria.id_detail_kriteria'=>$Id);
-        $TL = $this->ModelBiayaLatihan->GetBiayaById($where)->result();
-        if ($TL) {
-            $this->set_response($TL[0], REST_Controller::HTTP_CREATED);
+        $Bya = $this->ModelBiayaLatihan->GetBiayaById($where)->result();
+        if ($Bya) {
+            $this->set_response($Bya[0], REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
