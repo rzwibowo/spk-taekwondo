@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body text-right">
-                                    <button type="reset" class="btn" @click="resetJrk">Reset</button>
+                                        <button type="reset" class="btn" @click="resetJrk">Reset</button>
                                         <button type="button" class="btn btn-primary" @click="saveJrk">Simpan</button>
                                     </div>
                                 </div>

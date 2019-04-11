@@ -44,9 +44,7 @@ class ModelTempatLatihan extends CI_Model
 	}
 	function Delete($Id)
 	{
-		$Where=array(
-				'id_tempat_latihan'=>$Id
-		);
+		$Where=array('id_tempat_latihan'=>$Id);
 		$this->db->where($Where);
 		if($this->db->delete('tempat_latihan')){
 			return true;

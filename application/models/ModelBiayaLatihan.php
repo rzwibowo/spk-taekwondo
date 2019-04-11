@@ -51,9 +51,7 @@ class ModelBiayaLatihan extends CI_Model
 	}
 	function Delete($Id)
 	{
-		$Where=array(
-				'id_detail_kriteria'=>$Id
-		);
+		$Where=array('id_detail_kriteria'=>$Id);
 		$this->db->where($Where);
 		if($this->db->delete('detail_kriteria')){
 			return true;

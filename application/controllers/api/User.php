@@ -30,51 +30,60 @@ class User extends REST_Controller {
 
     }
 
-    public function getusers_post()
+    public function ambilUsr_get()
     {
-        $Filter = $this->post('body');
-        $data=$this->ModelUser->GetUserWithFilter($Filter)->result();
-        $this->set_response($data, REST_Controller::HTTP_CREATED);
-    }
-    public function getkriterias_get()
-    {
-        $data=$this->ModelKriteria->Getkriteria()->result();
-        $this->set_response($data, REST_Controller::HTTP_CREATED);
-    }
-    public function user_post()
-    {
-        $User= (object) $this->post('body');
-        if(isset($User->id_pengelola)){
-            if($this->ModelUser->UpdateUser($User)){
-                $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
-            }else{
-                $this->set_response(array('error' => 'Error saat simpan data'), 404);
-            }
-        }else{
-            $User->password =  md5($User->password);
-            if($this->ModelUser->InsertUser($User)){
-                $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
-            }else{
-                $this->set_response(array('error' => 'Error saat simpan data'), 404);
-            }
+        $data = $this->ModelUser->GetUser()->result();
+        if ($data) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
-
-      //  $this->set_response($message, REST_Controller::HTTP_CREATED);
     }
-    function getdatauserbyid_get($Id)
+    public function simpanUsr_post()
+    {
+        $Usr=(object) $this->post('body');
+        $Usr->password = md5($Usr->password);
+        if ($this->ModelUser->InsertUser($Usr)) {
+            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+    public function updateUsr_put()
+    {
+        $Usr = (object) $this->put('body');
+        if ($this->ModelUser->UpdateUser($Usr)){
+            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+    function ambilUsrDenganId_get($Id)
     {
         # code...
-        $where=array('id_pengelola'=>$Id);
-        $User=$this->ModelUser->GatById($where)->result();
-        $this->set_response($User[0], REST_Controller::HTTP_CREATED);
-    }
-    function userdelete_get($Id)
-    {
-        if($this->ModelUser->Delete($Id)){
-
-        }else{
-
+        $where = array('user.id_user'=>$Id);
+        $Usr = $this->ModelUser->GetUserById($where)->result();
+        if ($Usr) {
+            $this->set_response($Usr[0], REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
-
+    function hapusUsr_delete($Id)
+    {
+        $this->ModelUser->Delete($Id);
+        if ($Id <= 0)
+        {
+            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+        }
+        $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
+    }
+    function login_post() {
+        $Usr = $this->post('body');
+        if ($this->ModelUser->AuthUser($User['username'], $User['password'])) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
 }
