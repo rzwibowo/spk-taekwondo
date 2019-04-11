@@ -83,7 +83,7 @@
                                     <tr v-for="(bya, i) in biayas">
                                         <td>{{ i+1 }}</td>
                                         <td>{{ bya.nama }}</td>
-                                        <td>{{ bya.nilai }}</td>
+                                        <td>{{ bya.nilai | formatRupiah }}</td>
                                         <td>
                                             <button type="button" class="btn btn-default" @click="editBya(bya.id_detail_kriteria)">Ubah</button>
                                             <button type="button" class="btn btn-danger" @click="deleteBya(bya.id_detail_kriteria)">Hapus</button>
@@ -118,6 +118,14 @@
         mounted: function() {
             this.getListTl();
             this.getListBya();
+        },
+        filters: {
+            formatRupiah: function(val) {
+                if (!val) return '';
+                const fmt = 'id-ID';
+                const fmtDetail = { style: 'currency', currency: 'IDR' };
+                return new Intl.NumberFormat(fmt, fmtDetail).format(val);
+            }
         },
         methods: {
             getListTl: function () {
