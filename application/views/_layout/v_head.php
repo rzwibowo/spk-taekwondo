@@ -101,11 +101,14 @@
                       <!-- ============================================================== -->
                       <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url() ?>assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                          <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                              <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                          <div class="dropdown-menu dropdown-menu-right user-dd animated" id="user-man">
+                              <a class="dropdown-item disabled" style="font-weight: bold; background-color: #929292; color: #ffffff;">
+                                  <i class="ti-user m-r-5 m-l-5"></i>
+                                  {{ user.username }} [ {{ user.level }} ]
+                              </a>
                               <a class="dropdown-item" href="<?php echo site_url() ?>/user"><i class="ti-panel m-r-5 m-l-5"></i> Kelola User</a>
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                              <a class="dropdown-item" href="javascript:void(0)" @click="logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                           </div>
                       </li>
                       <!-- ============================================================== -->

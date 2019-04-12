@@ -79,8 +79,9 @@ class User extends REST_Controller {
         $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
     }
     function login_post() {
-        $Usr = $this->post('body');
-        if ($this->ModelUser->AuthUser($User['username'], $User['password'])) {
+        $Usr = (object) $this->post('body');
+        $data = $this->ModelUser->AuthUser($Usr->username, $Usr->password)->result();
+        if ($data) {
             $this->set_response($data, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);

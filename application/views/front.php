@@ -14,47 +14,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-// var app = new Vue({
-//   el: '#app',
-//   created(){
-//     this.GetData();
-//   },
-//   data: {
-//   	count_mhs: 0,
-//     count_kriteria: 0,
-//     isAdmin:false,
-//   },
-//   methods: {
-//     GetData()
-//     {
-//         axios
-//             .post(locationServer+'/api/mahasiswa/mahasiswas', {body: {}})
-//             .then(response => {
-//                 this.count_mhs = response.data.length
-//             })
-//             .catch(error => {
-//                 console.log(error)
-//                 this.errored = true
-//             })
-//             .finally(() => this.loading = false )
-//         axios
-//             .post(locationServer+'/api/kriteria/kriterias', {body: {}})
-//             .then(response => {
-//                 this.count_kriteria = response.data.length
-//             })
-//             .catch(error => {
-//                 console.log(error)
-//                 this.errored = true
-//             })
-//             .finally(() => this.loading = false )
 
-//             if(this.$cookies.get("tokenUserApp") !== "" && this.$cookies.get("tokenUserApp") !== null && this.$cookies.get("tokenUserApp") !== "undefined"){
-//                this.isAdmin = this.$cookies.get("tokenUserApp") == '1'? true:false;
-//             }
-//     },
-//   }
-// })
-
-// loaderStop()      
-</script>
+<script src="<?php echo base_url() ?>assets/js/vue.js"></script>

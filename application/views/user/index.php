@@ -161,7 +161,7 @@
 				.catch(err => console.error(err));
 			},
 			deleteUsr: function (id) {
-				const cnf = confirm('Hapus Data?');
+                const cnf = confirm('Hapus Data?');
 				if (cnf) {
 					axios.delete(server_host+'/api/user/hapusUsr/'+id)
 					.then(res => {

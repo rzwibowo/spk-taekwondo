@@ -22,7 +22,7 @@ class ModelUser extends CI_Model
     {
         # code...
         $PasswordHash = md5($Password);
-        $this->db->select('id_user, username, level');
+        $this->db->select('username, level');
         $this->db->from('user');
         $this->db->where('username', $Username);
         $this->db->where('password', $PasswordHash);

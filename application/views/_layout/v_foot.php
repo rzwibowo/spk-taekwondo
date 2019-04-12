@@ -21,6 +21,29 @@
 	<!-- ============================================================== -->
 	<!-- End Wrapper -->
 	<!-- ============================================================== -->
+	<script>
+		const auth_script = new Vue({
+			el: '#user-man',
+			data: {
+				user: {}
+			},
+			mounted: function () {
+				this.checkAuth();
+			},
+			methods: {
+				checkAuth: function () {
+					this.user = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
+					if ((this.user === null) || (!this.user.token)) {
+						window.location.assign(server_host + '/Login');
+					}
+				},
+				logout: function () {
+					sessionStorage.removeItem('auth_spk_tkwd');
+					this.checkAuth();
+				}
+			}
+		})
+	</script>
 	
 </body>
 
