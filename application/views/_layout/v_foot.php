@@ -27,7 +27,7 @@
 			data: {
 				user: {}
 			},
-			mounted: function () {
+			created: function () {
 				this.checkAuth();
 			},
 			methods: {

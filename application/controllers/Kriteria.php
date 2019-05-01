@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Fasilitas extends CI_Controller {
+class Kriteria extends CI_Controller {
 	public function index()
 	{
-		$pageprop['title'] = "Fasilitas";
+		$pageprop['title'] = "Kriteria";
 
 		$this->load->view('_layout/v_head', $pageprop);
-		$this->load->view('fasilitas/index', $pageprop);
+		$this->load->view('kriteria/index', $pageprop);
 		$this->load->view('_layout/v_foot');
 	}
 }

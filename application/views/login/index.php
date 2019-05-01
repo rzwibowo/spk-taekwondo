@@ -121,7 +121,7 @@
 						},
 						chkdt: null
 					},
-					mounted: function () {
+					created: function () {
 						this.checkAuth();
 					},
 					methods: {
@@ -132,7 +132,7 @@
 							}
 						},
 						login: function() {
-							axios.post(server_host + '/api/User/Login',
+							axios.post(server_host + '/api/User/login',
 									{ 
 											body: this.user
 									})

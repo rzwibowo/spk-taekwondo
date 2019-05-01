@@ -20,62 +20,44 @@ use Restserver\Libraries\REST_Controller;
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class BiayaLatihan extends REST_Controller {
+class Kriteria extends REST_Controller {
 
     function __construct($config = 'rest')
     {
         // Construct the parent class
         parent::__construct($config);
-        $this->load->model('ModelBiayaLatihan');
+        $this->load->model('ModelKriteria');
 
     }
 
-    public function ambilBya_get()
+    public function ambilKrt_get()
     {
-        $data = $this->ModelBiayaLatihan->GetBiaya()->result();
+        $data = $this->ModelKriteria->GetKriteria()->result();
         if ($data) {
             $this->set_response($data, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
-    public function simpanBya_post()
+    public function updateKrt_put()
     {
-        $Bya = (object) $this->post('body');
-        if ($this->ModelBiayaLatihan->InsertBiaya($Bya)) {
+        $TL = (object) $this->put('body');
+        if ($this->ModelKriteria->UpdateKriteria($TL)){
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
         }
     }
-    public function updateBya_put()
-    {
-        $Bya = (object) $this->put('body');
-        if ($this->ModelBiayaLatihan->UpdateBiaya($Bya)){
-            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
-        } else {
-            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
-        }
-    }
-    public function ambilByaDenganId_get($Id)
+    public function ambilKrtDenganId_get($Id)
     {
         # code...
-        $where = array('detail_kriteria.id_detail_kriteria'=>$Id);
-        $Bya = $this->ModelBiayaLatihan->GetBiayaById($where)->result();
-        if ($Bya) {
-            $this->set_response($Bya[0], REST_Controller::HTTP_CREATED);
+        $where = array('kriteria.id_kriteria'=>$Id);
+        $TL = $this->ModelKriteria->GetKriteriaById($where)->result();
+        if ($TL) {
+            $this->set_response($TL[0], REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
-    }
-    public function hapusBya_delete($Id)
-    {
-        $this->ModelBiayaLatihan->Delete($Id);
-        if ($Id <= 0)
-        {
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
-        }
-        $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
     }
 
 }
