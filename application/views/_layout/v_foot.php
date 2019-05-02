@@ -33,9 +33,11 @@
 			methods: {
 				checkAuth: function () {
 					this.user = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
-					if ((this.user === null) || (!this.user.token)) {
+					if (this.user === null) {
 						window.location.assign(server_host + '/Login');
 					}
+
+					$(".preloader").fadeOut();
 				},
 				logout: function () {
 					sessionStorage.removeItem('auth_spk_tkwd');

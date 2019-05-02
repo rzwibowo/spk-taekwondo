@@ -53,17 +53,17 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-user"></i></span>
                                     </div>
-																		<input type="text" class="form-control form-control-lg" placeholder="Username"
-																			aria-label="Username" aria-describedby="basic-addon1" required=""
-																			v-model="user.username">
+                                    <input type="text" class="form-control form-control-lg" placeholder="Username"
+                                        aria-label="Username" aria-describedby="basic-addon1" required=""
+                                        v-model="user.username">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
                                     </div>
-																		<input type="password" class="form-control form-control-lg" placeholder="Password"
-																			aria-label="Password" aria-describedby="basic-addon1" required=""
-																			v-model="user.password">
+                                    <input type="password" class="form-control form-control-lg" placeholder="Password"
+                                        aria-label="Password" aria-describedby="basic-addon1" required=""
+                                        v-model="user.password">
                                 </div>
                             </div>
                         </div>
@@ -109,8 +109,6 @@
 
 		<script type="text/javascript">
 				const server_host = "<?php echo site_url() ?>";
-
-				$(".preloader").fadeOut();
 				
 				const main_script = new Vue({
 					el: '#loginform',
@@ -127,9 +125,13 @@
 					methods: {
 						checkAuth: function () {
 							this.chkdt = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
-							if ((!this.chkdt === null) || (this.chkdt.token)) {
-								window.location.assign(server_host);
-							}
+							if (this.chkdt !== null) {
+                                if (this.chkdt.token) {
+                                    window.location.assign(server_host);
+                                }
+                            }
+                            
+					        $(".preloader").fadeOut();
 						},
 						login: function() {
 							axios.post(server_host + '/api/User/login',

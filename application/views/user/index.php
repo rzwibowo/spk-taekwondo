@@ -48,10 +48,16 @@
                                             Level
                                         </label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" id="i-lvl" v-model="user.level">
-                                                <option value="user">User</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="level" 
+                                                    value="admin" v-model="user.level" id="l-adm">
+                                                <label class="custom-control-label" for="l-adm">Admin</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="level" 
+                                                    value="user" v-model="user.level" id="l-usr">
+                                                <label class="custom-control-label" for="l-usr">User</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
