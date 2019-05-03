@@ -22,6 +22,33 @@
 	<!-- End Wrapper -->
 	<!-- ============================================================== -->
 	<script>
+		const store = {
+			state: {
+				isLoading: true
+			},
+			setLoadingState (loadingState) {
+				this.state.isLoading = loadingState;
+			},
+			getLoadingState () {
+				return this.state.isLoading;
+			} 
+		}
+
+		const loading_control = new Vue({
+			el: '#spin',
+			data: {
+				isLoading: true
+			},
+			created: function() {
+				this.getLoadingState();
+			},
+			methods: {
+				getLoadingState: function () {
+					this.isLoading = store.getLoadingState();
+				}
+			}
+		})
+
 		const auth_script = new Vue({
 			el: '#user-man',
 			data: {
@@ -37,7 +64,8 @@
 						window.location.assign(server_host + '/Login');
 					}
 
-					$(".preloader").fadeOut();
+					store.setLoadingState(false);
+					loading_control.getLoadingState();
 				},
 				logout: function () {
 					sessionStorage.removeItem('auth_spk_tkwd');

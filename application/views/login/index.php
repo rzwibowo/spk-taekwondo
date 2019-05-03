@@ -27,10 +27,12 @@
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="lds-ripple">
-                <div class="lds-pos"></div>
-                <div class="lds-pos"></div>
+        <div id="spin">
+            <div class="preloader" v-show="isLoading">
+                <div class="lds-ripple">
+                    <div class="lds-pos"></div>
+                    <div class="lds-pos"></div>
+                </div>
             </div>
         </div>
         <!-- ============================================================== -->
@@ -109,7 +111,34 @@
 
 		<script type="text/javascript">
 				const server_host = "<?php echo site_url() ?>";
-				
+
+                const store = {
+                    state: {
+                        isLoading: true
+                    },
+                    setLoadingState (loadingState) {
+                        this.state.isLoading = loadingState;
+                    },
+                    getLoadingState () {
+                        return this.state.isLoading;
+                    } 
+                }
+
+                const loading_control = new Vue({
+                    el: '#spin',
+                    data: {
+                        isLoading: true
+                    },
+                    created: function() {
+                        this.getLoadingState();
+                    },
+                    methods: {
+                        getLoadingState: function () {
+                            this.isLoading = store.getLoadingState();
+                        }
+                    }
+                })
+
 				const main_script = new Vue({
 					el: '#loginform',
 					data: {
@@ -131,7 +160,8 @@
                                 }
                             }
                             
-					        $(".preloader").fadeOut();
+					        store.setLoadingState(false);
+                            loading_control.getLoadingState();
 						},
 						login: function() {
 							axios.post(server_host + '/api/User/login',
