@@ -132,6 +132,7 @@
 							}
 						},
 						login: function() {
+							//window.location.assign(server_host); 
 							axios.post(server_host + '/api/User/Login',
 									{ 
 											body: this.user
