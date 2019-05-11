@@ -1,28 +1,46 @@
 <div class="row">
-      <div class="col-md-8 offset-md-2">
+      <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title text-center">Daftar <?php echo $title ?></h4>
+                                <h4 class="card-title text-center">Analisa Kriteria</h4>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Nama Tempat Latihan</th>
-                                        <th>Fasilitas</th>
-                                        <th>Nilai</th>
-                                        <th></th>
+                                        <th>Kriteria Pertama</th>
+                                        <th>Penilaian</th>
+                                        <th>Kriteria Kedua</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th>1</th>
-                                        <td>Wakanda</td>
-                                        <td>WiFi</td>
-                                        <td>20</td>
+                                    
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
        </div>
 </div>
+
+<script src="<?php echo base_url() ?>assets/js/vue.js"></script>
+<script src="<?php echo base_url() ?>assets/js/axios.min.js"></script>
+
+<script>
+    const main_script = new Vue({
+        el: '#main',
+        data: {
+            AKriteria:[],
+        },
+        mounted: function() {
+            this.getBuatAnalisaKriteria();
+        },
+        methods: {
+           getBuatAnalisaKriteria: function () {
+                axios.get(server_host + '/api/Analisa/buatAnalisaKriteria')
+                .then(res =>{ this.AKriteria = res.data; console.log(this.AKriteria)})
+                .catch(err => console.error(err));
+            },
+        },
+        
+    })
+</script>

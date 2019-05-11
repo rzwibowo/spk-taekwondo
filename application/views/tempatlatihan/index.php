@@ -25,12 +25,12 @@
                                 <div class="card-body">
                                     <h4 class="card-title text-center">Input Data <?php echo $title ?></h4>
                                     <div class="form-group row">
-                                        <label for="i-nama" 
+                                        <label for="i-id" 
                                             class="col-sm-3 text-right control-label col-form-label">
                                             ID
                                         </label>
                                         <div class="col-sm-3">
-                                            <input type="number" class="form-control" id="i-nama"
+                                            <input type="number" class="form-control" id="i-id"
 												placeholder="BARU" v-model="tempatlatihan.id_tempat_latihan"
                                                 readonly>
                                         </div>

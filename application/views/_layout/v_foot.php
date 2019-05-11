@@ -22,20 +22,50 @@
 	<!-- End Wrapper -->
 	<!-- ============================================================== -->
 	<script>
+		const store = {
+			state: {
+				isLoading: true
+			},
+			setLoadingState (loadingState) {
+				this.state.isLoading = loadingState;
+			},
+			getLoadingState () {
+				return this.state.isLoading;
+			} 
+		}
+
+		const loading_control = new Vue({
+			el: '#spin',
+			data: {
+				isLoading: true
+			},
+			created: function() {
+				this.getLoadingState();
+			},
+			methods: {
+				getLoadingState: function () {
+					this.isLoading = store.getLoadingState();
+				}
+			}
+		})
+
 		const auth_script = new Vue({
 			el: '#user-man',
 			data: {
 				user: {}
 			},
-			mounted: function () {
+			created: function () {
 				this.checkAuth();
 			},
 			methods: {
 				checkAuth: function () {
 					this.user = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
-					if ((this.user === null) || (!this.user.token)) {
+					if (this.user === null) {
 						window.location.assign(server_host + '/Login');
 					}
+
+					store.setLoadingState(false);
+					loading_control.getLoadingState();
 				},
 				logout: function () {
 					sessionStorage.removeItem('auth_spk_tkwd');

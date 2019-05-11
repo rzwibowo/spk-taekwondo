@@ -29,10 +29,12 @@
   <!-- ============================================================== -->
   <!-- Preloader - style you can find in spinners.css -->
   <!-- ============================================================== -->
-  <div class="preloader">
-      <div class="lds-ripple">
-          <div class="lds-pos"></div>
-          <div class="lds-pos"></div>
+  <div id="spin">
+      <div class="preloader" v-show="isLoading">
+          <div class="lds-ripple">
+              <div class="lds-pos"></div>
+              <div class="lds-pos"></div>
+          </div>
       </div>
   </div>
   <!-- ============================================================== -->
@@ -137,39 +139,21 @@
                           </a>
                       </li>
                       <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/kriteria" aria-expanded="false">
+                              <i class="mdi mdi-label"></i>
+                              <span class="hide-menu">Kriteria</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
                           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/tempatlatihan" aria-expanded="false">
                               <i class="mdi mdi-bank"></i>
                               <span class="hide-menu">Tempat Latihan</span>
                           </a>
                       </li>
-                      <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/levelpelatih" aria-expanded="false">
-                              <i class="mdi mdi-account-star"></i>
-                              <span class="hide-menu">Level Pelatih</span>
-                          </a>
-                      </li>
-                      <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/biayalatihan" aria-expanded="false">
-                              <i class="mdi mdi-cash"></i>
-                              <span class="hide-menu">Biaya Latihan</span>
-                          </a>
-                      </li>
-                      <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/jarak" aria-expanded="false">
-                              <i class="mdi mdi-ruler"></i>
-                              <span class="hide-menu">Jarak</span>
-                          </a>
-                      </li>
-                      <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/fasilitas" aria-expanded="false">
-                              <i class="mdi mdi-lightbulb"></i>
-                              <span class="hide-menu">Fasilitas</span>
-                          </a>
-                      </li>
-                      <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/prestasianggota" aria-expanded="false">
-                              <i class="mdi mdi-star-circle"></i>
-                              <span class="hide-menu">Prestasi Anggota</span>
+                       <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/analisa/kriteria" aria-expanded="false">
+                              <i class="mdi mdi-account-search"></i>
+                              <span class="hide-menu">Analisis Kriteria</span>
                           </a>
                       </li>
                   </ul>
