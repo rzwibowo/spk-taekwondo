@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="main">
       <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
@@ -13,9 +13,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <template v-for="kriteria in AKriteria">
+                                    <tr v-for="colum in kriteria.colums">
+                                        <template v-if="colum.IsShow == '1'">
+                                        <th>{{kriteria.row}}</th>
+                                        <th><select class="form-control"><option>10</option></select></th>
+                                        <th>{{colum.row}}</th>
+                                        </template>
+                                    </tr>    
+                                    </template>
                                     
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -37,7 +44,7 @@
         methods: {
            getBuatAnalisaKriteria: function () {
                 axios.get(server_host + '/api/Analisa/buatAnalisaKriteria')
-                .then(res =>{ this.AKriteria = res.data; console.log(this.AKriteria)})
+                .then(res =>{ this.AKriteria = res.data;'/'})
                 .catch(err => console.error(err));
             },
         },

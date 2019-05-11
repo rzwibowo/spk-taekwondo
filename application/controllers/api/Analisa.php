@@ -26,13 +26,13 @@ class Analisa extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct($config);
-        $this->load->model('ModelKriteria');
+        $this->load->model('ModelAnalisa');
 
     }
 
     public function buatAnalisaKriteria_get()
     {
-        $data = $this->ModelKriteria->GetKriteria()->result();
+        $data = $this->ModelAnalisa->GetAnalisaKriteria();
         if ($data) {
             $this->set_response($data, REST_Controller::HTTP_OK);
         } else {
