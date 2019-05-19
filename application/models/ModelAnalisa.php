@@ -70,7 +70,7 @@ class ModelAnalisa extends CI_Model
                      $Matrix1[$index1]["colums"][$index]['value'] = number_format($value["colums"][$index]['value'] / $value["colums"][$index1]["value"],4);
                     }
 
-                $jumlah = $jumlah + $Matrix1[$index1]["colums"][$index]['value'];
+                $jumlah = number_format($jumlah + $Matrix1[$index1]["colums"][$index]['value'],4);
                 $index1 ++;
                 }
          $Matrix1[$index]["jumlah"] =  $jumlah;
@@ -134,7 +134,7 @@ class ModelAnalisa extends CI_Model
           $totalHasil = $totalHasil + $Matrix4[$index]["hasil"];
          $index ++ ;
          }
-         $rata_rata = $totalHasil / count($keriteria);
+         $rata_rata = number_format($totalHasil / count($keriteria),4);
          $resultMatrix4 =array("ratarata" => $rata_rata,"Matrix4" => $Matrix4);
         // Perhitungan Matrix 4 end
 
