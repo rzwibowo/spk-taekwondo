@@ -39,5 +39,15 @@ class Analisa extends REST_Controller {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+    public function hitungMatrixPerbandingan_post()
+    {
+        $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
+        $data = $this->ModelAnalisa->hitungMatrixPerbandinganKeriteria($post);
+        if ($data) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Terjadi kesalahan'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
 
 }
