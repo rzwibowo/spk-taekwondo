@@ -29,7 +29,7 @@ class ModelAnalisa extends CI_Model
  			 	$index ++ ;
  			 }
 
-             array_push($result,array('row' => $value->nama_kriteria, 'colums' => $colums,'jumlah' => null,'bobot' => null,'hasil' => null ));
+             array_push($result,array('row' => $value->nama_kriteria,'id' => $value->id_kriteria, 'colums' => $colums,'jumlah' => null,'bobot' => null,'hasil' => null ));
              $indexShow ++;
         }
     	return $result;
@@ -147,7 +147,34 @@ class ModelAnalisa extends CI_Model
         $result = array('Matrix1' => $Matrix1,'Matrix2' => $Matrix2, 'Matrix3' => $Matrix3 ,'Matrix4' => $resultMatrix4,'Matrix5' =>  $Matrix5);
         return $result;
     }
-	
+    function saveAnalisisKriteria($keriteria){
+
+        $analisis_kriteria = array('tanggal_buat' => date("Y-m-d") , 'dibuat_oleh' => 0 );
+
+        if($this->db->insert('analisis_kriteria',$analisis_kriteria)){
+
+            $analisis_kriteria_id = $this->db->insert_id();
+
+            foreach ($keriteria as $key => $value) {
+
+                $detail_analisis_kriteria = array('analisis_kriteria_id' => $analisis_kriteria_id,'kriteria_id' => $value['id'], 'bobot' => $value['bobot']);
+
+               if($this->db->insert('detail_analisis_kriteria',$detail_analisis_kriteria)){
+
+               }else{
+
+                return false;
+
+               }
+
+            }
+
+        }else{
+
+            return false;
+
+        }
+    }
 
 }
 

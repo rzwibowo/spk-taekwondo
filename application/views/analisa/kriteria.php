@@ -139,7 +139,8 @@
                             </table>
                         </div>
                         <div style="text-align: right;">
-                            <button class="btn btn-success"  v-on:click="NextSteps">Next</button>
+                            <button class="btn btn-success"  v-on:click="NextSteps" v-if="Steps == 1">Next</button>
+                             <button class="btn btn-success"  v-on:click="Save" v-if="Steps == 2">Save</button>
                         </div>
        </div>
 </div>
@@ -191,7 +192,15 @@
                     body: this.AKriteria
                  }).then(res =>{
                    this.Matrix = res.data;
-                  // console.log(res.data.Matrix1);
+                 
+                 }).catch(err => console.error(err));
+            },
+            Save:function(){
+                 axios.post(server_host + '/api/Analisa/saveAnalisisKriteria',
+                 {
+                    body: this.Matrix.Matrix4 
+                 }).then(res =>{
+                   location.reload();
                  
                  }).catch(err => console.error(err));
             }

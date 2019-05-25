@@ -49,5 +49,12 @@ class Analisa extends REST_Controller {
             $this->set_response(array('error' => 'Terjadi kesalahan'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+    public function saveAnalisisKriteria_post(){
+
+         $post = json_decode(file_get_contents('php://input'), TRUE)["body"]["Matrix4"];
+
+        $this->ModelAnalisa->saveAnalisisKriteria($post);
+        
+    }
 
 }
