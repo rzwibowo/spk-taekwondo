@@ -4,13 +4,13 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#input" role="tab">
+                    <a class="nav-link" data-toggle="tab" href="#input" role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down"><i class="mdi mdi-pencil"></i> Input</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#list" role="tab">
+                    <a class="nav-link active" data-toggle="tab" href="#list" role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down"><i class="mdi mdi-format-list-bulleted"></i> List</span>
                     </a>
@@ -18,7 +18,7 @@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
-                <div class="tab-pane active" id="input" role="tabpanel">
+                <div class="tab-pane" id="input" role="tabpanel">
                     <div class="col-md-6 offset-md-3">
                         <div class="card">
                             <form class="form-horizontal">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="list" role="tabpanel">
+                <div class="tab-pane active" id="list" role="tabpanel">
                     <div class="col-md-6 offset-md-3">
                         <div class="card">
                             <div class="card-body">

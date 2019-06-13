@@ -63,6 +63,29 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group row sub-input">
+                                        <label class="col-sm-12 control-label col-form-label">Subkriteria</label>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Rating</th>
+                                                    <th>Keterangan Subkriteria</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="subk in kriteria.subkriteria">
+                                                    <td>
+                                                        <select class="form-control" v-model="subk.bobot_kriteria">
+                                                            <option v-for="rtg in 5" :value="rtg">{{ rtg }}</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" v-model="subk.nama_sub">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body text-right">
@@ -95,6 +118,7 @@
                                         <td>{{ kr.nama_kriteria }}</td>
                                         <td>{{ kr.min_max }}</td>
                                         <td>
+                                            <button type="button" class="btn btn-default" @click="lihatSub(kr.id_kriteria)">Lihat Subkriteria</button>
                                             <button type="button" class="btn btn-default" @click="editKr(kr.id_kriteria)">Ubah</button>
                                         </td>
                                     </tr>
@@ -103,6 +127,22 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true ">
+    <div class="modal-dialog" role="document ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Popup Header</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true ">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Here is the text coming you can put also image if you want…
             </div>
         </div>
     </div>
@@ -119,8 +159,10 @@
 			kriteria: {
                 id_kriteria: null,
 				nama_kriteria: '',
-				min_max: ''
+				min_max: '',
+                subkriteria: []
 			},
+            subkriteria_det: [],
             isDisabled: true
 		},
 		mounted: function() {
@@ -159,6 +201,7 @@
                 this.kriteria.id_kriteria = null;
                 this.kriteria.nama_kriteria = '';
                 this.kriteria.min_max = '';
+                this.kriteria.subkriteria = [];
 
                 this.isDisabled = true;
             }

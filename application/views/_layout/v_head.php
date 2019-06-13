@@ -151,7 +151,7 @@
                           </a>
                       </li>
                        <li class="sidebar-item">
-                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/analisa/kriteria" aria-expanded="false">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo site_url() ?>/analisis/kriteria" aria-expanded="false">
                               <i class="mdi mdi-account-search"></i>
                               <span class="hide-menu">Analisis Kriteria</span>
                           </a>

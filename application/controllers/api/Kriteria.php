@@ -42,6 +42,9 @@ class Kriteria extends REST_Controller {
     public function updateKrt_put()
     {
         $TL = (object) $this->put('body');
+
+        // print_r($this->ModelKriteria->UpdateKriteria($TL));
+        
         if ($this->ModelKriteria->UpdateKriteria($TL)){
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
@@ -51,10 +54,11 @@ class Kriteria extends REST_Controller {
     public function ambilKrtDenganId_get($Id)
     {
         # code...
-        $where = array('kriteria.id_kriteria'=>$Id);
-        $TL = $this->ModelKriteria->GetKriteriaById($where)->result();
+        $where = array('id_kriteria'=>$Id);
+        $TL = $this->ModelKriteria->GetKriteriaById($where);
+        
         if ($TL) {
-            $this->set_response($TL[0], REST_Controller::HTTP_CREATED);
+            $this->set_response($TL, REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
