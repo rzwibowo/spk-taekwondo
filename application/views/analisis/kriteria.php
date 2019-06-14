@@ -171,10 +171,21 @@
                 .catch(err => console.error(err));
             },
             isiPenilaian:function(){
+                const teksNilai = [
+                    'Sama penting dengan',
+                    'Mendekati sedikit lebih penting dari',
+                    'Sedikit lebih penting dari',
+                    'Mendekati lebih penting dari',
+                    'Lebih penting dari',
+                    'Mendekati sangat penting dari',
+                    'Sangat penting dari',
+                    'Mendekati mutlak dari',
+                    'Mutlak sangat penting dari'
+                ]
                 for (var i = 1; i <= 9; i++) {
                     this.Penilaian.push({
-                        name:i,
-                        value:i
+                        name: `${i} | ${teksNilai[i-1]}`,
+                        value: i
                     });
                 }
 

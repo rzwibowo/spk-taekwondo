@@ -5,7 +5,7 @@ class Analisis extends CI_Controller {
 	
 	public function kriteria()
 	{
-		$pageprop['title'] = "Kriteria";
+		$pageprop['title'] = "Analisis Kriteria";
 
 		$this->load->view('_layout/v_head', $pageprop);
 		$this->load->view('analisis/kriteria', $pageprop);

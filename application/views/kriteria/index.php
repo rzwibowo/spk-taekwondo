@@ -130,23 +130,39 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true ">
-    <div class="modal-dialog" role="document ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Popup Header</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true ">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Here is the text coming you can put also image if you want…
+    <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true ">
+        <div class="modal-dialog" role="document ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Subkriteria dari {{ subkriteria_det[0] }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rating</th>
+                                    <th>Nama Subkriteria</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="sub in subkriteria_det[1]">
+                                    <td>{{ sub.bobot_kriteria }}</td>
+                                    <td>{{ sub.nama_sub }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="<?php echo base_url() ?>assets/js/vue.js"></script>
 <script src="<?php echo base_url() ?>assets/js/axios.min.js"></script>
@@ -194,6 +210,18 @@
                     $('a[href="#edit"]').tab('show');
 
                     this.isDisabled = false;
+                })
+				.catch(err => console.error(err));
+			},
+            lihatSub: function (id) {
+				axios.get(server_host+'/api/Kriteria/ambilKrtDenganId/'+id)
+				.then(res => { 
+                    this.subkriteria_det = [];
+
+                    this.subkriteria_det.push(res.data.nama_kriteria);
+                    this.subkriteria_det.push(res.data.subkriteria);
+
+                    $('#Modal1').modal('show');
                 })
 				.catch(err => console.error(err));
 			},
