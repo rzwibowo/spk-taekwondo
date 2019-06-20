@@ -102,89 +102,89 @@
     <!-- All Required js -->
     <!-- ============================================================== -->
     <script src="<?php echo base_url() ?>assets/libs/jquery/dist/jquery.min.js"></script>
-		<!-- Bootstrap tether Core JavaScript -->
-		<script src="<?php echo base_url() ?>assets/libs/popper.js/dist/umd/popper.min.js"></script>
-		<script src="<?php echo base_url() ?>assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="<?php echo base_url() ?>assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
-		<script src="<?php echo base_url() ?>assets/js/vue.js"></script>
-		<script src="<?php echo base_url() ?>assets/js/axios.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/js/vue.js"></script>
+    <script src="<?php echo base_url() ?>assets/js/axios.min.js"></script>
 
-		<script type="text/javascript">
-				const server_host = "<?php echo site_url() ?>";
+    <script type="text/javascript">
+        const server_host = "<?php echo site_url() ?>";
 
-                const store = {
-                    state: {
-                        isLoading: true
-                    },
-                    setLoadingState (loadingState) {
-                        this.state.isLoading = loadingState;
-                    },
-                    getLoadingState () {
-                        return this.state.isLoading;
-                    } 
+        const store = {
+            state: {
+                isLoading: true
+            },
+            setLoadingState (loadingState) {
+                this.state.isLoading = loadingState;
+            },
+            getLoadingState () {
+                return this.state.isLoading;
+            } 
+        }
+
+        const loading_control = new Vue({
+            el: '#spin',
+            data: {
+                isLoading: true
+            },
+            created: function() {
+                this.getLoadingState();
+            },
+            methods: {
+                getLoadingState: function () {
+                    this.isLoading = store.getLoadingState();
                 }
+            }
+        })
 
-                const loading_control = new Vue({
-                    el: '#spin',
-                    data: {
-                        isLoading: true
-                    },
-                    created: function() {
-                        this.getLoadingState();
-                    },
-                    methods: {
-                        getLoadingState: function () {
-                            this.isLoading = store.getLoadingState();
+        const main_script = new Vue({
+            el: '#loginform',
+            data: {
+                user: {
+                    username: '',
+                    password: ''
+                },
+                chkdt: null
+            },
+            created: function () {
+                this.checkAuth();
+            },
+            methods: {
+                checkAuth: function () {
+                    this.chkdt = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
+                    if (this.chkdt !== null) {
+                        if (this.chkdt.token) {
+                            window.location.assign(server_host);
                         }
                     }
-                })
-
-				const main_script = new Vue({
-					el: '#loginform',
-					data: {
-						user: {
-							username: '',
-							password: ''
-						},
-						chkdt: null
-					},
-					created: function () {
-						this.checkAuth();
-					},
-					methods: {
-						checkAuth: function () {
-							this.chkdt = JSON.parse(sessionStorage.getItem('auth_spk_tkwd'));
-							if (this.chkdt !== null) {
-                                if (this.chkdt.token) {
-                                    window.location.assign(server_host);
-                                }
-                            }
-                            
-					        store.setLoadingState(false);
-                            loading_control.getLoadingState();
-						},
-						login: function() {
-							//window.location.assign(server_host); 
-							axios.post(server_host + '/api/User/Login',
-									{ 
-											body: this.user
-									})
-							.then(res => {
-									console.log(res);
-									const udt = res.data[0];
-									udt.token = new Date().getTime().toString();
-									sessionStorage.setItem('auth_spk_tkwd', JSON.stringify(udt));
-									window.location.assign(server_host); 
-							})
-							.catch(err => {
-								alert("error "+err);
-								console.error(err);
-							});
-						}
-					}
-				});
-						
-		</script>
+                    
+                    store.setLoadingState(false);
+                    loading_control.getLoadingState();
+                },
+                login: function() {
+                    //window.location.assign(server_host); 
+                    axios.post(server_host + '/api/User/Login',
+                            { 
+                                    body: this.user
+                            })
+                    .then(res => {
+                            console.log(res);
+                            const udt = res.data[0];
+                            udt.token = new Date().getTime().toString();
+                            sessionStorage.setItem('auth_spk_tkwd', JSON.stringify(udt));
+                            window.location.assign(server_host); 
+                    })
+                    .catch(err => {
+                        alert("error "+err);
+                        console.error(err);
+                    });
+                }
+            }
+        });
+                    
+    </script>
 
 </body>
 
