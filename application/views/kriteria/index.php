@@ -63,6 +63,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="i-multi" 
+                                            class="col-sm-3 text-right control-label col-form-label">
+                                            Multi Nilai
+                                        </label>
+                                        <div class="col-sm-4">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="multi" 
+                                                    value="1" v-model="kriteria.is_multi" id="k-mya">
+                                                <label class="custom-control-label" for="k-mya">Ya</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="multi" 
+                                                    value="0" v-model="kriteria.is_multi" id="k-mtdk">
+                                                <label class="custom-control-label" for="k-mtdk">Tidak</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group row sub-input">
                                         <label class="col-sm-12 control-label col-form-label">Subkriteria</label>
                                         <table class="table">
@@ -109,6 +127,7 @@
                                         <th>#</th>
                                         <th>Nama</th>
                                         <th>Min/Max</th>
+                                        <th>Multi Nilai</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -117,6 +136,7 @@
                                         <td>{{ i+1 }}</td>
                                         <td>{{ kr.nama_kriteria }}</td>
                                         <td>{{ kr.min_max }}</td>
+                                        <td>{{ kr.is_multi === "1" ? "Ya" : "Tidak" }}</td>
                                         <td>
                                             <button type="button" class="btn btn-default" @click="lihatSub(kr.id_kriteria)">Lihat Subkriteria</button>
                                             <button type="button" class="btn btn-default" @click="editKr(kr.id_kriteria)">Ubah</button>
@@ -176,6 +196,7 @@
                 id_kriteria: null,
 				nama_kriteria: '',
 				min_max: '',
+                is_multi: '',
                 subkriteria: []
 			},
             subkriteria_det: [],
@@ -229,6 +250,7 @@
                 this.kriteria.id_kriteria = null;
                 this.kriteria.nama_kriteria = '';
                 this.kriteria.min_max = '';
+                this.kriteria.is_multi = '';
                 this.kriteria.subkriteria = [];
 
                 this.isDisabled = true;

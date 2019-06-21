@@ -39,11 +39,18 @@ class Kriteria extends REST_Controller {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+    public function ambilKrtDanSub_get()
+    {
+        $data = $this->ModelKriteria->GetKriteriaAndSub();
+        // print_r($data);
+
+        $this->set_response($data, REST_Controller::HTTP_OK);
+    }
     public function updateKrt_put()
     {
         $TL = (object) $this->put('body');
 
-        // print_r($this->ModelKriteria->UpdateKriteria($TL));
+        //print_r($this->ModelKriteria->UpdateKriteria($TL));
         
         if ($this->ModelKriteria->UpdateKriteria($TL)){
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
@@ -58,7 +65,7 @@ class Kriteria extends REST_Controller {
         $TL = $this->ModelKriteria->GetKriteriaById($where);
         
         if ($TL) {
-            $this->set_response($TL, REST_Controller::HTTP_CREATED);
+            $this->set_response($TL, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }

@@ -14,7 +14,20 @@ class ModelKriteria extends CI_Model
     function GetKriteria(){
 
     	return $this->db->get('kriteria');
-    }
+	}
+	
+	function GetKriteriaAndSub() {
+		$res = $this->db->get('kriteria')->result();
+
+		foreach ($res as $item) {
+			$this->db->select('nama_sub, bobot_kriteria');
+			$res_sub = $this->db->get_where('sub_kriteria', array('id_kriteria' => $item->id_kriteria))->result();
+
+			$item->subkriteria = $res_sub;
+		}
+
+		return $res;
+	}
     
 	// function InsertKriteria($Data)
 	// {
@@ -47,12 +60,17 @@ class ModelKriteria extends CI_Model
 		
 		// return $Data->subkriteria;
 		if($this->db->update('kriteria',$Data)){
+			$main_q = true;
+			$sub_q = true;
+			
 			$sub_update = $Data->subkriteria;
 			if ($this->db->update_batch('sub_kriteria', $sub_update, 'id_sub_kriteria')) {
-				return true;
+				$sub_q = true;
 			} else {
-				return false;
+				$sub_q = false;
 			}
+
+			return $main_q || $sub_q;
 		} else {
 			return false;
 		}
