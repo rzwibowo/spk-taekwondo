@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2019 at 03:53 PM
+-- Generation Time: Jun 21, 2019 at 04:49 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `spk_tkwnd`
 --
-CREATE DATABASE IF NOT EXISTS `spk_tkwnd` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `spk_tkwnd`;
 
 -- --------------------------------------------------------
 
@@ -41,7 +39,8 @@ CREATE TABLE `analisis_kriteria` (
 --
 
 INSERT INTO `analisis_kriteria` (`analisis_kriteria_id`, `tanggal_buat`, `dibuat_oleh`) VALUES
-(4, '2019-05-25', 0);
+(4, '2019-05-25', 0),
+(5, '2019-06-19', 0);
 
 -- --------------------------------------------------------
 
@@ -78,7 +77,12 @@ INSERT INTO `detail_analisis_kriteria` (`detail_analisis_kriteria_id`, `analisis
 (15, 4, 2, '0.2387'),
 (16, 4, 3, '0.1400'),
 (17, 4, 4, '0.0721'),
-(18, 4, 5, '0.0255');
+(18, 4, 5, '0.0255'),
+(19, 5, 1, '0.4196'),
+(20, 5, 2, '0.2445'),
+(21, 5, 3, '0.1870'),
+(22, 5, 4, '0.0993'),
+(23, 5, 5, '0.0496');
 
 -- --------------------------------------------------------
 
@@ -124,19 +128,20 @@ CREATE TABLE `detail_sub_kriteria` (
 CREATE TABLE `kriteria` (
   `id_kriteria` int(11) NOT NULL,
   `nama_kriteria` varchar(30) NOT NULL,
-  `min_max` varchar(20) NOT NULL
+  `min_max` varchar(20) NOT NULL,
+  `is_multi` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kriteria`
 --
 
-INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `min_max`) VALUES
-(1, 'Level Pelatih', ''),
-(2, 'Biaya Latihan', ''),
-(3, 'Jarak', ''),
-(4, 'Fasilitas', 'max'),
-(5, 'Prestasi Anggota', '');
+INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `min_max`, `is_multi`) VALUES
+(1, 'Level Pelatih', '', 1),
+(2, 'Biaya Latihan', '', 0),
+(3, 'Jarak', '', 0),
+(4, 'Fasilitas', 'max', 0),
+(5, 'Prestasi Anggota', '', 1);
 
 -- --------------------------------------------------------
 
@@ -300,7 +305,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `analisis_kriteria`
 --
 ALTER TABLE `analisis_kriteria`
-  MODIFY `analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bobot_kriteria`
@@ -312,7 +317,7 @@ ALTER TABLE `bobot_kriteria`
 -- AUTO_INCREMENT for table `detail_analisis_kriteria`
 --
 ALTER TABLE `detail_analisis_kriteria`
-  MODIFY `detail_analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `detail_analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `detail_kriteria`
