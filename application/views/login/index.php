@@ -166,15 +166,15 @@
                 login: function() {
                     //window.location.assign(server_host); 
                     axios.post(server_host + '/api/User/Login',
-                            { 
-                                    body: this.user
-                            })
+                        { 
+                            body: this.user
+                        })
                     .then(res => {
-                            console.log(res);
-                            const udt = res.data[0];
-                            udt.token = new Date().getTime().toString();
-                            sessionStorage.setItem('auth_spk_tkwd', JSON.stringify(udt));
-                            window.location.assign(server_host); 
+                        console.log(res);
+                        const udt = res.data[0];
+                        udt.token = new Date().getTime().toString();
+                        sessionStorage.setItem('auth_spk_tkwd', JSON.stringify(udt));
+                        window.location.assign(server_host); 
                     })
                     .catch(err => {
                         alert("error "+err);

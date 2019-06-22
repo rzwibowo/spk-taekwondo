@@ -148,34 +148,30 @@ class ModelAnalisa extends CI_Model
         return $result;
     }
     function saveAnalisisKriteria($keriteria){
-
-        $analisis_kriteria = array('tanggal_buat' => date("Y-m-d") , 'dibuat_oleh' => 0 );
-
+        $analisis_kriteria = array('tanggal_buat' => date("Y-m-d") , 'dibuat_oleh' => $keriteria['user_id'] );
+        
         if($this->db->insert('analisis_kriteria',$analisis_kriteria)){
-
             $analisis_kriteria_id = $this->db->insert_id();
 
-            foreach ($keriteria as $key => $value) {
-
+            foreach ($keriteria['Matrix4'] as $key => $value) {
                 $detail_analisis_kriteria = array('analisis_kriteria_id' => $analisis_kriteria_id,'kriteria_id' => $value['id'], 'bobot' => $value['bobot']);
-
-               if($this->db->insert('detail_analisis_kriteria',$detail_analisis_kriteria)){
-
-               }else{
-
-                return false;
-
-               }
-
+                    if ($this->db->insert('detail_analisis_kriteria',$detail_analisis_kriteria)){
+                } else {
+                    return false;
+                }
             }
-
-        }else{
-
+        } else {
             return false;
-
         }
     }
 
+    function getListAnalisisKriteria()
+    {
+        $this->db->select('analisis_kriteria_id, tanggal_buat, id_user, username');
+        $this->db->from('analisis_kriteria a');
+        $this->db->join('user u', 'a.dibuat_oleh = u.id_user');
+        return $this->db->get();
+    }
 }
 
 ?>

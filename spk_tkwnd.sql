@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2019 at 04:49 PM
+-- Generation Time: Jun 22, 2019 at 04:05 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -39,8 +39,7 @@ CREATE TABLE `analisis_kriteria` (
 --
 
 INSERT INTO `analisis_kriteria` (`analisis_kriteria_id`, `tanggal_buat`, `dibuat_oleh`) VALUES
-(4, '2019-05-25', 0),
-(5, '2019-06-19', 0);
+(7, '2019-06-22', 2);
 
 -- --------------------------------------------------------
 
@@ -73,16 +72,11 @@ CREATE TABLE `detail_analisis_kriteria` (
 --
 
 INSERT INTO `detail_analisis_kriteria` (`detail_analisis_kriteria_id`, `analisis_kriteria_id`, `kriteria_id`, `bobot`) VALUES
-(14, 4, 1, '0.5238'),
-(15, 4, 2, '0.2387'),
-(16, 4, 3, '0.1400'),
-(17, 4, 4, '0.0721'),
-(18, 4, 5, '0.0255'),
-(19, 5, 1, '0.4196'),
-(20, 5, 2, '0.2445'),
-(21, 5, 3, '0.1870'),
-(22, 5, 4, '0.0993'),
-(23, 5, 5, '0.0496');
+(29, 7, 1, '0.4471'),
+(30, 7, 2, '0.2321'),
+(31, 7, 3, '0.1923'),
+(32, 7, 4, '0.0778'),
+(33, 7, 5, '0.0506');
 
 -- --------------------------------------------------------
 
@@ -238,7 +232,8 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `level`) VALUES
 -- Indexes for table `analisis_kriteria`
 --
 ALTER TABLE `analisis_kriteria`
-  ADD PRIMARY KEY (`analisis_kriteria_id`);
+  ADD PRIMARY KEY (`analisis_kriteria_id`),
+  ADD KEY `dibuat_oleh` (`dibuat_oleh`);
 
 --
 -- Indexes for table `bobot_kriteria`
@@ -305,7 +300,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `analisis_kriteria`
 --
 ALTER TABLE `analisis_kriteria`
-  MODIFY `analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `bobot_kriteria`
@@ -317,7 +312,7 @@ ALTER TABLE `bobot_kriteria`
 -- AUTO_INCREMENT for table `detail_analisis_kriteria`
 --
 ALTER TABLE `detail_analisis_kriteria`
-  MODIFY `detail_analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `detail_analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `detail_kriteria`

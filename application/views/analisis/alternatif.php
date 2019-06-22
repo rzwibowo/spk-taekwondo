@@ -27,16 +27,53 @@
 							<div class="card-body">
 								<h4 class="card-title text-center">{{ alt.nama }}</h4>
 								<div class="form-group row" v-for="krt in kriterias">
-									<label class="col-md-4 text-right control-label col-form-label">
-										{{ krt.nama_kriteria }}
-									</label>
-									<div class="col-md-8">
-										<select class="form-control">
-											<option v-for="subk in krt.subkriteria">
-												{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
-											</option>
-										</select>
-									</div>
+									<template v-if="krt.is_multi === '0'">
+										<label class="col-md-3 text-right control-label col-form-label">
+											{{ krt.nama_kriteria }}
+										</label>
+										<div class="col-md-6">
+											<select class="form-control">
+												<option v-for="subk in krt.subkriteria">
+													{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
+												</option>
+											</select>
+										</div>
+									</template>
+									<template v-else>
+										<label class="col-md-3 text-right control-label col-form-label">
+											{{ krt.nama_kriteria }}
+										</label>
+										<div class="col-md-9">
+											<table class="table table-sm">
+												<thead>
+													<tr>
+														<th>Subkriteria</th>
+														<th class="text-right">Jumlah</th>
+													</tr>
+												</thead>
+												<tfoot>
+													<tr>
+														<td class="text-right">Rata-rata</td>
+														<td>
+															<input type="number" 
+																class="form-control form-control-sm text-right float-right" 
+																readonly style="width: 7em">
+														</td>
+													</tr>
+												</tfoot>
+												<tbody>
+													<tr v-for="subk in krt.subkriteria">
+														<td>{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}</td>
+														<td>
+															<input type="number"
+																class="form-control form-control-sm text-right float-right"
+																style="width: 7em">
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</template>
 								</div>
 							</div>
                         </div>
@@ -53,6 +90,7 @@
 						</button>
 					</div>
 					<div class="col text-center">
+						Alternatif {{ active_tab }} -
 						{{ alternatifs.length !== 0 ? alternatifs[active_tab - 1].nama : "..." }}
 					</div>
 					<div class="col text-right">

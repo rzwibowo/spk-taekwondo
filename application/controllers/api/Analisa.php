@@ -51,10 +51,20 @@ class Analisa extends REST_Controller {
     }
     public function saveAnalisisKriteria_post(){
 
-         $post = json_decode(file_get_contents('php://input'), TRUE)["body"]["Matrix4"];
+         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
 
         $this->ModelAnalisa->saveAnalisisKriteria($post);
         
+    }
+
+    public function ambilListAnalisis_get()
+    {
+        $data = $this->ModelAnalisa->getListAnalisisKriteria()->result();
+        if ($data) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
     }
 
 }
