@@ -10,7 +10,7 @@
                 <li class="nav-item" v-for="(alt, i) in alternatifs">
 					<a class="nav-link" :class="i === 0 ? 'active' : ''"
 						@click="active_tab = i + 1"
-						data-toggle="tab" :href="alt.id_tempat_latihan | tabId"
+						data-toggle="tab" :href="'#alt-' + alt.id_tempat_latihan"
 						role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down">{{ alt.nama }}</span>
@@ -20,7 +20,7 @@
             <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
 				<div class="tab-pane" v-for="(alt, i) in alternatifs" 
-					:id="alt.id_tempat_latihan | tabConId" 
+					:id="'alt-' + alt.id_tempat_latihan" 
 					:class="i === 0 ? 'active' : ''" role="tabpanel">
                     <div class="col-md-8 offset-md-2">
                         <div class="card">
@@ -77,14 +77,6 @@
 			alternatifs: [],
 			kriterias: [],
 			active_tab: 1
-		},
-		filters: {
-			tabId: function (val) {
-				return `#alt-${val}`
-			},
-			tabConId: function (val) {
-				return `alt-${val}`
-			}
 		},
 		mounted: function () {
 			this.getListAlt();
