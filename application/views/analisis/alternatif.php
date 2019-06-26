@@ -44,7 +44,7 @@
 													<td>
 														<input type="number" 
 															class="form-control form-control-sm text-right float-right"
-															v-model="nilai_alternatif[i].nilai[j]" 
+															v-model="nilai_subkriteria[i][j].rata_rata" 
 															readonly style="width: 7em">
 													</td>
 												</tr>
@@ -182,7 +182,8 @@
 								id_kriteria: kr.id_kriteria,
 								nilai: this.kriterias.kriteria_multi[i].subkriteria.map(sub =>{
 									return 0;
-								})
+								}),
+								rata_rata:0,
 							}
 						});
 						return _mapped;
@@ -193,8 +194,10 @@
 			hitungRataRata: function (indexA, indexK) {
 				this.nilai_alternatif[indexA].nilai[indexK] = 
 					this.nilai_subkriteria[indexA][indexK].nilai.map((ns, i) => {
-						return ns === '' ? 0 : parseInt(ns) * parseInt(this.bobot_subkriteria_multi[indexK].bobot_subkriteria[i]);
-					}).reduce((total, j) => {return total + j}, 0)
+						return ns === '' || ns === null ? 0 : parseInt(ns) * parseInt(this.bobot_subkriteria_multi[indexK].bobot_subkriteria[i]);
+					});
+
+				this.nilai_subkriteria[indexA][indexK].rata_rata = this.nilai_subkriteria[indexA][indexK].nilai.reduce((a, b) => parseInt(a) + parseInt(b), 0);
 			},
 			activateTab: function (tab_index) {
 				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');
