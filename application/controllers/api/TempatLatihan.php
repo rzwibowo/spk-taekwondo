@@ -32,7 +32,7 @@ class TempatLatihan extends REST_Controller {
 
     public function ambilTl_get()
     {
-        $data = $this->ModelTempatLatihan->GetTempatLatihan()->result();
+        $data = $this->ModelTempatLatihan->GetTempatLatihan();
         if ($data) {
             $this->set_response($data, REST_Controller::HTTP_OK);
         } else {

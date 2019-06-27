@@ -26,7 +26,7 @@
                         <div class="card">
 							<div class="card-body">
 								<h4 class="card-title text-center">{{ alt.nama }}</h4>
-								<div class="form-group row" v-for="(krt, j) in kriterias.kriteria_multi">
+								<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 1">
 									<label class="col-md-3 text-right control-label col-form-label">
 										{{ krt.nama_kriteria }}
 									</label>
@@ -44,7 +44,7 @@
 													<td>
 														<input type="number" 
 															class="form-control form-control-sm text-right float-right"
-															v-model="nilai_subkriteria[i][j].rata_rata" 
+															v-model="krt.rata_rata" 
 															readonly style="width: 7em">
 													</td>
 												</tr>
@@ -56,21 +56,21 @@
 														<input type="number"
 															class="form-control form-control-sm text-right float-right"
 															style="width: 7em"
-															v-model="nilai_subkriteria[i][j].nilai[k]"
-															@change="hitungRataRata(i, j)">
+															v-model="subk.nilai"
+															@change="hitungRataRata(krt.subkriteria,krt)">
 													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								</div>
-								<div class="form-group row" v-for="(krt, j) in kriterias.kriteria_nomulti">
+								<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 0">
 									<label class="col-md-3 text-right control-label col-form-label">
 										{{ krt.nama_kriteria }}
 									</label>
 									<div class="col-md-6">
 										<select class="form-control"
-											v-model="nilai_alternatif[i].nilai[j + kriterias.kriteria_multi.length]">
+											v-model="alt.rata_rata">
 											<option v-for="subk in krt.subkriteria"
 												:value="subk.bobot_kriteria">
 												{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
@@ -116,88 +116,24 @@
 		el: '#main',
 		data: {
 			alternatifs: [],
-			kriterias: {
-				kriteria_nomulti: [],
-				kriteria_multi: []
-			},
-			bobot_subkriteria_multi: [],
-			nilai_alternatif: [],
-			nilai_subkriteria: [],
 			active_tab: 1
 		},
 		mounted: function () {
-			this.getListKr();
+			this.getListAlt();
 		},
 		methods: {
 			getListAlt: async function () {
 				await axios.get(server_host + '/api/TempatLatihan/ambilTl')
 				.then(res => {
 					this.alternatifs = res.data;
-					this.nilai_alternatif = res.data.map(alt => {
-						return { 
-							id_alternatif: alt.id_tempat_latihan,
-							nama_alternatif: alt.nama,
-							nilai: this.kriterias.kriteria_multi.map(kr => {
-								return 0;
-							}).concat(this.kriterias.kriteria_nomulti.map(kr => {
-								return 0;
-							}))
-						};
-					});
 				})
 				.catch(err => console.error(err));
 			},
-			getListKr: async function () {
-				await axios.get(server_host + '/api/Kriteria/ambilKrtDanSub')
-				.then(async res => {
-					this.kriterias.kriteria_nomulti = await res.data.filter(kr => {
-						return kr.is_multi === '0'
-					});
-
-					this.kriterias.kriteria_multi = await res.data.filter(kr => {
-						return kr.is_multi === '1'
-					});
-
-					this.bobot_subkriteria_multi = await this.kriterias.kriteria_multi.map(kr => {
-						return {
-							id_kriteria: kr.id_kriteria,
-							nama_kriteria: kr.nama_kriteria,
-							bobot_subkriteria: kr.subkriteria.map(sub => {
-								return sub.bobot_kriteria;
-							})
-						};
-					});
-
-					// ambil hanya kriteria yg subkriterianya multi
-					this.nilai_subkriteria = await this.kriterias.kriteria_multi;
-
-					// ambil alternatif
-					await this.getListAlt();
-					
-					// buat array untuk nilai subkriteria multi tiap alternatif
-					this.nilai_subkriteria = await this.alternatifs.map(alt => {
-						const _mapped = this.nilai_subkriteria.map((kr,i) => {
-							return {
-								id_alternatif: alt.id_tempat_latihan,
-								id_kriteria: kr.id_kriteria,
-								nilai: this.kriterias.kriteria_multi[i].subkriteria.map(sub =>{
-									return 0;
-								}),
-								rata_rata:0,
-							}
-						});
-						return _mapped;
-					})
-				})
-				.catch(err => console.error(err));
-			},
-			hitungRataRata: function (indexA, indexK) {
-				this.nilai_alternatif[indexA].nilai[indexK] = 
-					this.nilai_subkriteria[indexA][indexK].nilai.map((ns, i) => {
-						return ns === '' || ns === null ? 0 : parseInt(ns) * parseInt(this.bobot_subkriteria_multi[indexK].bobot_subkriteria[i]);
-					});
-
-				this.nilai_subkriteria[indexA][indexK].rata_rata = this.nilai_subkriteria[indexA][indexK].nilai.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+			hitungRataRata: function (subK,Krt) {
+				for (var i = 0 ; i < subK.length; i++) {
+					subK[i].jumlah  = parseInt(subK[i].bobot_kriteria) * parseInt(subK[i].nilai);
+				}
+				Krt.rata_rata = subK.reduce((a, b) => a + (b['jumlah'] || 0), 0);
 			},
 			activateTab: function (tab_index) {
 				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');
