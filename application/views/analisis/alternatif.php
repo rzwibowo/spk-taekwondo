@@ -70,7 +70,7 @@
 									</label>
 									<div class="col-md-6">
 										<select class="form-control"
-											v-model="alt.rata_rata">
+											v-model="krt.rata_rata">
 											<option v-for="subk in krt.subkriteria"
 												:value="subk.bobot_kriteria">
 												{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
