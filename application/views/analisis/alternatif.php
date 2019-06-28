@@ -55,6 +55,7 @@
 													<td>
 														<input type="number"
 															class="form-control form-control-sm text-right float-right"
+															min="0"
 															style="width: 7em"
 															v-model="subk.nilai"
 															@change="hitungRataRata(krt.subkriteria,krt)">
@@ -104,6 +105,52 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="card-body">
+				<div class="row">
+					<table class="table table-sm">
+						<thead>
+							<tr>
+								<th>Bobot</th>
+								<th v-for="i in 5" style="text-align: center;">{{ i }}</th>
+							</tr>
+							<tr>
+								<th>Kriteria</th>
+								<th v-for="krt in kriterias"
+									style="vertical-align: middle; text-align: center;"
+									rowspan="2">
+									{{ krt.nama_kriteria }}
+								</th>
+							</tr>
+							<tr>
+								<th>Alternatif</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td v-for="mm in maxmin" style="text-align: center;">
+									{{ mm }}
+								</td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr v-for="alt in alternatifs">
+								<td>{{ alt.nama }}</td>
+								<td v-for="nk in alt.kriteria" style="text-align: center;">
+									{{ nk.rata_rata }}
+								</td>
+							</tr>
+							<tr>
+								<td>Min/Max</td>
+								<td v-for="krt in kriterias" style="text-align: center;">
+									{{ krt.min_max }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -116,6 +163,8 @@
 		el: '#main',
 		data: {
 			alternatifs: [],
+			kriterias: [],
+			maxmin: [],
 			active_tab: 1
 		},
 		mounted: function () {
@@ -126,6 +175,14 @@
 				await axios.get(server_host + '/api/TempatLatihan/ambilTl')
 				.then(res => {
 					this.alternatifs = res.data;
+					this.kriterias = res.data[0].kriteria.map(kr => {
+						return {
+							id_kriteria: kr.id_kriteria,
+							is_multi: kr.is_multi,
+							min_max: kr.min_max,
+							nama_kriteria: kr.nama_kriteria
+						};
+					})
 				})
 				.catch(err => console.error(err));
 			},
@@ -133,7 +190,37 @@
 				for (var i = 0 ; i < subK.length; i++) {
 					subK[i].jumlah  = parseInt(subK[i].bobot_kriteria) * parseInt(subK[i].nilai);
 				}
-				Krt.rata_rata = subK.reduce((a, b) => a + (b['jumlah'] || 0), 0);
+				Krt.rata_rata = Math.ceil(subK.reduce((a, b) => a + (b['jumlah'] || 0), 0)/subK.length);
+			},
+			cariMaxMin: function() {
+				this.maxmin = this.kriterias.map(kr => {
+					return 0;
+				});
+
+				// this.kriterias.forEach((kr, i) => {
+				// 	const kondisi = kr.min_max;
+				// 	const nilai_alternatif = this.alternatifs.map(alt => {
+				// 		return alt.kriteria
+				// 	}).map(altn => {
+				// 		return altn.map(altn_ => {
+				// 			return {
+				// 				id: altn_.id_kriteria,
+				// 				rt: altn_.rata_rata
+				// 			}
+				// 		})
+				// 	}).map(altnf => altnf.filter(altnf_ => {
+				// 			return altnf_.id === kr.id
+				// 		})
+				// 	).flatMap(a => {
+				// 		return a.flatMap(b => {
+				// 			return b.rt
+				// 		})
+				// 	});
+
+				// 	this.maxmin = kondisi === 'max'
+				// 		? this.maxmin[i] = Math.max(...nilai_alternatif)
+				// 		: this.maxmin[i] = Math.min(...nilai_alternatif);
+				// });
 			},
 			activateTab: function (tab_index) {
 				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');

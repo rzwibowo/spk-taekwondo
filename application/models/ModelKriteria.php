@@ -12,7 +12,7 @@ class ModelKriteria extends CI_Model
 	}
 	
     function GetKriteria(){
-
+		$this->db->order_by("is_multi","desc");
     	return $this->db->get('kriteria');
 	}
 	
