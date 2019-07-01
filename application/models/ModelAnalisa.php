@@ -148,7 +148,7 @@ class ModelAnalisa extends CI_Model
         return $result;
     }
     function saveAnalisisKriteria($keriteria){
-        $analisis_kriteria = array('tanggal_buat' => date("Y-m-d") , 'dibuat_oleh' => $keriteria['user_id'] );
+        $analisis_kriteria = array('tanggal_buat' => date("Y-m-d") , 'id_user' => $keriteria['id_user'] );
         
         if($this->db->insert('analisis_kriteria',$analisis_kriteria)){
             $analisis_kriteria_id = $this->db->insert_id();
@@ -169,7 +169,7 @@ class ModelAnalisa extends CI_Model
     {
         $this->db->select('analisis_kriteria_id, tanggal_buat, id_user, username');
         $this->db->from('analisis_kriteria a');
-        $this->db->join('user u', 'a.dibuat_oleh = u.id_user');
+        $this->db->join('user u', 'a.id_user = u.id_user');
         return $this->db->get();
     }
 }

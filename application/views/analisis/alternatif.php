@@ -197,8 +197,8 @@
 					return 0;
 				});
 
-				// this.kriterias.forEach((kr, i) => {
-				// 	const kondisi = kr.min_max;
+				this.kriterias.forEach((kr, i) => {
+					const kondisi = kr.min_max;
 				// 	const nilai_alternatif = this.alternatifs.map(alt => {
 				// 		return alt.kriteria
 				// 	}).map(altn => {
@@ -215,7 +215,7 @@
 				// 		return a.flatMap(b => {
 				// 			return b.rt
 				// 		})
-				// 	});
+					});
 
 				// 	this.maxmin = kondisi === 'max'
 				// 		? this.maxmin[i] = Math.max(...nilai_alternatif)

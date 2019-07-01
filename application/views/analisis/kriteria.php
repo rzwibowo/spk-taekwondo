@@ -221,7 +221,7 @@
 				}).catch(err => console.error(err));
 			},
 			Save: function () {
-				this.Matrix.Matrix4.user_id = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).id_user;
+				this.Matrix.Matrix4.id_user = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).id_user;
 				axios.post(server_host + '/api/Analisa/saveAnalisisKriteria', {
 					body: this.Matrix.Matrix4
 				}).then(res => {

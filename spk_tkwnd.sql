@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2019 at 04:22 PM
+-- Generation Time: Jul 01, 2019 at 03:31 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -31,28 +31,15 @@ SET time_zone = "+00:00";
 CREATE TABLE `analisis_kriteria` (
   `analisis_kriteria_id` int(11) NOT NULL,
   `tanggal_buat` date DEFAULT NULL,
-  `dibuat_oleh` int(11) DEFAULT NULL
+  `Id_user` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `analisis_kriteria`
 --
 
-INSERT INTO `analisis_kriteria` (`analisis_kriteria_id`, `tanggal_buat`, `dibuat_oleh`) VALUES
+INSERT INTO `analisis_kriteria` (`analisis_kriteria_id`, `tanggal_buat`, `Id_user`) VALUES
 (7, '2019-06-22', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bobot_kriteria`
---
-
-CREATE TABLE `bobot_kriteria` (
-  `id_bobot_kriteria` int(11) NOT NULL,
-  `bobot_kriteria` int(11) NOT NULL,
-  `id_kriteria` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -103,19 +90,6 @@ INSERT INTO `detail_kriteria` (`id_detail_kriteria`, `id_tempat_latihan`, `id_kr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_sub_kriteria`
---
-
-CREATE TABLE `detail_sub_kriteria` (
-  `id_detail_sub_kriteria` int(11) NOT NULL,
-  `id_sub_kriteria` int(11) NOT NULL,
-  `id_tempat_latihan` int(11) NOT NULL,
-  `nilai` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kriteria`
 --
 
@@ -131,11 +105,11 @@ CREATE TABLE `kriteria` (
 --
 
 INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `min_max`, `is_multi`) VALUES
-(1, 'Level Pelatih', '', 1),
-(2, 'Biaya Latihan', '', 0),
-(3, 'Jarak', '', 0),
+(1, 'Level Pelatih', 'max', 1),
+(2, 'Biaya Latihan', 'min', 0),
+(3, 'Jarak', 'min', 0),
 (4, 'Fasilitas', 'max', 0),
-(5, 'Prestasi Anggota', '', 1);
+(5, 'Prestasi Anggota', 'max', 1);
 
 -- --------------------------------------------------------
 
@@ -233,15 +207,7 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `level`) VALUES
 --
 ALTER TABLE `analisis_kriteria`
   ADD PRIMARY KEY (`analisis_kriteria_id`),
-  ADD KEY `dibuat_oleh` (`dibuat_oleh`);
-
---
--- Indexes for table `bobot_kriteria`
---
-ALTER TABLE `bobot_kriteria`
-  ADD PRIMARY KEY (`id_bobot_kriteria`),
-  ADD KEY `id_kriteria` (`id_kriteria`),
-  ADD KEY `id_user` (`id_user`);
+  ADD KEY `dibuat_oleh` (`Id_user`);
 
 --
 -- Indexes for table `detail_analisis_kriteria`
@@ -258,14 +224,6 @@ ALTER TABLE `detail_kriteria`
   ADD PRIMARY KEY (`id_detail_kriteria`),
   ADD KEY `id_tempat_latihan` (`id_tempat_latihan`),
   ADD KEY `id_kriteria` (`id_kriteria`);
-
---
--- Indexes for table `detail_sub_kriteria`
---
-ALTER TABLE `detail_sub_kriteria`
-  ADD PRIMARY KEY (`id_detail_sub_kriteria`),
-  ADD KEY `id_sub_kriteria` (`id_sub_kriteria`),
-  ADD KEY `id_tempat_latihan` (`id_tempat_latihan`);
 
 --
 -- Indexes for table `kriteria`
@@ -303,12 +261,6 @@ ALTER TABLE `analisis_kriteria`
   MODIFY `analisis_kriteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `bobot_kriteria`
---
-ALTER TABLE `bobot_kriteria`
-  MODIFY `id_bobot_kriteria` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `detail_analisis_kriteria`
 --
 ALTER TABLE `detail_analisis_kriteria`
@@ -319,12 +271,6 @@ ALTER TABLE `detail_analisis_kriteria`
 --
 ALTER TABLE `detail_kriteria`
   MODIFY `id_detail_kriteria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `detail_sub_kriteria`
---
-ALTER TABLE `detail_sub_kriteria`
-  MODIFY `id_detail_sub_kriteria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kriteria`
@@ -355,11 +301,10 @@ ALTER TABLE `user`
 --
 
 --
--- Constraints for table `bobot_kriteria`
+-- Constraints for table `analisis_kriteria`
 --
-ALTER TABLE `bobot_kriteria`
-  ADD CONSTRAINT `bobot_kriteria_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `bobot_kriteria_ibfk_2` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`);
+ALTER TABLE `analisis_kriteria`
+  ADD CONSTRAINT `analisis_kriteria_ibfk_1` FOREIGN KEY (`Id_user`) REFERENCES `user` (`id_user`);
 
 --
 -- Constraints for table `detail_analisis_kriteria`
@@ -374,12 +319,6 @@ ALTER TABLE `detail_analisis_kriteria`
 ALTER TABLE `detail_kriteria`
   ADD CONSTRAINT `detail_kriteria_ibfk_1` FOREIGN KEY (`id_tempat_latihan`) REFERENCES `tempat_latihan` (`id_tempat_latihan`),
   ADD CONSTRAINT `detail_kriteria_ibfk_2` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`);
-
---
--- Constraints for table `detail_sub_kriteria`
---
-ALTER TABLE `detail_sub_kriteria`
-  ADD CONSTRAINT `detail_sub_kriteria_ibfk_1` FOREIGN KEY (`id_sub_kriteria`) REFERENCES `sub_kriteria` (`id_sub_kriteria`);
 
 --
 -- Constraints for table `sub_kriteria`
