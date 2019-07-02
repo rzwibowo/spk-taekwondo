@@ -112,7 +112,7 @@
 						<thead>
 							<tr>
 								<th>Bobot</th>
-								<th v-for="i in 5" style="text-align: center;">{{ i }}</th>
+								<th v-for="bbtdet in bobot" style="text-align: center;">{{ bbtdet }}</th>
 							</tr>
 							<tr>
 								<th>Kriteria</th>
@@ -150,9 +150,52 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<button type="button" class="btn btn-primary" @click="getListBobotKriteria">Pilih Bobot Kriteria</button>
+					</div>
+					<div class="col-md-6"></div>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true ">
+        <div class="modal-dialog" role="document ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pilih Bobot</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true ">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal Input</th>
+									<th>User</th>
+									<th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="bbt in bobots">
+                                    <td>{{ bbt.tanggal_buat }}</td>
+                                    <td>{{ bbt.username }}</td>
+                                    <td>
+										<button type="button" class="btn btn-default" 
+											@click="getBobotKriteria(bbt.analisis_kriteria_id)">Ambil Bobot
+										</button>
+									</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="<?php echo base_url() ?>assets/js/vue.js"></script>
@@ -165,6 +208,8 @@
 			alternatifs: [],
 			kriterias: [],
 			maxmin: [],
+			bobots: [],
+			bobot: [],
 			active_tab: 1
 		},
 		mounted: function () {
@@ -199,28 +244,54 @@
 
 				this.kriterias.forEach((kr, i) => {
 					const kondisi = kr.min_max;
-				// 	const nilai_alternatif = this.alternatifs.map(alt => {
-				// 		return alt.kriteria
-				// 	}).map(altn => {
-				// 		return altn.map(altn_ => {
-				// 			return {
-				// 				id: altn_.id_kriteria,
-				// 				rt: altn_.rata_rata
-				// 			}
-				// 		})
-				// 	}).map(altnf => altnf.filter(altnf_ => {
-				// 			return altnf_.id === kr.id
-				// 		})
-				// 	).flatMap(a => {
-				// 		return a.flatMap(b => {
-				// 			return b.rt
-				// 		})
+					const alternatif = this.alternatifs.map(alt => alt.kriteria);
+					const list_krt = [];
+
+					alternatif.forEach(krt => 
+						krt.forEach(sub => {
+							list_krt.push(
+								{
+									id: sub.id_kriteria, 
+									rt: sub.rata_rata
+								}
+							)
+						})
+					)
+
+					const nilai_alt = list_krt.filter(nil => 
+						nil.id == kr.id_kriteria
+					).map(nil => 
+						parseInt(nil.rt)
+					)
+
+					this.maxmin[i] = kondisi === 'max'
+						? Math.max(...nilai_alt)
+						: Math.min(...nilai_alt)
+				});
+			},
+			getListBobotKriteria: function () {
+				axios.get(server_host + '/api/analisa/ambilListAnalisis')
+				.then(res => {
+					this.bobots = res.data;
+
+                    $('#Modal1').modal('show');
+				})
+				.catch(err => console.error(err));
+			},
+			getBobotKriteria: function (id_analisis) {
+				axios.get(server_host + '/api/analisa/ambilAnlsDenganId/' + id_analisis)
+				.then(res => {
+					this.kriterias.forEach(kr => {
+						this.bobot.push(
+							parseFloat(res.data.filter(bbt => 
+								bbt.kriteria_id == kr.id_kriteria
+							)[0].bobot)
+						)
 					});
 
-				// 	this.maxmin = kondisi === 'max'
-				// 		? this.maxmin[i] = Math.max(...nilai_alternatif)
-				// 		: this.maxmin[i] = Math.min(...nilai_alternatif);
-				// });
+                    $('#Modal1').modal('hide');
+				})
+				.catch(err => console.error(err));
 			},
 			activateTab: function (tab_index) {
 				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');

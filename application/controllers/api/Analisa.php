@@ -67,4 +67,15 @@ class Analisa extends REST_Controller {
         }
     }
 
+    function ambilAnlsDenganId_get($Id)
+    {
+        # code...
+        $where = array('analisis_kriteria_id'=>$Id);
+        $Bbt = $this->ModelAnalisa->getAnalisisById($where)->result();
+        if ($Bbt) {
+            $this->set_response($Bbt, REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
 }

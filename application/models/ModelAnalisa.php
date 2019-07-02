@@ -167,10 +167,15 @@ class ModelAnalisa extends CI_Model
 
     function getListAnalisisKriteria()
     {
-        $this->db->select('analisis_kriteria_id, tanggal_buat, id_user, username');
+        $this->db->select('analisis_kriteria_id, tanggal_buat, a.id_user, username');
         $this->db->from('analisis_kriteria a');
         $this->db->join('user u', 'a.id_user = u.id_user');
         return $this->db->get();
+    }
+
+    function getAnalisisById($Where)
+    {
+        return $this->db->get_where('detail_analisis_kriteria',$Where);
     }
 }
 
