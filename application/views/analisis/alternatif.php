@@ -157,6 +157,84 @@
 					<div class="col-md-6"></div>
 				</div>
 			</div>
+
+			<div class="card-body">
+				<div class="row">
+					<table class="table table-sm">
+						<thead>
+							<tr>
+								<th>Kriteria</th>
+								<th v-for="krt in kriterias"
+									style="vertical-align: middle; text-align: center;"
+									rowspan="2">
+									{{ krt.nama_kriteria }}
+								</th>
+							</tr>
+							<tr>
+								<th>Alternatif</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="nrm in normalisasi">
+								<td>{{ nrm.nm }}</td>
+								<td v-for="n in nrm.nilai" style="text-align: center">{{ n }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<div class="row">
+					<table class="table table-sm">
+						<thead>
+							<tr>
+								<th>Kriteria</th>
+								<th v-for="krt in kriterias"
+									style="vertical-align: middle; text-align: center;"
+									rowspan="2">
+									{{ krt.nama_kriteria }}
+								</th>
+								<th rowspan="2"
+									style="vertical-align: middle; text-align: center;">
+									Jumlah
+								</th>
+							</tr>
+							<tr>
+								<th>Alternatif</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="prg in pemeringkatan">
+								<td>{{ prg.nm }}</td>
+								<td v-for="p in prg.nilai" style="text-align: center">{{ p }}</td>
+								<td style="text-align: center">{{ prg.jumlah }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<div class="row">
+					<table class="table table-sm">
+						<thead>
+							<tr>
+								<th>Peringkat</th>
+								<th>Tempat Latihan</th>
+								<th>Jumlah Nilai</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(hprg, i) in peringkat">
+								<td>{{ ++i }}</td>
+								<td>{{ hprg.nm }}</td>
+								<td>{{ hprg.jumlah }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -210,6 +288,9 @@
 			maxmin: [],
 			bobots: [],
 			bobot: [],
+			normalisasi: [],
+			pemeringkatan: [],
+			peringkat: [],
 			active_tab: 1
 		},
 		mounted: function () {
@@ -279,6 +360,8 @@
 				.catch(err => console.error(err));
 			},
 			getBobotKriteria: function (id_analisis) {
+				this.bobot = [];
+
 				axios.get(server_host + '/api/analisa/ambilAnlsDenganId/' + id_analisis)
 				.then(res => {
 					this.kriterias.forEach(kr => {
@@ -292,6 +375,59 @@
                     $('#Modal1').modal('hide');
 				})
 				.catch(err => console.error(err));
+			},
+			hitungNormalisasi: function () {
+				this.normalisasi = this.alternatifs.map((alt, i) => {
+					const id = alt.id_tempat_latihan;
+					const nm = alt.nama;
+					const nilai = [];
+					alt.kriteria.forEach((krt, j) => {
+						nilai.push(
+							parseFloat(krt.rata_rata) / this.maxmin[j]
+						);
+					});
+
+					return {
+						id: id,
+						nm: nm,
+						nilai: nilai
+					};
+				});
+			},
+			hitungPeringkat: function () {
+				this.pemeringkatan = this.normalisasi.map(nrm => {
+					const id = nrm.id;
+					const nm = nrm.nm;
+					const nilai = [];
+					let jumlah = 0;
+
+					nrm.nilai.forEach((nil, i) => {
+						const nilai_baris = this.bobot[i] * nil;
+						
+						nilai.push(
+							nilai_baris
+						);
+						jumlah += nilai_baris;
+					});
+
+					return {
+						id: id,
+						nm: nm,
+						nilai: nilai,
+						jumlah: jumlah
+					};
+				});
+			},
+			urutkanPeringkat: function () {
+				this.peringkat = this.pemeringkatan.slice(0)
+					.sort((a, b) => b.jumlah - a.jumlah)
+					.map(prg => {
+						return {
+							id: prg.id,
+							nm: prg.nm,
+							jumlah: prg.jumlah
+						}
+					});
 			},
 			activateTab: function (tab_index) {
 				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');
