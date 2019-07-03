@@ -5,234 +5,299 @@
 				<h4 class="card-title text-center">Perbandingan Alternatif</h4>
 			</div>
 
-			<!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist" id="alt-tab">
-                <li class="nav-item" v-for="(alt, i) in alternatifs">
-					<a class="nav-link" :class="i === 0 ? 'active' : ''"
-						@click="active_tab = i + 1"
-						data-toggle="tab" :href="'#alt-' + alt.id_tempat_latihan"
-						role="tab">
-                        <span class="hidden-sm-up"></span>
-                        <span class="hidden-xs-down">{{ alt.nama }}</span>
-                    </a>
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content tabcontent-border">
-				<div class="tab-pane" v-for="(alt, i) in alternatifs" 
-					:id="'alt-' + alt.id_tempat_latihan" 
-					:class="i === 0 ? 'active' : ''" role="tabpanel">
-                    <div class="col-md-8 offset-md-2">
-                        <div class="card">
-							<div class="card-body">
-								<h4 class="card-title text-center">{{ alt.nama }}</h4>
-								<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 1">
-									<label class="col-md-3 text-right control-label col-form-label">
-										{{ krt.nama_kriteria }}
-									</label>
-									<div class="col-md-9">
-										<table class="table table-sm">
-											<thead>
-												<tr>
-													<th>Subkriteria</th>
-													<th class="text-right">Jumlah</th>
-												</tr>
-											</thead>
-											<tfoot>
-												<tr>
-													<td class="text-right">Rata-rata</td>
-													<td>
-														<input type="number" 
-															class="form-control form-control-sm text-right float-right"
-															v-model="krt.rata_rata" 
-															readonly style="width: 7em">
-													</td>
-												</tr>
-											</tfoot>
-											<tbody>
-												<tr v-for="(subk, k) in krt.subkriteria">
-													<td>{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}</td>
-													<td>
-														<input type="number"
-															class="form-control form-control-sm text-right float-right"
-															min="0"
-															style="width: 7em"
-															v-model="subk.nilai"
-															@change="hitungRataRata(krt.subkriteria,krt)">
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 0">
-									<label class="col-md-3 text-right control-label col-form-label">
-										{{ krt.nama_kriteria }}
-									</label>
-									<div class="col-md-6">
-										<select class="form-control"
-											v-model="krt.rata_rata">
-											<option v-for="subk in krt.subkriteria"
-												:value="subk.bobot_kriteria">
-												{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
-											</option>
-										</select>
+			<ul class="nav nav-pills nav-fill" role="tablist" id="process-tab">
+				<li class="nav-item">
+					<a href="#input-alt" class="nav-link active"
+						data-toggle="tab" role="tab" 
+						@click="active_outer_tab = 1">
+						Input Nilai Alternatif
+					</a>	
+				</li>
+				<li class="nav-item">
+					<a href="#hitung" class="nav-link"
+						data-toggle="tab" role="tab"
+						@click="active_outer_tab = 2">
+						Penghitungan
+					</a>	
+				</li>
+				<li class="nav-item">
+					<a href="#hasil" class="nav-link"
+						data-toggle="tab" role="tab"
+						@click="active_outer_tab = 3">
+						Hasil Pemeringkatan
+					</a>	
+				</li>
+			</ul>
+
+			<div class="tab-content tabcontent-border">
+				<div class="tab-pane active" id="input-alt" role="tabpanel">
+					<!-- #region Input Nilai Alternatif -->
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist" id="alt-tab">
+						<li class="nav-item" v-for="(alt, i) in alternatifs">
+							<a class="nav-link" :class="i === 0 ? 'active' : ''"
+								@click="active_tab = i + 1"
+								data-toggle="tab" :href="'#alt-' + alt.id_tempat_latihan"
+								role="tab">
+								<span class="hidden-sm-up"></span>
+								<span class="hidden-xs-down">{{ alt.nama }}</span>
+							</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content tabcontent-border">
+						<div class="tab-pane" v-for="(alt, i) in alternatifs" 
+							:id="'alt-' + alt.id_tempat_latihan" 
+							:class="i === 0 ? 'active' : ''" role="tabpanel">
+							<div class="col-md-8 offset-md-2">
+								<div class="card">
+									<div class="card-body">
+										<h4 class="card-title text-center">{{ alt.nama }}</h4>
+										<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 1">
+											<label class="col-md-3 text-right control-label col-form-label">
+												{{ krt.nama_kriteria }}
+											</label>
+											<div class="col-md-9">
+												<table class="table table-sm">
+													<thead>
+														<tr>
+															<th>Subkriteria</th>
+															<th class="text-right">Jumlah</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															<td class="text-right">Rata-rata</td>
+															<td>
+																<input type="number" 
+																	class="form-control form-control-sm text-right float-right"
+																	v-model="krt.rata_rata" 
+																	readonly style="width: 7em">
+															</td>
+														</tr>
+													</tfoot>
+													<tbody>
+														<tr v-for="(subk, k) in krt.subkriteria">
+															<td>{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}</td>
+															<td>
+																<input type="number"
+																	class="form-control form-control-sm text-right float-right"
+																	min="0"
+																	style="width: 7em"
+																	v-model="subk.nilai"
+																	@change="hitungRataRata(krt.subkriteria,krt)">
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="form-group row" v-for="(krt, j) in alt.kriteria" v-if="krt.is_multi == 0">
+											<label class="col-md-3 text-right control-label col-form-label">
+												{{ krt.nama_kriteria }}
+											</label>
+											<div class="col-md-6">
+												<select class="form-control"
+													v-model="krt.rata_rata">
+													<option v-for="subk in krt.subkriteria"
+														:value="subk.bobot_kriteria">
+														{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
+													</option>
+												</select>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="row">
+							<div class="col">
+								<button class="btn btn-secondary" @click="activateTab('alt-tab', --active_tab)" 
+									:disabled="active_tab === 1 ? true : false">
+									<i class="mdi mdi-arrow-left-bold-circle-outline"></i>
+								</button>
+							</div>
+							<div class="col text-center">
+								Alternatif {{ active_tab }} -
+								{{ alternatifs.length !== 0 ? alternatifs[active_tab - 1].nama : "..." }}
+							</div>
+							<div class="col text-right">
+								<button class="btn btn-secondary" @click="activateTab('alt-tab', ++active_tab)"
+									:disabled="active_tab === alternatifs.length ? true : false">
+									<i class="mdi mdi-arrow-right-bold-circle-outline"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- #endregion Input Nilai Alternatif -->
+				</div>
+
+				<div class="tab-pane" id="hitung" role="tabpanel">
+					<!-- #region Tabel Keputusan -->
+					<div class="card-body">
+						<h4 class="card-title m-b-0">Tabel Keputusan</h4>
+						<div class="row">
+							<table class="table table-sm">
+								<thead>
+									<tr>
+										<th>Bobot</th>
+										<th v-for="bbtdet in bobot" style="text-align: center;">{{ bbtdet }}</th>
+									</tr>
+									<tr>
+										<th>Kriteria</th>
+										<th v-for="krt in kriterias"
+											style="vertical-align: middle; text-align: center;"
+											rowspan="2">
+											{{ krt.nama_kriteria }}
+										</th>
+									</tr>
+									<tr>
+										<th>Alternatif</th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<td></td>
+										<td v-for="mm in maxmin" style="text-align: center;">
+											{{ mm }}
+										</td>
+									</tr>
+								</tfoot>
+								<tbody>
+									<tr v-for="alt in alternatifs">
+										<td>{{ alt.nama }}</td>
+										<td v-for="nk in alt.kriteria" style="text-align: center;">
+											{{ nk.rata_rata }}
+										</td>
+									</tr>
+									<tr>
+										<td>Min/Max</td>
+										<td v-for="krt in kriterias" style="text-align: center;">
+											{{ krt.min_max }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="row">
+							<div class="col text-right">
+								<button type="button" class="btn btn-primary" @click="getListBobotKriteria">Pilih Bobot Kriteria</button>
+								<button type="button" class="btn btn-primary" @click="hitung" :disabled="bobot.length === 0">Hitung</button>
+							</div>
+						</div>
+					</div>
+					<!-- #endregion Tabel Keputusan -->
+
+					<!-- #region Tabel Normalisasi -->
+					<div class="card-body">
+						<h4 class="card-title m-b-0">Tabel Normalisasi</h4>
+						<div class="row">
+							<table class="table table-sm">
+								<thead>
+									<tr>
+										<th>Kriteria</th>
+										<th v-for="krt in kriterias"
+											style="vertical-align: middle; text-align: center;"
+											rowspan="2">
+											{{ krt.nama_kriteria }}
+										</th>
+									</tr>
+									<tr>
+										<th>Alternatif</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="nrm in normalisasi">
+										<td>{{ nrm.nm }}</td>
+										<td v-for="n in nrm.nilai" style="text-align: center">{{ n }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- #endregion Tabel Normalisasi -->
+
+					<!-- #region Tabel Pemeringkatan -->
+					<div class="card-body">
+						<h4 class="card-title m-b-0">Tabel Pemeringkatan</h4>
+						<div class="row">
+							<table class="table table-sm">
+								<thead>
+									<tr>
+										<th>Kriteria</th>
+										<th v-for="krt in kriterias"
+											style="vertical-align: middle; text-align: center;"
+											rowspan="2">
+											{{ krt.nama_kriteria }}
+										</th>
+										<th rowspan="2"
+											style="vertical-align: middle; text-align: center;">
+											Jumlah
+										</th>
+									</tr>
+									<tr>
+										<th>Alternatif</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="prg in pemeringkatan">
+										<td>{{ prg.nm }}</td>
+										<td v-for="p in prg.nilai" style="text-align: center">{{ p }}</td>
+										<td style="text-align: center">{{ prg.jumlah }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- #endregion Tabel Pemeringkatan -->
+				</div>
+
+				<div class="tab-pane" id="hasil" role="tabpanel">
+					<!-- #region Hasil Peringkat -->
+					<div class="card-body">
+						<h4 class="card-title m-b-0">Tabel Hasil Peringkat</h4>
+						<div class="row">
+							<table class="table table-sm">
+								<thead>
+									<tr>
+										<th>Peringkat</th>
+										<th>Tempat Latihan</th>
+										<th>Jumlah Nilai</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(hprg, i) in peringkat">
+										<td>{{ ++i }}</td>
+										<td>{{ hprg.nm }}</td>
+										<td>{{ hprg.jumlah }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- #endregion Hasil Peringkat -->
+				</div>
+			</div>
 
 			<div class="card-body">
 				<div class="row">
 					<div class="col">
-						<button class="btn btn-secondary" @click="activateTab(--active_tab)" 
-							:disabled="active_tab === 1 ? true : false">
+						<button class="btn btn-primary" @click="activateTab('process-tab', --active_outer_tab)" 
+							:disabled="active_outer_tab === 1 ? true : false">
 							<i class="mdi mdi-arrow-left-bold-circle-outline"></i>
+							Sebelumnya
 						</button>
 					</div>
-					<div class="col text-center">
-						Alternatif {{ active_tab }} -
-						{{ alternatifs.length !== 0 ? alternatifs[active_tab - 1].nama : "..." }}
-					</div>
 					<div class="col text-right">
-						<button class="btn btn-secondary" @click="activateTab(++active_tab)"
-							:disabled="active_tab === alternatifs.length ? true : false">
+						<button class="btn btn-primary" @click="activateTab('process-tab', ++active_outer_tab)"
+							:disabled="active_outer_tab === 3 ? true : false">
+							Selanjutnya
 							<i class="mdi mdi-arrow-right-bold-circle-outline"></i>
 						</button>
 					</div>
-				</div>
-			</div>
-
-			<div class="card-body">
-				<div class="row">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>Bobot</th>
-								<th v-for="bbtdet in bobot" style="text-align: center;">{{ bbtdet }}</th>
-							</tr>
-							<tr>
-								<th>Kriteria</th>
-								<th v-for="krt in kriterias"
-									style="vertical-align: middle; text-align: center;"
-									rowspan="2">
-									{{ krt.nama_kriteria }}
-								</th>
-							</tr>
-							<tr>
-								<th>Alternatif</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<td></td>
-								<td v-for="mm in maxmin" style="text-align: center;">
-									{{ mm }}
-								</td>
-							</tr>
-						</tfoot>
-						<tbody>
-							<tr v-for="alt in alternatifs">
-								<td>{{ alt.nama }}</td>
-								<td v-for="nk in alt.kriteria" style="text-align: center;">
-									{{ nk.rata_rata }}
-								</td>
-							</tr>
-							<tr>
-								<td>Min/Max</td>
-								<td v-for="krt in kriterias" style="text-align: center;">
-									{{ krt.min_max }}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<button type="button" class="btn btn-primary" @click="getListBobotKriteria">Pilih Bobot Kriteria</button>
-					</div>
-					<div class="col-md-6"></div>
-				</div>
-			</div>
-
-			<div class="card-body">
-				<div class="row">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>Kriteria</th>
-								<th v-for="krt in kriterias"
-									style="vertical-align: middle; text-align: center;"
-									rowspan="2">
-									{{ krt.nama_kriteria }}
-								</th>
-							</tr>
-							<tr>
-								<th>Alternatif</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="nrm in normalisasi">
-								<td>{{ nrm.nm }}</td>
-								<td v-for="n in nrm.nilai" style="text-align: center">{{ n }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="card-body">
-				<div class="row">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>Kriteria</th>
-								<th v-for="krt in kriterias"
-									style="vertical-align: middle; text-align: center;"
-									rowspan="2">
-									{{ krt.nama_kriteria }}
-								</th>
-								<th rowspan="2"
-									style="vertical-align: middle; text-align: center;">
-									Jumlah
-								</th>
-							</tr>
-							<tr>
-								<th>Alternatif</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="prg in pemeringkatan">
-								<td>{{ prg.nm }}</td>
-								<td v-for="p in prg.nilai" style="text-align: center">{{ p }}</td>
-								<td style="text-align: center">{{ prg.jumlah }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="card-body">
-				<div class="row">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>Peringkat</th>
-								<th>Tempat Latihan</th>
-								<th>Jumlah Nilai</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="(hprg, i) in peringkat">
-								<td>{{ ++i }}</td>
-								<td>{{ hprg.nm }}</td>
-								<td>{{ hprg.jumlah }}</td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div>
@@ -291,7 +356,8 @@
 			normalisasi: [],
 			pemeringkatan: [],
 			peringkat: [],
-			active_tab: 1
+			active_tab: 1,
+			active_outer_tab: 1
 		},
 		mounted: function () {
 			this.getListAlt();
@@ -429,8 +495,14 @@
 						}
 					});
 			},
-			activateTab: function (tab_index) {
-				$(`#alt-tab li:nth-child(${tab_index}) a`).tab('show');
+			hitung: function() {
+				this.cariMaxMin();
+				this.hitungNormalisasi();
+				this.hitungPeringkat();
+				this.urutkanPeringkat();
+			},
+			activateTab: function (tablist_id, tab_index) {
+				$(`#${tablist_id} li:nth-child(${tab_index}) a`).tab('show');
 			}
 		}
 	})
