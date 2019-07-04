@@ -22,6 +22,14 @@
 
 	<!-- Notification -->
 	<link href="<?php echo base_url() ?>assets/libs/toastr/build/toastr.min.css" rel="stylesheet">
+
+	<!-- custom private -->
+	<style>
+	.disabled-link {
+		opacity: .3 !important;
+		pointer-events: none;
+	}
+	</style>
 </head>
 
 <body>
@@ -179,6 +187,7 @@
 						</li>
 						<li class="sidebar-item">
 							<a class="sidebar-link waves-effect waves-dark sidebar-link"
+								:class="disabledClass"
 								href="<?php echo site_url() ?>/analisis/alternatif" aria-expanded="false">
 								<i class="mdi mdi-poll-box"></i>
 								<span class="hide-menu">Perbandingan Alternatif</span>
