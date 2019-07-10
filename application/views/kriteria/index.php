@@ -3,7 +3,7 @@
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
+                <li class="nav-item" :class="disabledClass">
                     <a class="nav-link" data-toggle="tab" href="#edit" role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down"><i class="mdi mdi-pencil"></i> Edit</span>
@@ -138,8 +138,10 @@
                                         <td>{{ kr.min_max }}</td>
                                         <td>{{ kr.is_multi === "1" ? "Ya" : "Tidak" }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-default" @click="lihatSub(kr.id_kriteria)">Lihat Subkriteria</button>
-                                            <button type="button" class="btn btn-default" @click="editKr(kr.id_kriteria)">Ubah</button>
+                                            <button type="button" class="btn btn-default" 
+                                                @click="lihatSub(kr.id_kriteria)">Lihat Subkriteria</button>
+                                            <button type="button" class="btn btn-default" :class="disabledClass"
+                                                @click="editKr(kr.id_kriteria)">Ubah</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -200,8 +202,12 @@
                 subkriteria: []
 			},
             subkriteria_det: [],
-            isDisabled: true
+            isDisabled: true,
+            disabledClass: 'disabled-link'
 		},
+        created: function() {
+            this.checkLevel();
+        },
 		mounted: function() {
 			this.getListKr();
 		},
@@ -254,6 +260,14 @@
                 this.kriteria.subkriteria = [];
 
                 this.isDisabled = true;
+            },
+            checkLevel: function () {
+                const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
+                if (level === 'user') {
+                    this.disabledClass = 'disabled-link';
+                } else {
+                    this.disabledClass = '';
+                }
             }
 		}
 	})

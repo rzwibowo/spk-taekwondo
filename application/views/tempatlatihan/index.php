@@ -3,7 +3,7 @@
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
+                <li class="nav-item" :class="disabledClass">
                     <a class="nav-link" data-toggle="tab" href="#input" role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down"><i class="mdi mdi-pencil"></i> Input</span>
@@ -61,7 +61,7 @@
                                             Latitude
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="number" class="form-control" id="i-lat"
+                                            <input type="text" class="form-control" id="i-lat"
 												placeholder="##.####" v-model="tempatlatihan.latitude">
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                             Longitude
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="number" class="form-control" id="i-lng"
+                                            <input type="text" class="form-control" id="i-lng"
 												placeholder="##.####" v-model="tempatlatihan.longitude">
                                         </div>
                                     </div>
@@ -111,8 +111,10 @@
                                         <td>{{ tl.latitude }}</td>
                                         <td>{{ tl.longitude }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-default" @click="editTl(tl.id_tempat_latihan)">Ubah</button>
-                                            <button type="button" class="btn btn-danger" @click="deleteTl(tl.id_tempat_latihan)">Hapus</button>
+                                            <button type="button" class="btn btn-default" :class="disabledClass"
+                                                @click="editTl(tl.id_tempat_latihan)">Ubah</button>
+                                            <button type="button" class="btn btn-danger" :class="disabledClass"
+                                                @click="deleteTl(tl.id_tempat_latihan)">Hapus</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -139,8 +141,12 @@
 				alamat: '',
 				latitude: 0,
 				longitude: 0
-			}
+			},
+            disabledClass: 'disabled-link'
 		},
+        created: function() {
+            this.checkLevel();
+        },
 		mounted: function() {
 			this.getListTl();
 		},
@@ -203,6 +209,14 @@
                 this.tempatlatihan.alamat = '';
                 this.tempatlatihan.latitude = 0;
                 this.tempatlatihan.longitude = 0;
+            },
+            checkLevel: function () {
+                const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
+                if (level === 'user') {
+                    this.disabledClass = 'disabled-link';
+                } else {
+                    this.disabledClass = '';
+                }
             }
 		}
 	})

@@ -186,11 +186,35 @@
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a class="sidebar-link waves-effect waves-dark sidebar-link"
-								:class="disabledClass"
-								href="<?php echo site_url() ?>/analisis/alternatif" aria-expanded="false">
+							<a class="sidebar-link has-arrow waves-effect waves-dark" 
+								href="javascript:void(0)" aria-expanded="false">
 								<i class="mdi mdi-poll-box"></i>
-								<span class="hide-menu">Perbandingan Alternatif</span>
+								<span class="hide-menu">Perbandingan Alternatif </span>
+							</a>
+                            <ul aria-expanded="false" class="collapse first-level">
+								<li class="sidebar-item">
+									<a class="sidebar-link waves-effect waves-dark sidebar-link"
+										:class="disabledClass"
+										href="<?php echo site_url() ?>/analisis/alternatif_input" aria-expanded="false">
+										<i class="mdi mdi-pencil-box"></i>
+										<span class="hide-menu">Input Nilai</span>
+									</a>
+								</li>
+                                <li class="sidebar-item">
+									<a class="sidebar-link waves-effect waves-dark sidebar-link"
+										:class="disabledClass"
+										href="<?php echo site_url() ?>/analisis/alternatif_hitung" aria-expanded="false">
+										<i class="mdi mdi-calculator"></i>
+										<span class="hide-menu">Hitung Perbandingan</span>
+									</a>
+								</li>
+                            </ul>
+                        </li>
+						<li class="sidebar-item">
+							<a class="sidebar-link waves-effect waves-dark sidebar-link"
+								href="<?php echo site_url() ?>/analisis/hasil_peringkat" aria-expanded="false">
+								<i class="mdi mdi-sort-variant"></i>
+								<span class="hide-menu">Hasil Peringkat</span>
 							</a>
 						</li>
 					</ul>

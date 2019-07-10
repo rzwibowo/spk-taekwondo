@@ -3,7 +3,7 @@
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
+                <li class="nav-item" :class="disabledClass">
                     <a class="nav-link" data-toggle="tab" href="#input" role="tab">
                         <span class="hidden-sm-up"></span>
                         <span class="hidden-xs-down"><i class="mdi mdi-pencil"></i> Input</span>
@@ -92,8 +92,10 @@
                                         <td>{{ usr.username }}</td>
                                         <td>{{ usr.level }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-default" @click="editUsr(usr.id_user)">Ubah</button>
-                                            <button type="button" class="btn btn-danger" @click="deleteUsr(usr.id_user)">Hapus</button>
+                                            <button type="button" class="btn btn-default" :class="disabledClass"
+                                                @click="editUsr(usr.id_user)">Ubah</button>
+                                            <button type="button" class="btn btn-danger" :class="disabledClass"
+                                                @click="deleteUsr(usr.id_user)">Hapus</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -119,7 +121,11 @@
                 username: '',
                 password: '',
                 level: ''
-            }
+            },
+            disabledClass: 'disabled-link'
+        },
+        created: function() {
+            this.checkLevel();
         },
         mounted: function() {
             this.getListUsr();
@@ -183,6 +189,14 @@
                 this.user.username = '';
                 this.user.password = '' ;
                 this.user.level = '';
+            },
+            checkLevel: function () {
+                const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
+                if (level === 'user') {
+                    this.disabledClass = 'disabled-link';
+                } else {
+                    this.disabledClass = '';
+                }
             }
         },
         
