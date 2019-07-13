@@ -14,7 +14,7 @@ class Analisis extends CI_Controller {
 
 	public function alternatif_input()
 	{
-		$pageprop['title'] = "Input Perbandingan Alternatif";
+		$pageprop['title'] = "Input Nilai Alternatif";
 
 		$this->load->view('_layout/v_head', $pageprop);
 		$this->load->view('analisis/alternatif-input', $pageprop);
