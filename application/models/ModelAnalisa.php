@@ -177,6 +177,76 @@ class ModelAnalisa extends CI_Model
     {
         return $this->db->get_where('detail_analisis_kriteria',$Where);
     }
+
+    function saveNilaiPerbandiganAlternatif($data){
+        $H_perbandingan = array('user_id' =>  $data['user'] , 'tanggal' =>date("Y-m-d"));
+        
+       if($this->db->insert('h_perbandingan',$H_perbandingan)){
+           $H_perbandinganId = $this->db->insert_id();
+
+                 foreach ($data['alternatif'] as $key => $value_A) {
+                    
+                     $H_perbandingan_alternatif = array('H_perbandingan_id' => $H_perbandinganId,'tempat_latihan_id' => $value_A['id_tempat_latihan']);
+                     if ($this->db->insert('h_perbandingan_alternatif',$H_perbandingan_alternatif)){
+                             $H_perbandingan_alternatif_id = $this->db->insert_id();
+                            
+                            foreach ($value_A['kriteria'] as $key => $value_K) {
+                                $H_perbandingan_kriteria = array('H_perbandingan_alternatif_id' => $H_perbandingan_alternatif_id,'kriteria_id' => $value_K['id_kriteria'],'rata_rata'=> $value_K['rata_rata']);
+
+                                if ($this->db->insert('h_perbandingan_kriteria',$H_perbandingan_kriteria)){
+                                    if($value_K['is_multi'] == "1"){
+                                         $H_perbandingan_kriteria_Id = $this->db->insert_id();
+                                       foreach ($value_K['subkriteria'] as $key => $value_S) {
+                                               $H_perbandingan_sub_kriteria = array('H_perbandingan_kriteria_id' => $H_perbandingan_kriteria_Id,'sub_kriteria_id' => $value_S['id_sub_kriteria'],'nilai'=> $value_S['nilai']);
+                                               if ($this->db->insert('h_perbandingan_sub_kriteria',$H_perbandingan_sub_kriteria)){
+                                                    
+                                               }else
+                                               {
+                                                return false;
+                                               }
+                                        }
+                                    }
+                                   
+                                } else {
+                                return false;
+                                }
+                            }
+                    }
+
+                 }
+        } else {
+           return false;
+       }
+
+    }
+    public function hitung_perbandingan(){
+        $result = array(
+            'tabel_keputusan' => array()
+
+        );
+         /** ambil history perbandingan yang paling terakhir **/
+        $this->db->select('*');
+        $this->db->from('h_perbandingan');
+        $this->db->order_by('h_perbandingan_id','DESC');
+        $this->db->limit(1);
+        $perbandingan = $this->db->get()->result()[0];
+        
+        /** ambil data alternatif berdasarkan perbandingan **/
+        $this->db->select('*');
+        $this->db->from('h_perbandingan_alternatif a');
+        $this->db->join('tempat_latihan b', 'a.tempat_latihan_id = b.id_tempat_latihan');
+        $this->db->where('a.h_perbandingan_id',$perbandingan->h_perbandingan_id);
+        $alternatif = $this->db->get()->result();
+
+        foreach($alternatif as $key => $value){
+            $keriteia 
+
+            $alternatif[$key] = (object) array_merge((array)$res_sub[$Ksub], (array)array("nilai" => 0,"jumlah"=> 0));
+        }
+
+        return $this->db->get()->result();
+
+    }
 }
 
 ?>

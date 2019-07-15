@@ -22,7 +22,7 @@ class ModelTempatLatihan extends CI_Model
 
 		foreach ($kriteria as $key => $item) {
 
-			$this->db->select('nama_sub, bobot_kriteria');
+			$this->db->select('nama_sub, bobot_kriteria,id_sub_kriteria');
 
 			$res_sub = $this->db->get_where('sub_kriteria', array('id_kriteria' => $item->id_kriteria))->result();
 

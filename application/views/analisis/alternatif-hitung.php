@@ -280,12 +280,10 @@
 				this.maxmin = this.kriterias.map(kr => {
 					return 0;
 				});
-
 				this.kriterias.forEach((kr, i) => {
 					const kondisi = kr.min_max;
 					const alternatif = this.alternatifs.map(alt => alt.kriteria);
 					const list_krt = [];
-
 					alternatif.forEach(krt => 
 						krt.forEach(sub => {
 							list_krt.push(
@@ -296,13 +294,11 @@
 							)
 						})
 					)
-
 					const nilai_alt = list_krt.filter(nil => 
 						nil.id == kr.id_kriteria
 					).map(nil => 
 						parseInt(nil.rt)
 					)
-
 					this.maxmin[i] = kondisi === 'max'
 						? Math.max(...nilai_alt)
 						: Math.min(...nilai_alt)
@@ -312,14 +308,12 @@
 				axios.get(server_host + '/api/analisa/ambilListAnalisis')
 				.then(res => {
 					this.bobots = res.data;
-
                     $('#Modal1').modal('show');
 				})
 				.catch(err => console.error(err));
 			},
 			getBobotKriteria: function (id_analisis) {
 				this.bobot = [];
-
 				axios.get(server_host + '/api/analisa/ambilAnlsDenganId/' + id_analisis)
 				.then(res => {
 					this.kriterias.forEach(kr => {
@@ -329,7 +323,6 @@
 							)[0].bobot)
 						)
 					});
-
                     $('#Modal1').modal('hide');
 				})
 				.catch(err => console.error(err));
@@ -344,7 +337,6 @@
 							parseFloat(krt.rata_rata) / this.maxmin[j]
 						);
 					});
-
 					return {
 						id: id,
 						nm: nm,
@@ -358,7 +350,6 @@
 					const nm = nrm.nm;
 					const nilai = [];
 					let jumlah = 0;
-
 					nrm.nilai.forEach((nil, i) => {
 						const nilai_baris = this.bobot[i] * nil;
 						
@@ -367,7 +358,6 @@
 						);
 						jumlah += nilai_baris;
 					});
-
 					return {
 						id: id,
 						nm: nm,

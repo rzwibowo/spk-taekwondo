@@ -98,10 +98,13 @@
 						Alternatif {{ active_tab }} -
 						{{ alternatifs.length !== 0 ? alternatifs[active_tab - 1].nama : "..." }}
 					</div>
-					<div class="col text-right">
-						<button class="btn btn-secondary" @click="activateTab('alt-tab', ++active_tab)"
-							:disabled="active_tab === alternatifs.length ? true : false">
+					<div class="col text-right" v-show="active_tab === alternatifs.length ? false : true">
+						<button class="btn btn-secondary" @click="activateTab('alt-tab', ++active_tab)">
 							<i class="mdi mdi-arrow-right-bold-circle-outline"></i>
+						</button>
+					</div>
+					<div class="col text-right" v-show="active_tab === alternatifs.length ? true : false">
+						<button class="btn btn-primary" @click="Simpan()"> SIMPAN
 						</button>
 					</div>
 				</div>
@@ -140,14 +143,6 @@
 				await axios.get(server_host + '/api/TempatLatihan/ambilTl')
 				.then(res => {
 					this.alternatifs = res.data;
-					this.kriterias = res.data[0].kriteria.map(kr => {
-						return {
-							id_kriteria: kr.id_kriteria,
-							is_multi: kr.is_multi,
-							min_max: kr.min_max,
-							nama_kriteria: kr.nama_kriteria
-						};
-					})
 				})
 				.catch(err => console.error(err));
 			},
@@ -159,6 +154,19 @@
 			},
 			activateTab: function (tablist_id, tab_index) {
 				$(`#${tablist_id} li:nth-child(${tab_index}) a`).tab('show');
+			},
+			Simpan:function()
+			{
+				var data = {
+					user : JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).id_user ,
+					alternatif: this.alternatifs
+				};
+console.log(data);
+				axios.post(server_host + '/api/Analisa/saveNilaiPerbandiganAlternatif', {
+					body: data
+				}).then(res => {
+
+				}).catch(err => console.error(err));
 			}
 		}
 	})

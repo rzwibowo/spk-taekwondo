@@ -78,4 +78,21 @@ class Analisa extends REST_Controller {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+
+    public function saveNilaiPerbandiganAlternatif_post(){
+
+         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
+
+        $this->ModelAnalisa->saveNilaiPerbandiganAlternatif($post);
+        
+    }
+    public function hitung_perbandingan_get(){
+        $result = $this->ModelAnalisa->hitung_perbandingan();
+        if ($result) {
+            $this->set_response($result, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+
+    }
 }
