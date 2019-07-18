@@ -36,7 +36,7 @@
 									</tr>
 									<tr>
 										<th>Kriteria</th>
-										<th v-for="krt in kriterias"
+										<th v-for="krt in perbandingan.tabel_keputusan.kriteira"
 											style="vertical-align: middle; text-align: center;"
 											rowspan="2">
 											{{ krt.nama_kriteria }}
@@ -55,7 +55,7 @@
 									</tr>
 								</tfoot>
 								<tbody>
-									<tr v-for="alt in alternatifs">
+									<tr v-for="alt in perbandingan.tabel_keputusan.alternatif">
 										<td>{{ alt.nama }}</td>
 										<td v-for="nk in alt.kriteria" style="text-align: center;">
 											{{ nk.rata_rata }}
@@ -63,7 +63,7 @@
 									</tr>
 									<tr>
 										<td>Min/Max</td>
-										<td v-for="krt in kriterias" style="text-align: center;">
+										<td v-for="krt in perbandingan.tabel_keputusan.kriteira" style="text-align: center;">
 											{{ krt.min_max }}
 										</td>
 									</tr>
@@ -236,6 +236,7 @@
 	const main_script = new Vue({
 		el: '#main',
 		data: {
+			perbandingan:[],
 			alternatifs: [],
 			kriterias: [],
 			maxmin: [],
@@ -262,17 +263,9 @@
 				}
 			},
 			getListAlt: async function () {
-				await axios.get(server_host + '/api/TempatLatihan/ambilTl')
+				await axios.get(server_host + '/api/Analisa/hitung_perbandingan')
 				.then(res => {
-					this.alternatifs = res.data;
-					this.kriterias = res.data[0].kriteria.map(kr => {
-						return {
-							id_kriteria: kr.id_kriteria,
-							is_multi: kr.is_multi,
-							min_max: kr.min_max,
-							nama_kriteria: kr.nama_kriteria
-						};
-					})
+					this.perbandingan = res.data;
 				})
 				.catch(err => console.error(err));
 			},

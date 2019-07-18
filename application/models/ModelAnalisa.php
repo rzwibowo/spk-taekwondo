@@ -221,7 +221,7 @@ class ModelAnalisa extends CI_Model
     }
     public function hitung_perbandingan(){
         $result = array(
-            'tabel_keputusan' => array()
+            'tabel_keputusan' => null
 
         );
          /** ambil history perbandingan yang paling terakhir **/
@@ -236,15 +236,36 @@ class ModelAnalisa extends CI_Model
         $this->db->from('h_perbandingan_alternatif a');
         $this->db->join('tempat_latihan b', 'a.tempat_latihan_id = b.id_tempat_latihan');
         $this->db->where('a.h_perbandingan_id',$perbandingan->h_perbandingan_id);
+		$this->db->order_by('b.id_tempat_latihan','ASC');
         $alternatif = $this->db->get()->result();
 
         foreach($alternatif as $key => $value){
-            $keriteia 
 
-            $alternatif[$key] = (object) array_merge((array)$res_sub[$Ksub], (array)array("nilai" => 0,"jumlah"=> 0));
+		   /** ambil data bobot rata - rata kriteria **/
+		   $this->db->select('*');
+		   $this->db->from('h_perbandingan_kriteria a');
+		   $this->db->join('kriteria b', 'b.id_kriteria = a.kriteria_id');
+		   $this->db->where('a.H_perbandingan_alternatif_id',$value->H_perbandingan_alternatif_id);
+		   $this->db->order_by('b.id_kriteria','ASC');
+		   $kriteria = $this->db->get()->result();
+
+            $alternatif[$key] = (object) array_merge((array)$alternatif[$key], (array)array("kriteria" => $kriteria));
         }
+		$this->db->select('*');
+		$this->db->from('kriteria');
+		$this->db->order_by('id_kriteria','ASC');
+		$M_kriteria=  $this->db->get()->result();
 
-        return $this->db->get()->result();
+		$result['tabel_keputusan'] = array(
+        "kriteira"=>$M_kriteria,
+        "alternatif"=>$alternatif);
+
+		/**array(2){
+		['kriteira'] => $M_kriteria
+		['alternatif']=
+		};**/
+
+        return $result;
 
     }
 }
