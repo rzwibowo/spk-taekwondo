@@ -36,11 +36,13 @@
 									</tr>
 									<tr>
 										<th>Kriteria</th>
+										<template v-if="perbandingan.tabel_keputusan">
 										<th v-for="krt in perbandingan.tabel_keputusan.kriteira"
 											style="vertical-align: middle; text-align: center;"
 											rowspan="2">
 											{{ krt.nama_kriteria }}
 										</th>
+										</template>
 									</tr>
 									<tr>
 										<th>Alternatif</th>
@@ -55,24 +57,28 @@
 									</tr>
 								</tfoot>
 								<tbody>
-									<tr v-for="alt in perbandingan.tabel_keputusan.alternatif">
+								<template v-if="perbandingan.tabel_keputusan">
+									<tr v-for="alt in perbandingan.tabel_keputusan.alternatif" v-if="perbandingan.tabel_keputusan.kriteira">
 										<td>{{ alt.nama }}</td>
 										<td v-for="nk in alt.kriteria" style="text-align: center;">
 											{{ nk.rata_rata }}
 										</td>
 									</tr>
-									<tr>
-										<td>Min/Max</td>
-										<td v-for="krt in perbandingan.tabel_keputusan.kriteira" style="text-align: center;">
-											{{ krt.min_max }}
-										</td>
-									</tr>
+								</template>
+								<template v-if="perbandingan.tabel_keputusan">
+								<tr>
+									<td>Min/Max</td>
+									<td v-for="krt in perbandingan.tabel_keputusan.kriteira" style="text-align: center;" v-if="perbandingan.tabel_keputusan.kriteira">
+										{{ krt.min_max }}
+									</td>
+								</tr>
+									</template>
 								</tbody>
 							</table>
 						</div>
 						<div class="row">
 							<div class="col text-right">
-								<button type="button" class="btn btn-primary" @click="getListBobotKriteria">Pilih Bobot Kriteria</button>
+								<button type="button" class="btn btn-primary" @click="getListHistoryPerbandingan">Pilih Bobot Kriteria</button>
 								<button type="button" class="btn btn-primary" @click="hitung" :disabled="bobot.length === 0">Hitung</button>
 							</div>
 						</div>
@@ -212,11 +218,11 @@
                             </thead>
                             <tbody>
                                 <tr v-for="bbt in bobots">
-                                    <td>{{ bbt.tanggal_buat }}</td>
+                                    <td>{{ bbt.tanggal }}</td>
                                     <td>{{ bbt.username }}</td>
                                     <td>
 										<button type="button" class="btn btn-default" 
-											@click="getBobotKriteria(bbt.analisis_kriteria_id)">Ambil Bobot
+											@click="getBobotKriteria(bbt.h_perbandingan_id)">Ambil Bobot
 										</button>
 									</td>
                                 </tr>
@@ -252,7 +258,7 @@
 			this.checkLevel();
 		},
 		mounted: function () {
-			this.getListAlt();
+			//this.getListAlt();
 		},
 		methods: {
 			checkLevel: function () {
@@ -297,25 +303,19 @@
 						: Math.min(...nilai_alt)
 				});
 			},
-			getListBobotKriteria: function () {
-				axios.get(server_host + '/api/analisa/ambilListAnalisis')
+			getListHistoryPerbandingan: function () {
+				axios.get(server_host + '/api/analisa/history_perbandingan')
 				.then(res => {
 					this.bobots = res.data;
                     $('#Modal1').modal('show');
 				})
 				.catch(err => console.error(err));
 			},
-			getBobotKriteria: function (id_analisis) {
+			getBobotKriteria: function (id_perbandingan) {
 				this.bobot = [];
-				axios.get(server_host + '/api/analisa/ambilAnlsDenganId/' + id_analisis)
+				axios.get(server_host + '/api/analisa/hitung_perbandingan/' + id_perbandingan)
 				.then(res => {
-					this.kriterias.forEach(kr => {
-						this.bobot.push(
-							parseFloat(res.data.filter(bbt => 
-								bbt.kriteria_id == kr.id_kriteria
-							)[0].bobot)
-						)
-					});
+					this.perbandingan = res.data;
                     $('#Modal1').modal('hide');
 				})
 				.catch(err => console.error(err));

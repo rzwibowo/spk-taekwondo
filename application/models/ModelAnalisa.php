@@ -219,7 +219,7 @@ class ModelAnalisa extends CI_Model
        }
 
     }
-    public function hitung_perbandingan(){
+    public function hitung_perbandingan($id_perbandingan){
         $result = array(
             'tabel_keputusan' => null
 
@@ -227,8 +227,7 @@ class ModelAnalisa extends CI_Model
          /** ambil history perbandingan yang paling terakhir **/
         $this->db->select('*');
         $this->db->from('h_perbandingan');
-        $this->db->order_by('h_perbandingan_id','DESC');
-        $this->db->limit(1);
+        $this->db->where('h_perbandingan_id',$id_perbandingan);
         $perbandingan = $this->db->get()->result()[0];
         
         /** ambil data alternatif berdasarkan perbandingan **/
@@ -259,15 +258,20 @@ class ModelAnalisa extends CI_Model
 		$result['tabel_keputusan'] = array(
         "kriteira"=>$M_kriteria,
         "alternatif"=>$alternatif);
-
-		/**array(2){
-		['kriteira'] => $M_kriteria
-		['alternatif']=
-		};**/
+		
 
         return $result;
 
     }
+	public function historyPerbandingan(){
+
+	$this->db->select('b.username,a.tanggal,a.h_perbandingan_id');
+	$this->db->from('h_perbandingan a');
+	$this->db->join('user b','b.id_user = a.user_id');
+	$resut = $this->db->get()->result();
+	return $resut;
+
+	}
 }
 
 ?>

@@ -86,8 +86,8 @@ class Analisa extends REST_Controller {
         $this->ModelAnalisa->saveNilaiPerbandiganAlternatif($post);
         
     }
-    public function hitung_perbandingan_get(){
-        $result = $this->ModelAnalisa->hitung_perbandingan();
+    public function hitung_perbandingan_get($id_perbandingan){
+        $result = $this->ModelAnalisa->hitung_perbandingan($id_perbandingan);
         if ($result){
             $this->set_response($result, REST_Controller::HTTP_OK);
         } else {
@@ -95,4 +95,12 @@ class Analisa extends REST_Controller {
         }
 
     }
+	public function history_perbandingan_get(){
+	$result = $this->ModelAnalisa->historyPerbandingan();
+	if ($result){
+            $this->set_response($result, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+	}
 }
