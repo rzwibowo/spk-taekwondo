@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 /** @noinspection PhpIncludeInspection */
@@ -20,14 +20,14 @@ use Restserver\Libraries\REST_Controller;
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Kriteria extends REST_Controller {
+class Kriteria extends REST_Controller
+{
 
     function __construct($config = 'rest')
     {
         // Construct the parent class
         parent::__construct($config);
         $this->load->model('ModelKriteria');
-
     }
 
     public function ambilKrt_get()
@@ -51,8 +51,8 @@ class Kriteria extends REST_Controller {
         $TL = (object) $this->put('body');
 
         //print_r($this->ModelKriteria->UpdateKriteria($TL));
-        
-        if ($this->ModelKriteria->UpdateKriteria($TL)){
+
+        if ($this->ModelKriteria->UpdateKriteria($TL)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
@@ -61,14 +61,13 @@ class Kriteria extends REST_Controller {
     public function ambilKrtDenganId_get($Id)
     {
         # code...
-        $where = array('id_kriteria'=>$Id);
+        $where = array('id_kriteria' => $Id);
         $TL = $this->ModelKriteria->GetKriteriaById($where);
-        
+
         if ($TL) {
             $this->set_response($TL, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
-
 }

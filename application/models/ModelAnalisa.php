@@ -263,15 +263,39 @@ class ModelAnalisa extends CI_Model
         return $result;
 
     }
+
 	public function historyPerbandingan(){
 
-	$this->db->select('b.username,a.tanggal,a.h_perbandingan_id');
-	$this->db->from('h_perbandingan a');
-	$this->db->join('user b','b.id_user = a.user_id');
-	$resut = $this->db->get()->result();
-	return $resut;
+        $this->db->select('b.username,a.tanggal,a.h_perbandingan_id');
+        $this->db->from('h_perbandingan a');
+        $this->db->join('user b','b.id_user = a.user_id');
+        $resut = $this->db->get()->result();
+        return $resut;
 
-	}
+    }
+    
+    public function savePeringkat($Data) {
+        $header_peringkat = array('tanggal' => date("Y-m-d"), "user" => $Data['user']); 
+
+        if ($this->db->insert('peringkat_alternatif', $header_peringkat)) {
+            $header_peringkat_id = $this->db->insert_id();
+            for ($i =  0; $i < count($Data['peringkat']); $i++) {
+                $tosave[$i]['id_peringkat_alternatif'] = $header_peringkat_id;
+                $tosave[$i]['peringkat'] = $Data['peringkat'][$i]['peringkat'];
+                $tosave[$i]['id_tempat_latihan'] = $Data['peringkat'][$i]['id_tempat_latihan'];
+                $tosave[$i]['jumlah_nilai'] = $Data['peringkat'][$i]['jumlah_nilai'];
+            }
+
+            if ($this->db->insert_batch('peringkat_alternatif_detail', $tosave)){
+                return true;
+            }
+            else {
+                return false;
+            };
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

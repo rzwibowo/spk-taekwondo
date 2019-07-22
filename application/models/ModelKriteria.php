@@ -88,5 +88,3 @@ class ModelKriteria extends CI_Model
 	// }
 
 }
-
-?>

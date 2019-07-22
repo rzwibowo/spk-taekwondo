@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 /** @noinspection PhpIncludeInspection */
@@ -20,14 +20,14 @@ use Restserver\Libraries\REST_Controller;
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class Analisa extends REST_Controller {
+class Analisa extends REST_Controller
+{
 
     function __construct($config = 'rest')
     {
         // Construct the parent class
         parent::__construct($config);
         $this->load->model('ModelAnalisa');
-
     }
 
     public function buatAnalisaKriteria_get()
@@ -49,12 +49,12 @@ class Analisa extends REST_Controller {
             $this->set_response(array('error' => 'Terjadi kesalahan'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
-    public function saveAnalisisKriteria_post(){
+    public function saveAnalisisKriteria_post()
+    {
 
-         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
+        $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
 
         $this->ModelAnalisa->saveAnalisisKriteria($post);
-        
     }
 
     public function ambilListAnalisis_get()
@@ -70,7 +70,7 @@ class Analisa extends REST_Controller {
     function ambilAnlsDenganId_get($Id)
     {
         # code...
-        $where = array('analisis_kriteria_id'=>$Id);
+        $where = array('analisis_kriteria_id' => $Id);
         $Bbt = $this->ModelAnalisa->getAnalisisById($where)->result();
         if ($Bbt) {
             $this->set_response($Bbt, REST_Controller::HTTP_CREATED);
@@ -79,28 +79,39 @@ class Analisa extends REST_Controller {
         }
     }
 
-    public function saveNilaiPerbandiganAlternatif_post(){
+    public function saveNilaiPerbandiganAlternatif_post()
+    {
 
-         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
+        $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
 
         $this->ModelAnalisa->saveNilaiPerbandiganAlternatif($post);
-        
     }
-    public function hitung_perbandingan_get($id_perbandingan){
+    public function hitung_perbandingan_get($id_perbandingan)
+    {
         $result = $this->ModelAnalisa->hitung_perbandingan($id_perbandingan);
-        if ($result){
+        if ($result) {
             $this->set_response($result, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
-
     }
-	public function history_perbandingan_get(){
-	$result = $this->ModelAnalisa->historyPerbandingan();
-	if ($result){
+    public function history_perbandingan_get()
+    {
+        $result = $this->ModelAnalisa->historyPerbandingan();
+        if ($result) {
             $this->set_response($result, REST_Controller::HTTP_OK);
         } else {
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
-	}
+    }
+
+    public function simpanPeringkat_post()
+    {
+        $Peringkat = json_decode(file_get_contents('php://input'), TRUE)["body"];
+        if ($this->ModelAnalisa->savePeringkat($Peringkat)) {
+            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
 }
