@@ -90,5 +90,3 @@ class ModelTempatLatihan extends CI_Model
 	}
 
 }
-
-?>

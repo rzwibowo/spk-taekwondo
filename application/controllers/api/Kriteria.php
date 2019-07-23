@@ -42,15 +42,12 @@ class Kriteria extends REST_Controller
     public function ambilKrtDanSub_get()
     {
         $data = $this->ModelKriteria->GetKriteriaAndSub();
-        // print_r($data);
 
         $this->set_response($data, REST_Controller::HTTP_OK);
     }
     public function updateKrt_put()
     {
         $TL = (object) $this->put('body');
-
-        //print_r($this->ModelKriteria->UpdateKriteria($TL));
 
         if ($this->ModelKriteria->UpdateKriteria($TL)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
@@ -60,7 +57,6 @@ class Kriteria extends REST_Controller
     }
     public function ambilKrtDenganId_get($Id)
     {
-        # code...
         $where = array('id_kriteria' => $Id);
         $TL = $this->ModelKriteria->GetKriteriaById($where);
 

@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 /** @noinspection PhpIncludeInspection */
@@ -20,14 +20,14 @@ use Restserver\Libraries\REST_Controller;
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
-class User extends REST_Controller {
+class User extends REST_Controller
+{
 
     function __construct($config = 'rest')
     {
         // Construct the parent class
         parent::__construct($config);
         $this->load->model('ModelUser');
-
     }
 
     public function ambilUsr_get()
@@ -41,7 +41,7 @@ class User extends REST_Controller {
     }
     public function simpanUsr_post()
     {
-        $Usr=(object) $this->post('body');
+        $Usr = (object) $this->post('body');
         $Usr->password = md5($Usr->password);
         if ($this->ModelUser->InsertUser($Usr)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
@@ -52,7 +52,7 @@ class User extends REST_Controller {
     public function updateUsr_put()
     {
         $Usr = (object) $this->put('body');
-        if ($this->ModelUser->UpdateUser($Usr)){
+        if ($this->ModelUser->UpdateUser($Usr)) {
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
@@ -60,8 +60,7 @@ class User extends REST_Controller {
     }
     function ambilUsrDenganId_get($Id)
     {
-        # code...
-        $where = array('user.id_user'=>$Id);
+        $where = array('user.id_user' => $Id);
         $Usr = $this->ModelUser->GetUserById($where)->result();
         if ($Usr) {
             $this->set_response($Usr[0], REST_Controller::HTTP_CREATED);
@@ -72,13 +71,13 @@ class User extends REST_Controller {
     function hapusUsr_delete($Id)
     {
         $this->ModelUser->Delete($Id);
-        if ($Id <= 0)
-        {
+        if ($Id <= 0) {
             $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
         $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
     }
-    function login_post() {
+    function login_post()
+    {
         $Usr = (object) $this->post('body');
         $data = $this->ModelUser->AuthUser($Usr->username, $Usr->password)->result();
         if ($data) {

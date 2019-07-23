@@ -39,6 +39,7 @@ class Analisa extends REST_Controller
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+
     public function hitungMatrixPerbandingan_post()
     {
         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
@@ -49,12 +50,17 @@ class Analisa extends REST_Controller
             $this->set_response(array('error' => 'Terjadi kesalahan'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+
     public function saveAnalisisKriteria_post()
     {
 
         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
 
-        $this->ModelAnalisa->saveAnalisisKriteria($post);
+        if ($this->ModelAnalisa->saveAnalisisKriteria($post)) {
+            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
     }
 
     public function ambilListAnalisis_get()
@@ -67,9 +73,8 @@ class Analisa extends REST_Controller
         }
     }
 
-    function ambilAnlsDenganId_get($Id)
+    public function ambilAnlsDenganId_get($Id)
     {
-        # code...
         $where = array('analisis_kriteria_id' => $Id);
         $Bbt = $this->ModelAnalisa->getAnalisisById($where)->result();
         if ($Bbt) {
@@ -83,9 +88,14 @@ class Analisa extends REST_Controller
     {
 
         $post = json_decode(file_get_contents('php://input'), TRUE)["body"];
-
-        $this->ModelAnalisa->saveNilaiPerbandiganAlternatif($post);
+        
+        if ($this->ModelAnalisa->saveNilaiPerbandiganAlternatif($post)) {
+            $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
     }
+
     public function hitung_perbandingan_get($id_perbandingan)
     {
         $result = $this->ModelAnalisa->hitung_perbandingan($id_perbandingan);
@@ -95,6 +105,7 @@ class Analisa extends REST_Controller
             $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
+
     public function history_perbandingan_get()
     {
         $result = $this->ModelAnalisa->historyPerbandingan();
@@ -112,6 +123,37 @@ class Analisa extends REST_Controller
             $this->set_response(array('status' => 'sukses'), REST_Controller::HTTP_CREATED);
         } else {
             $this->set_response(array('error' => 'Error saat simpan data'),  REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function ambilListPeringkat_get()
+    {
+        $data = $this->ModelAnalisa->getListPeringkat()->result();
+        if ($data) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function ambilPeringkatDenganId_get($Id)
+    {
+        $where = array('id_peringkat_alternatif' => $Id);
+        $Prg = $this->ModelAnalisa->getPeringkatById($where)->result();
+        if ($Prg) {
+            $this->set_response($Prg, REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function ambilPeringkatHariIni_get()
+    {
+        $Prg = $this->ModelAnalisa->getLatestPeringkat()->result();
+        if ($Prg) {
+            $this->set_response($Prg, REST_Controller::HTTP_CREATED);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
         }
     }
 }

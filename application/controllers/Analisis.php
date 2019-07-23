@@ -1,8 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Analisis extends CI_Controller {
-	
+class Analisis extends CI_Controller
+{
+
 	public function kriteria()
 	{
 		$pageprop['title'] = "Perbandingan Kriteria";

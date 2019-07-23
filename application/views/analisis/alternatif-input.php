@@ -161,11 +161,11 @@
 					user : JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).id_user ,
 					alternatif: this.alternatifs
 				};
-console.log(data);
+				//console.log(data);
 				axios.post(server_host + '/api/Analisa/saveNilaiPerbandiganAlternatif', {
 					body: data
 				}).then(res => {
-
+					toastr.success('Data disimpan', 'Berhasil');
 				}).catch(err => console.error(err));
 			}
 		}

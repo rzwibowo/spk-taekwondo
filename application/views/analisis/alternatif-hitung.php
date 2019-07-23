@@ -182,7 +182,8 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col text-right">
-								<button class="btn btn-default" @click="simpanPeringkat">Simpan</button>
+								<button class="btn btn-default" @click="simpanPeringkat"
+									:disabled="peringkat.length === 0">Simpan</button>
 							</div>
 						</div>
 					</div>
