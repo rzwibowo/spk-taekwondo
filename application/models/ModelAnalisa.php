@@ -163,7 +163,7 @@ class ModelAnalisa extends CI_Model
             foreach ($keriteria['Matrix4'] as $key => $value) {
                 $detail_analisis_kriteria = array('analisis_kriteria_id' => $analisis_kriteria_id, 'kriteria_id' => $value['id'], 'bobot' => $value['bobot']);
                 if ($this->db->insert('detail_analisis_kriteria', $detail_analisis_kriteria)) {
-                    return true;
+                    //return true;
                 } else {
                     return false;
                 }
