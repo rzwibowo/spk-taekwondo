@@ -334,7 +334,7 @@ class ModelAnalisa extends CI_Model
         $this->db->select('id_detail, peringkat, t.nama, t.latitude, t.longitude, jumlah_nilai');
         $this->db->from('peringkat_alternatif_detail p');
         $this->db->join('tempat_latihan t', 'p.id_tempat_latihan = t.id_tempat_latihan');
-        $this->db->where('`id_peringkat_alternatif` = (SELECT `id_peringkat_alternatif` FROM `peringkat_alternatif` WHERE `tanggal` = "'.date("Y-m-d").'" ORDER BY `id_peringkat_alternatif` DESC LIMIT 1)');
+        $this->db->where('`id_peringkat_alternatif` = (SELECT `id_peringkat` FROM `peringkat_alternatif` WHERE `tanggal` = "'.date("Y-m-d").'" ORDER BY `id_peringkat` DESC LIMIT 1)');
         $this->db->order_by('peringkat', 'asc');
         return $this->db->get();
     }
