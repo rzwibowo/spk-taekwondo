@@ -159,15 +159,19 @@ class ModelAnalisa extends CI_Model
 
         if ($this->db->insert('analisis_kriteria', $analisis_kriteria)) {
             $analisis_kriteria_id = $this->db->insert_id();
+            $hasil = true;
 
             foreach ($keriteria['Matrix4'] as $key => $value) {
                 $detail_analisis_kriteria = array('analisis_kriteria_id' => $analisis_kriteria_id, 'kriteria_id' => $value['id'], 'bobot' => $value['bobot']);
                 if ($this->db->insert('detail_analisis_kriteria', $detail_analisis_kriteria)) {
-                    //return true;
+                    $hasil = true;
                 } else {
+                    $hasil = false;
                     return false;
                 }
             }
+
+            return $hasil;
         } else {
             return false;
         }
@@ -189,12 +193,12 @@ class ModelAnalisa extends CI_Model
     function saveNilaiPerbandiganAlternatif($data)
     {
         $H_perbandingan = array('user_id' =>  $data['user'], 'tanggal' => date("Y-m-d"));
+        $hasil = true;
 
         if ($this->db->insert('h_perbandingan', $H_perbandingan)) {
             $H_perbandinganId = $this->db->insert_id();
 
             foreach ($data['alternatif'] as $key => $value_A) {
-
                 $H_perbandingan_alternatif = array('H_perbandingan_id' => $H_perbandinganId, 'tempat_latihan_id' => $value_A['id_tempat_latihan']);
                 if ($this->db->insert('h_perbandingan_alternatif', $H_perbandingan_alternatif)) {
                     $H_perbandingan_alternatif_id = $this->db->insert_id();
@@ -208,18 +212,22 @@ class ModelAnalisa extends CI_Model
                                 foreach ($value_K['subkriteria'] as $key => $value_S) {
                                     $H_perbandingan_sub_kriteria = array('H_perbandingan_kriteria_id' => $H_perbandingan_kriteria_Id, 'sub_kriteria_id' => $value_S['id_sub_kriteria'], 'nilai' => $value_S['nilai']);
                                     if ($this->db->insert('h_perbandingan_sub_kriteria', $H_perbandingan_sub_kriteria)) {
-                                        return true;
+                                        $hasil = true;
                                     } else {
+                                        $hasil = false;
                                         return false;
                                     }
                                 }
                             }
                         } else {
+                            $hasil = false;
                             return false;
                         }
                     }
                 }
             }
+
+            return $hasil;
         } else {
             return false;
         }
@@ -326,7 +334,7 @@ class ModelAnalisa extends CI_Model
         $this->db->select('id_detail, peringkat, t.nama, t.latitude, t.longitude, jumlah_nilai');
         $this->db->from('peringkat_alternatif_detail p');
         $this->db->join('tempat_latihan t', 'p.id_tempat_latihan = t.id_tempat_latihan');
-        $this->db->where('`id_peringkat_alternatif` = (SELECT `id_peringkat_alternatif` FROM `peringkat_alternatif` WHERE `tanggal` = "'.date("Y-m-d").'")');
+        $this->db->where('`id_peringkat_alternatif` = (SELECT `id_peringkat_alternatif` FROM `peringkat_alternatif` WHERE `tanggal` = "'.date("Y-m-d").'" ORDER BY `id_peringkat_alternatif` DESC LIMIT 1)');
         $this->db->order_by('peringkat', 'asc');
         return $this->db->get();
     }

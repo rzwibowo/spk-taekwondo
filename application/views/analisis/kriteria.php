@@ -225,7 +225,7 @@
 				axios.post(server_host + '/api/Analisa/saveAnalisisKriteria', {
 					body: this.Matrix.Matrix4
 				}).then(res => {
-					// location.reload();
+					toastr.success('Data disimpan', 'Berhasil');
 				}).catch(err => console.error(err));
 			}
 		},
