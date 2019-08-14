@@ -13,12 +13,20 @@ class ModelTempatLatihan extends CI_Model
 	
     function GetTempatLatihan(){
 
+	    
+		$header = $this->db->order_by("is_multi","desc")->get('kriteria')->result();
     	
-        $result = array();
+		$result = array(
+		"header" => $header,
+		"data" => null
+		);
+
+		$data = array();
 
     	$TLatihan = $this->db->get('tempat_latihan')->result();
 
     	$kriteria = $this->db->order_by("is_multi","desc")->get('kriteria')->result();
+		
 
 		foreach ($kriteria as $key => $item) {
 
@@ -45,8 +53,10 @@ class ModelTempatLatihan extends CI_Model
 					"kriteria" => $kriteria
     	       	);
 
-    	       	array_push($result,$TempLatihan );
+    	       	array_push($data,$TempLatihan );
     	}
+
+	     $result["data"] = $data;
 
     	return $result;
     }

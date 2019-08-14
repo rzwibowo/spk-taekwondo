@@ -198,7 +198,7 @@ class ModelAnalisa extends CI_Model
         if ($this->db->insert('h_perbandingan', $H_perbandingan)) {
             $H_perbandinganId = $this->db->insert_id();
 
-            foreach ($data['alternatif'] as $key => $value_A) {
+            foreach ($data['alternatif']['data'] as $key => $value_A) {
                 $H_perbandingan_alternatif = array('H_perbandingan_id' => $H_perbandinganId, 'tempat_latihan_id' => $value_A['id_tempat_latihan']);
                 if ($this->db->insert('h_perbandingan_alternatif', $H_perbandingan_alternatif)) {
                     $H_perbandingan_alternatif_id = $this->db->insert_id();
