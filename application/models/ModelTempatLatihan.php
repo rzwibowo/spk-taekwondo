@@ -10,7 +10,16 @@ class ModelTempatLatihan extends CI_Model
 		//load database library
 		$this->load->database();
 	}
-	
+
+	function GetTempatLatihanGrid(){
+
+
+    	$TLatihan = $this->db->get('tempat_latihan')->result();
+
+			
+    	return $TLatihan;
+    }
+
     function GetTempatLatihan(){
 
 	    

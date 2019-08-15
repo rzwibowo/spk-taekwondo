@@ -30,6 +30,15 @@ class TempatLatihan extends REST_Controller
         $this->load->model('ModelTempatLatihan');
     }
 
+    public function ambilTlGrid_get()
+    {
+        $data = $this->ModelTempatLatihan->GetTempatLatihanGrid();
+        if ($data) {
+            $this->set_response($data, REST_Controller::HTTP_OK);
+        } else {
+            $this->set_response(array('error' => 'Tidak ditemukan data'),  REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
     public function ambilTl_get()
     {
         $data = $this->ModelTempatLatihan->GetTempatLatihan();

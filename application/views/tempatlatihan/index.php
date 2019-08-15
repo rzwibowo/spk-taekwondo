@@ -152,7 +152,7 @@
 		},
 		methods: {
 			getListTl: function () {
-				axios.get(server_host + '/api/tempatlatihan/ambilTl')
+				axios.get(server_host + '/api/tempatlatihan/ambilTlGrid')
 				.then(res => this.tempatlatihans = res.data)
 				.catch(err => console.error(err));
 			},
