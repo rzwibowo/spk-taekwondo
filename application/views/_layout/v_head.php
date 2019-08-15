@@ -194,7 +194,6 @@
                             <ul aria-expanded="false" class="collapse first-level">
 								<li class="sidebar-item">
 									<a class="sidebar-link waves-effect waves-dark sidebar-link"
-										:class="disabledClass"
 										href="<?php echo site_url() ?>/analisis/alternatif_input" aria-expanded="false">
 										<i class="mdi mdi-pencil-box"></i>
 										<span class="hide-menu">Input Nilai</span>
@@ -202,7 +201,6 @@
 								</li>
                                 <li class="sidebar-item">
 									<a class="sidebar-link waves-effect waves-dark sidebar-link"
-										:class="disabledClass"
 										href="<?php echo site_url() ?>/analisis/alternatif_hitung" aria-expanded="false">
 										<i class="mdi mdi-calculator"></i>
 										<span class="hide-menu">Hitung Perbandingan</span>

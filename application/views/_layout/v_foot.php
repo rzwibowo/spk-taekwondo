@@ -73,26 +73,6 @@
 				}
 			}
 		})
-
-		const menu_script = new Vue({
-			el: '#sidebarnav',
-			data: {
-				disabledClass: 'disabled-link'
-			},
-			created: function () {
-				this.checkLevel();
-			},
-			methods: {
-				checkLevel: function () {
-					const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
-					if (level === 'user') {
-						this.disabledClass = 'disabled-link';
-					} else {
-						this.disabledClass = '';
-					}
-				}
-			} 
-		})
 	</script>
 	
 </body>

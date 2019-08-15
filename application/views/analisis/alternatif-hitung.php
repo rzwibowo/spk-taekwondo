@@ -309,20 +309,10 @@
 			active_tab: 1,
 			active_outer_tab: 1
 		},
-		created: function () {
-			this.checkLevel();
-		},
 		mounted: function () {
 			this.getListKr();
 		},
 		methods: {
-			checkLevel: function () {
-				const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
-				if (level === 'user') {
-					toastr.warning('Kembali ke halaman sebelumnya', 'Anda tidak memiliki akses');
-					history.back();
-				}
-			},
 			getListKr: function () {
 				axios.get(server_host + '/api/Kriteria/ambilKrt')
 					.then(res => this.kriterias = res.data)

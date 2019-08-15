@@ -7,60 +7,99 @@
 
 			<div class="card-body">
 				<div class="row">
+					<div class="table-responsive">
 						<table class="table table-sm">
-								<thead>
-									<tr>
-										<th>Alternatif</th>
-										<th v-for="(krt, i) in alternatifs.header">{{krt.nama_kriteria}}</th>
-									</tr>
-								</thead>
-								<tbody>
+							<thead>
+								<tr>
+									<th>Kriteria →</th>
+									<th v-for="(krt, i) in kriterias"
+										:colspan="krt.is_multi === '1' ? krt.subkriteria.length + 1 : 1">
+										{{krt.nama_kriteria}}
+									</th>
+								</tr>
+								<tr>
+									<th>Alternatif ↓</th>
+									<template v-for="krt in kriterias">
+										<template v-if="krt.is_multi === '1'">
+											<th v-for="subk in krt.subkriteria">
+												{{ subk.bobot_kriteria }} | {{ subk.nama_sub }} 
+											</th>
+											<th>Rata-rata</th>
+										</template>
+										<template v-else>
+											<th></th>
+										</template>
+									</template>
+								</tr>
+							</thead>
+							<tbody>
 								<tr v-for="(alt , i) in alternatifs.data">
 									<th>{{alt.nama}}</th>
-									<th v-for="(krt,i) in alt.kriteria">
+									<template v-for="(krt,i) in alt.kriteria">
+										<template v-if="krt.is_multi === '1'">
+											<td v-for="(subk, k) in krt.subkriteria">
+												<input type="number"
+													class="form-control form-control-sm text-right float-right" min="0"
+													style="width: 7em" v-model="subk.nilai"
+													@change="hitungRataRata(krt.subkriteria,krt)">
+											</td>
+											<td>
+												<input type="number" class="form-control form-control-sm"
+													v-model="krt.rata_rata" readonly style="width: 7em">
+											</td>
+										</template>
+										<template v-else>
+											<td>
+												<select class="form-control form-control-sm" v-model="krt.rata_rata" style="width: 10em">
+													<option v-for="subk in krt.subkriteria"
+														:value="subk.bobot_kriteria">
+														{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
+													</option>
+												</select>
+											</td>
+										</template>
+									</template>
+									<!-- <th v-for="(krt,i) in alt.kriteria">
 										<table class="table table-sm" v-if="krt.is_multi == 1">
 											<tr>
-												<td v-for="(subk, k) in krt.subkriteria" class="text-center">{{ subk.bobot_kriteria }}</td>
+												<td v-for="(subk, k) in krt.subkriteria" class="text-center">
+													{{ subk.bobot_kriteria }}</td>
 											</tr>
-										    <tr>
+											<tr>
 												<td v-for="(subk, k) in krt.subkriteria">{{ subk.nama_sub }}</td>
 											</tr>
-											 <tr>
+											<tr>
 												<td v-for="(subk, k) in krt.subkriteria">
 													<input type="number"
-																class="form-control form-control-sm text-right float-right"
-																min="0"
-																style="width: 7em"
-																v-model="subk.nilai"
-																@change="hitungRataRata(krt.subkriteria,krt)">
+														class="form-control form-control-sm text-right float-right" min="0"
+														style="width: 7em" v-model="subk.nilai"
+														@change="hitungRataRata(krt.subkriteria,krt)">
 												</td>
 											</tr>
 											<tr>
-												<td :colspan="krt.subkriteria.length" >
-												<input type="number" 
-												class="form-control form-control-sm" 
-												v-model="krt.rata_rata" 
-												readonly style="width: 7em">
+												<td :colspan="krt.subkriteria.length">
+													<input type="number" class="form-control form-control-sm"
+														v-model="krt.rata_rata" readonly style="width: 7em">
 												</td>
 											</tr>
 										</table>
 										<table class="table table-sm" v-if="krt.is_multi == 0">
-											 <tr>
+											<tr>
 												<td>
-													<select class="form-control form-control-sm"
-													v-model="krt.rata_rata">
+													<select class="form-control form-control-sm" v-model="krt.rata_rata">
 														<option v-for="subk in krt.subkriteria"
-														:value="subk.bobot_kriteria">
-														{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
+															:value="subk.bobot_kriteria">
+															{{ subk.bobot_kriteria }} | {{ subk.nama_sub }}
 														</option>
 													</select>
 												</td>
 											</tr>
 										</table>
-									</th>
+									</th> -->
 								</tr>
-								</tbody>
+							</tbody>
 						</table>
+					</div>
 					<div class="col text-right">
 						<button class="btn btn-primary" @click="Simpan()"> SIMPAN
 						</button>
@@ -82,24 +121,17 @@
 			kriterias: [],
 			active_tab: 1
 		},
-		created: function () {
-			this.checkLevel();
-		},
 		mounted: function () {
 			this.getListAlt();
 		},
 		methods: {
-			checkLevel: function () {
-				const level = JSON.parse(sessionStorage.getItem('auth_spk_tkwd')).level;
-				if (level === 'user') {
-					toastr.warning('Kembali ke halaman sebelumnya', 'Anda tidak memiliki akses');
-					history.back();
-				}
-			},
 			getListAlt: async function () {
 				await axios.get(server_host + '/api/TempatLatihan/ambilTl')
 				.then(res => {
 					this.alternatifs = res.data;
+					this.kriterias = res.data.data[0].kriteria;
+
+					console.log(this.kriterias);
 				})
 				.catch(err => console.error(err));
 			},
